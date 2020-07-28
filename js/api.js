@@ -110,9 +110,9 @@ function getWeatherContents(response) {
 
     let icon_link;
     if (i === 0) {
-      icon_link = `http://openweathermap.org/img/wn/${icon}@4x.png`;
+      icon_link = `https://openweathermap.org/img/wn/${icon}@4x.png`;
     } else {
-      icon_link = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+      icon_link = `https://openweathermap.org/img/wn/${icon}@2x.png`;
     }
     //Create JSON object to add to array
     let obj = {
