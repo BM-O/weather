@@ -4,37 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Welcome to Firebase Hosting</title>
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.16.0/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.16.0/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.16.0/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.16.0/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.16.0/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
     <link rel="stylesheet" href="home.css" />
     <!-- bootstrap -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
     />
-
-    <!-- <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style> -->
   </head>
   <body>
     <div class="wrapper">
@@ -65,11 +40,15 @@
               name="location"
               type="location"
               class="form-control ml-3 mr-3 w-75"
-              id="location"
+              id="address"
               placeholder="Portland, OR"
             />
             <div class="text-center">
-              <button type="submit" class="btn btn-lrg btn-primary">
+              <button
+                type="button"
+                class="btn btn-lrg btn-primary"
+                id="get_location"
+              >
                 Search
               </button>
             </div>
@@ -80,29 +59,7 @@
 
     <!-- WEATHER PAGE -->
     <!-- For this "page", give ids to the elements and put the class names in the js file -->
-    <div class="weather_page visible">
-      <!-- SEARCH BAR TO FIND DIFFERENT LOCATIONS AFTER GETTING RESULTS -->
-      <div class="container text-center w-75" id="search_bar">
-        <form
-          id="location"
-          class="bg-light border mx-auto p-2 border border-dark"
-        >
-          <div class="form-inline row justify-content-center">
-            <input
-              name="location"
-              type="location"
-              class="form-control ml-3 mr-3 w-75"
-              id="location"
-              placeholder="Portland, OR"
-            />
-            <div class="text-center">
-              <button type="button" class="btn btn-lrg btn-primary">
-                Search
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+    <div class="weather_page invisible">
       <!-- CURRENT WEATHER, AQI, AQ NOTICE -->
       <div class="container-fluid w-75" id="current_container">
         <div class="row">
@@ -119,7 +76,7 @@
                   </div>
                   <div class="col text-right" id="temp_range">
                     <!-- ADD IMG HERE -->
-                    <img src="http://openweathermap.org/img/wn/01n@4x.png" />
+                    <img src="https://openweathermap.org/img/wn/01n@4x.png" />
                     <h4 class="text-right" id="tempHiLo">tempHi | tempLo</h4>
                   </div>
                 </div>
@@ -155,41 +112,16 @@
         </tbody>
       </table>
     </div>
-
-    <!-- <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p> -->
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = ["auth", "database", "messaging", "storage"].filter(
-            (feature) => typeof app[feature] === "function"
-          );
-          document.getElementById(
-            "load"
-          ).innerHTML = `Firebase SDK loaded with ${features.join(", ")}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById("load").innerHTML =
-            "Error loading the Firebase SDK, check the console.";
-        }
-      });
-    </script>
+    <script src="./js/script.js"></script>
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/7.16.0/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/7.16.0/firebase-auth.js"></script>
+    <script defer src="/__/firebase/7.16.0/firebase-functions.js"></script>
+    <script defer src="/__/firebase/7.16.0/firebase-database.js"></script>
+    <script defer src="/__/firebase/7.16.0/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/7.16.0/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
   </body>
 </html>

@@ -1,11 +1,10 @@
 body {
   background-color: lightblue;
 }
-.home_page,
+/* .home_page,
 .weather_page {
   max-width: 1920px;
   max-height: 900px;
-  /* min-height: 900px; */
 }
 .container {
   padding-top: 10%;
