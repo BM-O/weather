@@ -2,6 +2,11 @@ const functions = require("firebase-functions");
 const config = functions.config();
 const axios = require("axios");
 
+/*
+ *  Cloud Function that is called by the script.js file
+ *  - Takes in the address passed in to the function and uses it to
+ *    query the MapQuest API
+ */
 exports.getCoords = functions.https.onCall(async (dataObj, context) => {
   //Query MapQuest API to get a JSON object in order to get
   //the geocode for the location entered.
@@ -48,6 +53,7 @@ async function getAQ(lat, lng) {
   return getAirQualityContents(data);
 }
 
+//OpenWeather helper function
 function getWeatherContents(response) {
   //create object that will be returned
   let array = [];
@@ -108,21 +114,22 @@ function getWeatherContents(response) {
       tempCel: tempC,
       wind: windSpeed,
       humidity: humidityValue,
-      pressire: pressureValue,
+      pressure: pressureValue,
       dew_point: dewpointF,
       uvi: uvindexValue,
       icon: icon_link,
     };
-    array.push(obj);
+    array.push(obj); //Add object to array
   }
   return array;
 }
 
+//AirVisual helper function
 function getAirQualityContents(response) {
   // Get current air quality
-  let pollution = response.data.current.pollution;
-  let airQuality = pollution.aqius;
-  let mainPollutant = pollution.mainus;
+  let pollution = response.data.current.pollution; //Shorthand
+  let airQuality = pollution.aqius; //Get AQI-us
+  let mainPollutant = pollution.mainus; //Get the main pollutant
 
   // Create object to return to client
   let obj = {
