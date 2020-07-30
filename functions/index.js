@@ -133,23 +133,23 @@ function getAirQualityContents(response) {
   let mainPollutant = pollution.mainus; //Get the main pollutant
   let pollutionLevel = "";
   let cautionStatement = "";
-  if (airQuality <= 0 && airQuality >= 50) {
+  if (airQuality >= 0 && airQuality <= 50) {
     pollutionLevel = "Good";
     cautionStatement =
       "Air pollution poses little or no risk to active children and adults";
-  } else if (airQuality <= 51 && airQuality >= 100) {
+  } else if (airQuality >= 51 && airQuality <= 100) {
     pollutionLevel = "Moderate";
     cautionStatement =
       "Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.";
-  } else if (airQuality <= 101 && airQuality >= 150) {
+  } else if (airQuality >= 101 && airQuality <= 150) {
     pollutionLevel = "Unhealthy for Sensitive Groups";
     cautionStatement =
       "Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.";
-  } else if (airQuality <= 151 && airQuality >= 200) {
+  } else if (airQuality >= 151 && airQuality <= 200) {
     pollutionLevel = "Unhealthy";
     cautionStatement =
       "Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor exertion; everyone else, especially children, should limit prolonged outdoor exertion";
-  } else if (airQuality <= 201 && airQuality >= 300) {
+  } else if (airQuality >= 201 && airQuality <= 300) {
     pollutionLevel = "Very Unhealthy";
     cautionStatement =
       "Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion.";
