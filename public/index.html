@@ -16,11 +16,17 @@
       <div class="inner">
         <svg height="200" width="200">
           <mask id="moon">
-            <rect x="-200" y="0" width="600" height="200" style="fill:white;" />
-            <circle cx="100" cy="100" r="95" style="fill:black;" />
+            <rect
+              x="-200"
+              y="0"
+              width="600"
+              height="200"
+              style="fill: white;"
+            />
+            <circle cx="100" cy="100" r="95" style="fill: black;" />
           </mask>
           <g id="sun-g" mask="url(#moon)">
-            <circle id="sun" cx="100" cy="100" r="100" style="fill:#DBBB34;" />
+            <circle id="sun" cx="100" cy="100" r="100" style="fill: #dbbb34;" />
           </g>
         </svg>
       </div>
@@ -59,7 +65,7 @@
 
     <!-- WEATHER PAGE -->
     <!-- For this "page", give ids to the elements and put the class names in the js file -->
-    <div class="weather_page invisible">
+    <div class="invisible" id="weather_page">
       <!-- CURRENT WEATHER, AQI, AQ NOTICE -->
       <div class="container-fluid w-75" id="current_container">
         <div class="row">
