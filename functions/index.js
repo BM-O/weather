@@ -1,6 +1,7 @@
 const functions = require("firebase-functions");
 const config = functions.config();
 const axios = require("axios");
+const e = require("express");
 
 /*
  *  Cloud Function that is called by the script.js file
@@ -99,11 +100,11 @@ function getWeatherContents(response) {
     //Convert wind speeds to from meters per hour to miles per hour
     let windSpeed = Math.round(windValue * 2.237 * 10) / 10;
 
-    let icon_link;
+    let iconLink;
     if (i === 0) {
-      icon_link = `https://openweathermap.org/img/wn/${icon}@4x.png`;
+      iconLink = `https://openweathermap.org/img/wn/${icon}@4x.png`;
     } else {
-      icon_link = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+      iconLink = `https://openweathermap.org/img/wn/${icon}@2x.png`;
     }
     //Create JSON object to add to array
     let obj = {
@@ -117,7 +118,7 @@ function getWeatherContents(response) {
       pressure: pressureValue,
       dew_point: dewpointF,
       uvi: uvindexValue,
-      icon: icon_link,
+      icon: iconLink,
     };
     array.push(obj); //Add object to array
   }
@@ -130,7 +131,32 @@ function getAirQualityContents(response) {
   let pollution = response.data.current.pollution; //Shorthand
   let airQuality = pollution.aqius; //Get AQI-us
   let mainPollutant = pollution.mainus; //Get the main pollutant
-
+  let pollutionLevel = "";
+  let cautionStatement = "";
+  if (airQuality <= 0 && airQuality >= 50) {
+    pollutionLevel = "Good";
+    cautionStatement =
+      "Air pollution poses little or no risk to active children and adults";
+  } else if (airQuality <= 51 && airQuality >= 100) {
+    pollutionLevel = "Moderate";
+    cautionStatement =
+      "Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.";
+  } else if (airQuality <= 101 && airQuality >= 150) {
+    pollutionLevel = "Unhealthy for Sensitive Groups";
+    cautionStatement =
+      "Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.";
+  } else if (airQuality <= 151 && airQuality >= 200) {
+    pollutionLevel = "Unhealthy";
+    cautionStatement =
+      "Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor exertion; everyone else, especially children, should limit prolonged outdoor exertion";
+  } else if (airQuality <= 201 && airQuality >= 300) {
+    pollutionLevel = "Very Unhealthy";
+    cautionStatement =
+      "Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion.";
+  } else {
+    pollutionLevel = "Hazardous";
+    cautionStatement = "Everyone should avoid all outdoor exertion";
+  }
   // Create object to return to client
   let obj = {
     aqi: airQuality,
