@@ -3,24 +3,27 @@
   max-width: 1920px;
   max-height: 900px;
   /* min-height: 900px; */
-  z-index: 2;
+  
+  z-index: 20;
 }
 .container {
   padding-top: 10%;
   padding-bottom: 15px;
-  z-index: 1;
+
+  z-index: 10;
 }
 
 /* Visibility Settings */
 .invisible {
   visibility: hidden;
   display: none;
+  z-index: 5;
 }
 
 .wrapper {
   /* width: 100%; */
   height: 100%;
-  z-index: 0;
+  z-index: 1;
   overflow: hidden;
   background-color: lightblue;
 }
@@ -29,9 +32,10 @@
   overflow: hidden;
   /* width: 100%; */
   position: relative;
+  z-index: 0;
 }
 
 #sun {
   position: absolute;
-  z-index: 10;
+  z-index: -1;
 }
