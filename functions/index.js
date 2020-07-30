@@ -161,6 +161,8 @@ function getAirQualityContents(response) {
   let obj = {
     aqi: airQuality,
     pol: mainPollutant,
+    level: pollutionLevel,
+    caution: cautionStatement,
   };
   return obj;
 }
