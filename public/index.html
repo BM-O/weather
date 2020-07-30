@@ -34,13 +34,7 @@
     <!-- HOME PAGE WITH INITAL SEARCH BAR -->
     <div class="home_page visible">
       <div class="container" id="home_search_bar">
-        <form
-          id="location"
-          class="bg-light border mx-auto p-4 border border-dark"
-          action="/weather"
-          method="post"
-        >
-          <h1 class="mb-3 text-center">PLACEHOLDER TEXT</h1>
+        <form id="location" action="/weather" method="post">
           <div class="form-inline row justify-content-center">
             <input
               name="location"
@@ -65,46 +59,34 @@
 
     <!-- WEATHER PAGE -->
     <!-- For this "page", give ids to the elements and put the class names in the js file -->
-    <div class="invisible" id="weather_page">
+    <div class="visible" id="weather_page">
       <!-- CURRENT WEATHER, AQI, AQ NOTICE -->
-      <div class="container-fluid w-75" id="current_container">
+      <div class="container">
         <div class="row">
-          <div
-            class="card_container w-50 mx-auto pl-4 pr-2"
-            id="current_weather"
-          >
-            <div class="card p-4 m-2">
-              <div class="card_body">
-                <div class="row">
-                  <div class="col text-left" id="current_forecast">
-                    <h4 id="current_temperature">Current temp</h4>
-                    <div id="current_condition">Weather description</div>
-                  </div>
-                  <div class="col text-right" id="temp_range">
-                    <!-- ADD IMG HERE -->
-                    <img src="https://openweathermap.org/img/wn/01n@4x.png" />
-                    <h4 class="text-right" id="tempHiLo">tempHi | tempLo</h4>
-                  </div>
-                </div>
+          <div class="col-md-7">
+            <div class="card h-100" id="weather_card">
+              <div class="card-body" id="weather_data">
+                <!-- Put Weather data here -->
               </div>
             </div>
           </div>
-          <div
-            class="card_container w-50 mx-auto pl-2 pr-4 text-center"
-            id="current_airquality"
-          >
-            <div class="card p-4 m-2">
-              <div class="card_body">
-                <div id="air_quality_card">
-                  <h4 id="air_quality">16</h4>
-                  <h4 id="main_pollutant">PM25</h4>
+          <div class="col-md-5">
+            <div class="row">
+              <div class="col">
+                <div class="card h-100" id="aq_card">
+                  <div class="card-body" id="aq_text">
+                    <!-- Air quality and main pollutant here -->
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="card p-4 m-2">
-              <div class="card_body">
-                <div id="advisory_card">
-                  <div id="air_advisory">Advisory text here</div>
+            <div class="row">
+              <div class="col">
+                <div class="card h-100" id="advisory_card">
+                  <!-- Add bg-[color] and text-[color] class to advisory_card based on level from results -->
+                  <div class="card-body" id="advisory_text">
+                    <!-- Advisory text from results here -->
+                  </div>
                 </div>
               </div>
             </div>
