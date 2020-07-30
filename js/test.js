@@ -3,8 +3,9 @@ function myMove() {
     var pos = 0;
     var id = setInterval(frame, 5);
     function frame() {
-        if (pos == 350) {
-            clearInterval(id);
+        if (pos == 550) {
+            // clearInterval(id);
+            pos = 0;
         } else {
             pos++;
             elem.style.top = pos + 'px';
