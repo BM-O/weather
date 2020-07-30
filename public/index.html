@@ -4,16 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Welcome to Firebase Hosting</title>
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.16.0/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.16.0/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.16.0/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.16.0/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.16.0/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
     <link rel="stylesheet" href="home.css" />
     <!-- bootstrap -->
     <link
@@ -46,11 +36,15 @@
                 name="location"
                 type="location"
                 class="form-control ml-3 mr-3 w-75"
-                id="location"
+                id="address"
                 placeholder="Portland, OR"
               />
               <div class="text-center">
-                <button type="submit" class="btn btn-lrg btn-primary">
+                <button
+                  type="button"
+                  class="btn btn-lrg btn-primary"
+                  id="get_location"
+                >
                   Search
                 </button>
               </div>
@@ -61,29 +55,7 @@
 
       <!-- WEATHER PAGE -->
       <!-- For this "page", give ids to the elements and put the class names in the js file -->
-      <div class="weather_page visible">
-        <!-- SEARCH BAR TO FIND DIFFERENT LOCATIONS AFTER GETTING RESULTS -->
-        <div class="container text-center w-75" id="search_bar">
-          <form
-            id="location"
-            class="bg-light border mx-auto p-2 border border-dark"
-          >
-            <div class="form-inline row justify-content-center">
-              <input
-                name="location"
-                type="location"
-                class="form-control ml-3 mr-3 w-75"
-                id="location"
-                placeholder="Portland, OR"
-              />
-              <div class="text-center">
-                <button type="button" class="btn btn-lrg btn-primary">
-                  Search
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
+      <div class="invisible" id="weather_page">
         <!-- CURRENT WEATHER, AQI, AQ NOTICE -->
         <div class="container-fluid w-75" id="current_container">
           <div class="row">
@@ -100,34 +72,40 @@
                     </div>
                     <div class="col text-right" id="temp_range">
                       <!-- ADD IMG HERE -->
-                      <img src="http://openweathermap.org/img/wn/01n@4x.png" />
+                      <img src="https://openweathermap.org/img/wn/01n@4x.png" />
                       <h4 class="text-right" id="tempHiLo">tempHi | tempLo</h4>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="card_container w-50 mx-auto pl-2 pr-4 text-center"
-              id="current_airquality"
-            >
-              <div class="card p-4 m-2">
-                <div class="card_body">
-                  <div id="air_quality_card">
-                    <h4 id="air_quality">16</h4>
-                    <h4 id="main_pollutant">PM25</h4>
+              <div
+                class="card_container w-50 mx-auto pl-2 pr-4 text-center"
+                id="current_airquality"
+              >
+                <div class="card p-4 m-2">
+                  <div class="card_body">
+                    <div id="air_quality_card">
+                      <h4 id="air_quality">16</h4>
+                      <h4 id="main_pollutant">PM25</h4>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="card p-4 m-2">
-                <div class="card_body">
-                  <div id="advisory_card">
-                    <div id="air_advisory">Advisory text here</div>
+                <div class="card p-4 m-2">
+                  <div class="card_body">
+                    <div id="advisory_card">
+                      <div id="air_advisory">Advisory text here</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- 7 DAY FORECAST TABLE-->
+          <table id="forecast_table">
+            <tbody id="forecast_body">
+              <!-- CONTENTS CREATED AND APPENDED VIA "script.js" -->
+            </tbody>
+          </table>
         </div>
         <!-- 7 DAY FORECAST TABLE-->
         <table id="forecast_table">
@@ -138,5 +116,16 @@
       </div>
     </div>
     <script type="text/javascript" src="/js/test.js"></script>
+    <script src="./js/script.js"></script>
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/7.16.0/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/7.16.0/firebase-auth.js"></script>
+    <script defer src="/__/firebase/7.16.0/firebase-functions.js"></script>
+    <script defer src="/__/firebase/7.16.0/firebase-database.js"></script>
+    <script defer src="/__/firebase/7.16.0/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/7.16.0/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
   </body>
 </html>
