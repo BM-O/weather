@@ -1,4 +1,4 @@
-const weather = document.getElementsByClassName("weather_page");
+const weather = document.getElementById("weather_page");
 const search = document.getElementById("get_location");
 
 search.addEventListener("click", () => {
@@ -13,6 +13,6 @@ function showWeather(data) {
 }
 
 function makeVisible(page) {
-  page.classList.remove("invisible");
   page.classList.add("visible");
+  page.classList.remove("invisible");
 }

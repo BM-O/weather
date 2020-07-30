@@ -6,6 +6,7 @@ body {
   max-width: 1920px;
   max-height: 900px;
 }
+*/
 .container {
   padding-top: 10%;
   padding-bottom: 15px;
@@ -17,9 +18,8 @@ body {
   display: none;
 }
 
-
 body {
-  background: rgb(0,0,1,0);
+  background: rgb(0, 0, 1, 0);
   animation: sky 5s ease 1s infinite;
 }
 
@@ -47,19 +47,40 @@ svg #sun {
 }
 
 @keyframes sky {
-  0% { background: #3498DB; }
-  45%,55% { background: #2C3E50; }
-  100% { background: #3498DB; }
+  0% {
+    background: #3498db;
+  }
+  45%,
+  55% {
+    background: #2c3e50;
+  }
+  100% {
+    background: #3498db;
+  }
 }
 
 @keyframes sun-g {
-  0% { transform: translateX(200px); }
-  45%,55% { transform: translateX(0px); }
-  100% { transform: translateX(-200px); }
+  0% {
+    transform: translateX(200px);
+  }
+  45%,
+  55% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(-200px);
+  }
 }
 
 @keyframes sun {
-  0% { transform: translateX(-200px); }
-  45%,55% { transform: translateX(0px); }
-  100% { transform: translateX(200px); }
+  0% {
+    transform: translateX(-200px);
+  }
+  45%,
+  55% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(200px);
+  }
 }
