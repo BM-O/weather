@@ -3,7 +3,7 @@ function myMove() {
     var pos = 0;
     var id = setInterval(frame, 5);
     function frame() {
-        if (pos == 550) {
+        if (pos == window.screen.width) {
             // clearInterval(id);
             pos = 0;
         } else {
