@@ -119,6 +119,8 @@ function getWeatherContents(response) {
       dew_point: dewpointF,
       uvi: uvindexValue,
       icon: iconLink,
+      tempHi: tempHi,
+      tempLo: tempLo,
     };
     array.push(obj); //Add object to array
   }
