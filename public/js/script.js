@@ -2,7 +2,9 @@ const weather = document.getElementById("weather_page");
 const search = document.getElementById("get_location");
 
 search.addEventListener("click", () => {
-  const addr = document.getElementById("address").value;
+  const addr = document.getElementById("address").value
+    ? document.getElementById("address").value
+    : "Portland, OR";
   const getCoords = firebase.functions().httpsCallable("getCoords");
   getCoords({ address: addr }).then((result) => showWeather(result.data));
 });

@@ -10,6 +10,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
     />
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnc2sT31OknwQB52bGN8c9g8tINNR5nMk&libraries=places"></script>>
   </head>
   <body>
     <div class="wrapper">
@@ -111,5 +112,12 @@
     <script defer src="/__/firebase/7.16.0/firebase-storage.js"></script>
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
+    <script>
+      var input = document.getElementById('address');
+      var autocomplete = new google.maps.places.Autocomplete(input,{types: ['(cities)']});
+      google.maps.event.addListener(autocomplete, 'place_changed', function(){
+         var place = autocomplete.getPlace();
+      })
+    </script>
   </body>
 </html>
