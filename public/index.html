@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,7 +10,11 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
     />
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnc2sT31OknwQB52bGN8c9g8tINNR5nMk&libraries=places"></script>>
+    <script
+      type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnc2sT31OknwQB52bGN8c9g8tINNR5nMk&libraries=places"
+    ></script>
+    >
   </head>
   <body>
     <div class="wrapper">
@@ -37,6 +41,9 @@
       <div class="container" id="home_search_bar">
         <form id="location" action="/weather" method="post">
           <div class="form-inline row justify-content-center">
+            <label for="address" class="search-label" hidden
+              >Enter a zip code or address</label
+            >
             <input
               name="location"
               type="location"
@@ -60,7 +67,7 @@
 
     <!-- WEATHER PAGE -->
     <!-- For this "page", give ids to the elements and put the class names in the js file -->
-    <div class="visible" id="weather_page">
+    <div class="invisible" id="weather_page">
       <!-- CURRENT WEATHER, AQI, AQ NOTICE -->
       <div class="container">
         <div class="row">
@@ -113,11 +120,13 @@
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
     <script>
-      var input = document.getElementById('address');
-      var autocomplete = new google.maps.places.Autocomplete(input,{types: ['(cities)']});
-      google.maps.event.addListener(autocomplete, 'place_changed', function(){
-         var place = autocomplete.getPlace();
-      })
+      var input = document.getElementById("address");
+      var autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ["(cities)"],
+      });
+      google.maps.event.addListener(autocomplete, "place_changed", function () {
+        var place = autocomplete.getPlace();
+      });
     </script>
   </body>
 </html>
