@@ -91,6 +91,8 @@ function getWeatherContents(response) {
     let tempValue = (tempLo + tempHi) / 2; //average temp in Kelvins
     let tempF = Math.round(((tempValue - 273.15) * (9 / 5) + 32) * 10) / 10;
     let tempC = Math.round((tempValue - 273.15) * 10) / 10;
+    tempHi = Math.round(((tempHi - 273.15) * (9 / 5) + 32) * 10) / 10;
+    tempLo = Math.round(((tempLo - 273.15) * (9 / 5) + 32) * 10) / 10;
     let dewpointF =
       Math.round(((dewpointValue - 273.15) * (9 / 5) + 32) * 10) / 10;
 
