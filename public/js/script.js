@@ -1,11 +1,10 @@
 const weather = document.getElementById("weather_page");
 const search = document.getElementById("get_location");
 var addr = "Portland, OR"; //Default for animation
-const conditions = ["Clear", "Clouds", "Drizzle", "Rain", "Thunderstorm"]
+const conditions = ["Clear", "Clouds", "Drizzle", "Rain", "Thunderstorm"];
 let debugging = true;
 
-
-function loadDefault(){
+function loadDefault() {
   const getCoords = firebase.functions().httpsCallable("getCoords");
   getCoords({ address: addr }).then((result) => showWeather(result.data));
 }
@@ -21,54 +20,54 @@ search.addEventListener("click", () => {
 function showWeather(data) {
   makeVisible(weather);
   console.log(data);
-  
+
   //Data shortcuts
   const aq = data.aq;
   const forecast = data.weather;
 
   currentWeather(forecast[0]);
+  currentAirQuality(aq);
 
   //animation
   const curAddr = addr;
   var elem = document.getElementById("inner");
   //Reset previous conditions and display current condition
-  for(condition of conditions){
+  for (condition of conditions) {
     var reset = document.getElementsByClassName("condition");
-    for (elements of reset){
+    for (elements of reset) {
       elements.style.display = "none";
     }
   }
   var status = document.getElementsByClassName(data["weather"][0]["condition"]);
-  for (elements of status){
+  for (elements of status) {
     elements.style.display = "initial";
   }
-  
+
   var x = 0;
   var y = 0;
-  var id = setInterval(frame => {
-    if (addr !== curAddr){
-      console.log("Address changed from ", curAddr, " to ", addr)
+  var id = setInterval((frame) => {
+    if (addr !== curAddr) {
+      console.log("Address changed from ", curAddr, " to ", addr);
       clearInterval(id);
       return;
     }
-    if (x >= window.screen.width){
+    if (x >= window.screen.width) {
       x = 0;
-    }else{
+    } else {
       var windspeed = data["weather"][0]["wind"];
       x += windspeed * 0.756; //Meters per second to pixels per frame
       elem.style.left = x + "px";
     }
-    if (y >= window.screen.height){
-        y = 0;
-    }else{
-      if(data["weather"][0]["condition"].localeCompare("Snow") == 0){
+    if (y >= window.screen.height) {
+      y = 0;
+    } else {
+      if (data["weather"][0]["condition"].localeCompare("Snow") == 0) {
         y += 0.378;
         elem.style.top = y + "px";
       }
     }
-  },20);
+  }, 20);
 }
-
 
 function makeVisible(page) {
   page.classList.add("visible");
@@ -91,20 +90,21 @@ function currentWeather(current) {
   img.src = `${current.icon}`;
   img.alt = "Weather icon";
   cur_body.appendChild(img);
-  //temperature and description
+  //Temperature and description
   let temp = document.createElement("h2");
   temp.textContent = `${current.tempFar}°`;
   let des = document.createElement("h3");
   des.textContent = `${current.description}`;
   cur_body.appendChild(temp);
   cur_body.appendChild(des);
-  //rest of data
+  //Create a table to store the rest of the data
   let cur_table = document.createElement("table");
   cur_table.classList.add("w-100");
   cur_table.classList.add("table-bordered");
   cur_table.classList.add("text-center");
-  let row1 = cur_table.insertRow();
 
+  //Create row 1
+  let row1 = cur_table.insertRow();
   //Row 1 - High/Low
   let cell1 = row1.insertCell();
   let HiLo_label = document.createElement("div");
@@ -126,9 +126,8 @@ function currentWeather(current) {
   wind.textContent = `${current.wind} mph`;
   cell2.appendChild(wind);
 
-  //create row 2
+  //Create row 2
   let row2 = cur_table.insertRow();
-
   //Row 2 - Humidity
   let cell3 = row2.insertCell();
   let hum_label = document.createElement("div");
@@ -150,9 +149,8 @@ function currentWeather(current) {
   dew.textContent = `${current.dew_point}°`;
   cell4.appendChild(dew);
 
-  //create row 3
+  //Create row 3
   let row3 = cur_table.insertRow();
-
   //Row 3 - Pressure
   let cell5 = row3.insertCell();
   let press_label = document.createElement("div");
@@ -173,5 +171,47 @@ function currentWeather(current) {
   let uv = document.createElement("div");
   uv.textContent = `${current.uvi} of 10`;
   cell6.appendChild(uv);
+
+  //Append the table to the bottom of the card
   cur_body.append(cur_table);
+}
+
+function currentAirQuality(data) {
+  const card = document.getElementById("advisory_card");
+  const body = document.getElementById("advisory_text");
+  console.log(data.level);
+  console.log(data);
+
+  //Change background color and text color of card
+  if (data.level === "Good") {
+    card.style.backgroundColor = "#28E439";
+    card.style.color = "black";
+  } else if (data.level === "Moderate") {
+    card.style.backgroundColor = "#FEFF48";
+    card.style.color = "black";
+  } else if (data.level === "Unhealthy for Sensitive Groups") {
+    card.style.backgroundColor = "#FC7F29";
+    card.style.color = "white";
+  } else if (data.level === "Unhealthy") {
+    card.style.backgroundColor = "#FB061B";
+    card.style.color = "white";
+  } else if (data.level === "Very Unhealthy") {
+    card.style.backgroundColor = "#8E3E94";
+    card.style.color = "white";
+  } else {
+    card.style.backgroundColor = "#7C0124";
+    card.style.color = "white";
+  }
+
+  //Add BS4 class to the card body to center text
+  body.classList.add("text-center");
+  //Create new element to store caution statement
+  let text = document.createElement("div");
+  text.classList.add("font-weight-bold");
+  text.textContent = `${data.caution}`;
+
+  //Clear body's children
+  while (body.firstChild) body.firstChild.remove();
+  //Append caution statement to the card body
+  body.appendChild(text);
 }
