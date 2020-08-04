@@ -1,81 +1,61 @@
 body {
-  background-color: lightblue;
+  background-color: #33ccff;
 }
 
 .container {
   padding-top: 5%;
   padding-bottom: 15px;
+
+  z-index: 10;
 }
 
 /* Visibility Settings */
 .invisible {
   visibility: hidden;
   display: none;
-}
-
-body {
-  background: rgb(0, 0, 1, 0);
-  animation: sky 5s ease 1s infinite;
+  z-index: 5;
 }
 
 .wrapper {
-  display: table;
-  width: 100%;
+  /* width: 100%; */
   height: 100%;
-  z-index: 0;
+  z-index: 100;
+  overflow: hidden;
+  background-color: #33ccff;
 }
 
 .inner {
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
+  overflow: hidden;
+  /* width: 100%; */
+  position: relative;
+  z-index: 0;
 }
 
-svg #sun-g {
-  transform: translateX(200px);
-  animation: sun-g 5s ease 1s infinite;
+#sun {
+  position: absolute;
+  z-index: -1;
 }
 
-svg #sun {
-  transform: translateX(-200px);
-  animation: sun 5s ease 1s infinite;
+.Clear{
+  display: none;
 }
 
-@keyframes sky {
-  0% {
-    background: #3498db;
-  }
-  45%,
-  55% {
-    background: #2c3e50;
-  }
-  100% {
-    background: #3498db;
-  }
+.Snow{
+  display: none;
 }
 
-@keyframes sun-g {
-  0% {
-    transform: translateX(200px);
-  }
-  45%,
-  55% {
-    transform: translateX(0px);
-  }
-  100% {
-    transform: translateX(-200px);
-  }
+.Clouds{
+  display: none;
 }
 
-@keyframes sun {
-  0% {
-    transform: translateX(-200px);
-  }
-  45%,
-  55% {
-    transform: translateX(0px);
-  }
-  100% {
-    transform: translateX(200px);
-  }
+.Rain{
+  display: none;
+}
+
+.Drizzle{
+  display: none;
+}
+
+.Snow{
+  display: none;
 }

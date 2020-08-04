@@ -15,24 +15,16 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnc2sT31OknwQB52bGN8c9g8tINNR5nMk&libraries=places"
     ></script>
   </head>
-  <body>
+  <body onload="loadDefault()">
     <div class="wrapper">
-      <div class="inner">
-        <svg height="200" width="200">
-          <mask id="moon">
-            <rect
-              x="-200"
-              y="0"
-              width="600"
-              height="200"
-              style="fill: white;"
-            />
-            <circle cx="100" cy="100" r="95" style="fill: black;" />
-          </mask>
-          <g id="sun-g" mask="url(#moon)">
-            <circle id="sun" cx="100" cy="100" r="100" style="fill: #dbbb34;" />
-          </g>
+      <div class="inner" id="inner">
+        <img id="flake" class="Snow" src="./resources/snowflake.png" style="width:20px;height:20px;"></img>
+        <svg height="100" width="100">
+            <circle id="sun" class="Rain Drizzle Thunderstorm" cx="50" cy="50" r="50" style="fill: #dbbb34;" />
         </svg>
+        <img id="swirl1" class="Clear" src="./resources/swirl1.png" style="width:100px;height:50px"></img>
+        <img id="cloud1" class="Clouds" src="./resources/cloud1.png" style="width:100px;height:50px;"></img>
+
       </div>
     </div>
     <!-- HOME PAGE WITH INITAL SEARCH BAR -->
@@ -59,10 +51,9 @@
                 Search
               </button>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
 
     <!-- WEATHER PAGE -->
     <!-- For this "page", give ids to the elements and put the class names in the js file -->
@@ -98,15 +89,22 @@
               </div>
             </div>
           </div>
+          <!-- 7 DAY FORECAST TABLE-->
+          <table id="forecast_table">
+            <tbody id="forecast_body">
+              <!-- CONTENTS CREATED AND APPENDED VIA "script.js" -->
+            </tbody>
+          </table>
         </div>
+        <!-- 7 DAY FORECAST TABLE-->
+        <table id="forecast_table">
+          <tbody id="forecast_body">
+            <!-- CONTENTS CREATED AND APPENDED VIA "script.js" -->
+          </tbody>
+        </table>
       </div>
-      <!-- 7 DAY FORECAST TABLE-->
-      <table id="forecast_table">
-        <tbody id="forecast_body">
-          <!-- CONTENTS CREATED AND APPENDED VIA "script.js" -->
-        </tbody>
-      </table>
     </div>
+    <!-- <script src="./js/test.js"></script> -->
     <script src="./js/script.js"></script>
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/7.16.0/firebase-app.js"></script>
