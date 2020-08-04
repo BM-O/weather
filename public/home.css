@@ -1,5 +1,5 @@
 body {
-  background-color: lightblue;
+  background-color: #33ccff;
 }
 
 .container {
@@ -21,7 +21,7 @@ body {
   height: 100%;
   z-index: 100;
   overflow: hidden;
-  background-color: lightblue;
+  background-color: #33ccff;
 }
 
 .inner {
@@ -36,10 +36,26 @@ body {
   z-index: -1;
 }
 
-.clear{
+.Clear{
   display: none;
 }
 
-.snow{
+.Snow{
+  display: none;
+}
+
+.Clouds{
+  display: none;
+}
+
+.Rain{
+  display: none;
+}
+
+.Drizzle{
+  display: none;
+}
+
+.Snow{
   display: none;
 }

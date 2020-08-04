@@ -1,6 +1,8 @@
 const weather = document.getElementById("weather_page");
 const search = document.getElementById("get_location");
 var addr = "Portland, OR"; //Default for animation
+const conditions = ["Clear", "Clouds", "Drizzle", "Rain", "Thunderstorm"]
+let debugging = true;
 
 
 function loadDefault(){
@@ -21,23 +23,40 @@ function showWeather(data) {
   //animation
   const curAddr = addr;
   var elem = document.getElementById("inner");
-  if(data["weather"][0]["condition"] == "Clear"){
-    var x = document.getElementById("sun");
-    x.style.display = "initial";
+  //Reset previous conditions and display current condition
+  for(condition of conditions){
+    var reset = document.getElementsByClassName("condition");
+    for (elements of reset){
+      elements.style.display = "none";
+    }
   }
-  var pos = 0;
+  var status = document.getElementsByClassName(data["weather"][0]["condition"]);
+  for (elements of status){
+    elements.style.display = "initial";
+  }
+  
+  var x = 0;
+  var y = 0;
   var id = setInterval(frame => {
     if (addr !== curAddr){
       console.log("Address changed from ", curAddr, " to ", addr)
       clearInterval(id);
       return;
     }
-    if (pos >= window.screen.width){
-      pos = 0;
+    if (x >= window.screen.width){
+      x = 0;
     }else{
-      pos += data["weather"][0]["wind"];
-      elem.style.left = pos + "px";
-      elem.style.top = pos + "px";
+      var windspeed = data["weather"][0]["wind"];
+      x += windspeed * 0.756; //Meters per second to pixels per frame
+      elem.style.left = x + "px";
+    }
+    if (y >= window.screen.height){
+        y = 0;
+    }else{
+      if(data["weather"][0]["condition"].localeCompare("Snow") == 0){
+        y += 0.378;
+        elem.style.top = y + "px";
+      }
     }
   },20);
 }
