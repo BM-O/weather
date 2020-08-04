@@ -134,7 +134,6 @@ function getAirQualityContents(response) {
   // Get current air quality
   let pollution = response.data.current.pollution; //Shorthand
   let airQuality = pollution.aqius; //Get AQI-us
-  let mainPollutant = pollution.mainus; //Get the main pollutant
   let pollutionLevel = "";
   let cautionStatement = "";
   if (airQuality >= 0 && airQuality <= 50) {
@@ -164,7 +163,6 @@ function getAirQualityContents(response) {
   // Create object to return to client
   let obj = {
     aqi: airQuality,
-    pol: mainPollutant,
     level: pollutionLevel,
     caution: cautionStatement,
   };
