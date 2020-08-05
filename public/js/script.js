@@ -308,7 +308,7 @@ function getForecast(Data) {
   }
 
   //Add the data rows.
-  for (var i = 1; i < forecatData.length; i++) {
+  for (var i = 2; i < forecatData.length; i++) {
     row = forecast_card.insertRow(-1);
     for (var j = 0; j < columnCount; j++) {
       var cell = row.insertCell(-1);
