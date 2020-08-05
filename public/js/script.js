@@ -33,6 +33,19 @@ function loadDefault() {
   }
 }
 
+function enter (event) {
+  if (event.key === "Enter") {
+      event.preventDefault();
+      addr = document.getElementById("address").value;
+      const getCoords = firebase.functions().httpsCallable("getCoords");
+      getCoords({ address: addr }).then((result) => {     
+        showWeather(result.data);
+      });
+      return false;
+  }
+  return true;
+};
+
 search.addEventListener("click", () => {
   addr = document.getElementById("address").value
     ? document.getElementById("address").value
