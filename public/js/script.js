@@ -200,6 +200,8 @@ function currentWeather(current) {
 function currentAirQuality(data) {
   const card = document.getElementById("advisory_card");
   const body = document.getElementById("advisory_text");
+  const aqcard = document.getElementById("aq_card");
+  const aqbody = document.getElementById("aq_text");
   console.log(data.level);
   console.log(data);
 
@@ -207,32 +209,53 @@ function currentAirQuality(data) {
   if (data.level === "Good") {
     card.style.backgroundColor = "#28E439";
     card.style.color = "black";
+    aqcard.style.backgroundColor = "#28E439";
+    aqcard.style.color = "black";
   } else if (data.level === "Moderate") {
     card.style.backgroundColor = "#FEFF48";
     card.style.color = "black";
+    aqcard.style.backgroundColor = "#FEFF48";
+    aqcard.style.color = "black";
   } else if (data.level === "Unhealthy for Sensitive Groups") {
     card.style.backgroundColor = "#FC7F29";
     card.style.color = "white";
+    aqcard.style.backgroundColor = "#FC7F29";
+    aqcard.style.color = "white";
   } else if (data.level === "Unhealthy") {
     card.style.backgroundColor = "#FB061B";
     card.style.color = "white";
+    aqcard.style.backgroundColor = "#FB061B";
+    aqcard.style.color = "white";
   } else if (data.level === "Very Unhealthy") {
     card.style.backgroundColor = "#8E3E94";
     card.style.color = "white";
+    aqcard.style.backgroundColor = "#8E3E94";
+    aqcard.style.color = "white";
   } else {
     card.style.backgroundColor = "#7C0124";
     card.style.color = "white";
+    aqcard.style.backgroundColor = "#7C0124";
+    aqcard.style.color = "white";
   }
 
   //Add BS4 class to the card body to center text
   body.classList.add("text-center");
+  aqbody.classList.add("text-center");
   //Create new element to store caution statement
   let text = document.createElement("div");
   text.classList.add("font-weight-bold");
   text.textContent = `${data.caution}`;
 
+  let aqtext = document.createElement("div");
+  aqtext.classList.add("font-weight-bold");
+  aqtext.textContent = `Air Qualit level ${data.aqi}`;
+
   //Clear body's children
   while (body.firstChild) body.firstChild.remove();
   //Append caution statement to the card body
   body.appendChild(text);
+
+  while (aqbody.firstChild) aqbody.firstChild.remove();
+  //Append caution statement to the card body
+  aqbody.appendChild(aqtext);
 }
