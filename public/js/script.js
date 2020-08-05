@@ -52,7 +52,7 @@ function showWeather(data) {
       return;
     }
     if (x >= window.screen.width){
-      x = 0;
+      x = -400;
     }else{
       var windspeed = data["weather"][0]["wind"];
       x += windspeed * 0.756; //Meters per second to pixels per frame
@@ -62,7 +62,7 @@ function showWeather(data) {
         y = 0;
     }else{
       if(data["weather"][0]["condition"].localeCompare("Snow") == 0){
-        y += 0.378;
+        y += 0.756;
         elem.style.top = y + "px";
       }
     }
