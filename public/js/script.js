@@ -5,29 +5,32 @@ const conditions = ["Clear", "Clouds", "Drizzle", "Rain", "Thunderstorm"];
 let debugging = true;
 
 //function loadDefault() {
- // const getCoords = firebase.functions().httpsCallable("getCoords");
-  //getCoords({ address: addr }).then((result) => showWeather(result.data));
+// const getCoords = firebase.functions().httpsCallable("getCoords");
+//getCoords({ address: addr }).then((result) => showWeather(result.data));
 //}
 // On load, it will ask for permission to access current location
 function loadDefault() {
   // It using HTML5 function to get current location LatLong with persmission
-  if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
       // Get LatLong from position object
-      let  latitude = position.coords.latitude;
-      let  longitude = position.coords.longitude;      
+      let latitude = position.coords.latitude;
+      let longitude = position.coords.longitude;
       /* Below code will pass LatLong to getCurrent firebase callable function,
       getCurrent callbale function get weather data from external API,
       Pass this fetched data to showWeather to render html page
       */
       const getCurrent = firebase.functions().httpsCallable("getCurrent");
-      getCurrent({ latitude: latitude, longitude:longitude }).then((result) =>
-        showWeather(result.data));
+      getCurrent({ latitude: latitude, longitude: longitude }).then((result) =>
+        showWeather(result.data)
+      );
     });
-} else {
-  // This code will execute if User doesnt allow permission to access current location or HTML5 not supported.
-    alert("Sorry, your browser does not support HTML5 geolocation. Enter city and search");
-}
+  } else {
+    // This code will execute if User doesnt allow permission to access current location or HTML5 not supported.
+    alert(
+      "Sorry, your browser does not support HTML5 geolocation. Enter city and search"
+    );
+  }
 }
 
 search.addEventListener("click", () => {
@@ -48,6 +51,7 @@ function showWeather(data) {
 
   currentWeather(forecast[0]);
   currentAirQuality(aq);
+  getForecast(forecast);
 
   //animation
   const curAddr = addr;
@@ -258,4 +262,61 @@ function currentAirQuality(data) {
   while (aqbody.firstChild) aqbody.firstChild.remove();
   //Append caution statement to the card body
   aqbody.appendChild(aqtext);
+}
+
+function getForecast(Data) {
+  //Create Forecast
+  const forecast_card = document.getElementById("forecast_table");
+  const forecast_body = document.getElementById("forecast_body");
+
+  //clear current elements to populate new data
+  while (forecast_body.firstChild) forecast_body.firstChild.remove();
+
+  //Add forecast data
+  forecast_card.classList.add("w-50");
+  forecast_card.classList.add("table-bordered");
+  forecast_card.classList.add("text-center");
+
+  let forrow1 = forecast_card.insertRow();
+
+  let forcell1 = forrow1.insertCell();
+  let date = document.createElement("div");
+
+  var forecatData = new Array();
+  forecatData.push(["Date", "Icon IMG", "temp", "More Data"]);
+
+  for (forecast of Data) {
+    let forimage = `<img class='img-fluid float-right' src=${forecast.icon} alt="Weather icon"></img>`
+
+    forecatData.push([
+      forecast.date,
+      forimage,
+      `${forecast.tempFar}°`,
+      "More Data",
+    ]);
+  }
+
+  //Get the count of columns.
+  var columnCount = forecatData[0].length;
+
+  //Add the header row.
+  var row = forecast_card.insertRow(-1);
+  for (var i = 0; i < columnCount; i++) {
+    var headerCell = document.createElement("TH");
+    headerCell.innerHTML = forecatData[0][i];
+    row.appendChild(headerCell);
+  }
+
+  //Add the data rows.
+  for (var i = 1; i < forecatData.length; i++) {
+    row = forecast_card.insertRow(-1);
+    for (var j = 0; j < columnCount; j++) {
+      var cell = row.insertCell(-1);
+      cell.innerHTML = forecatData[i][j];
+    }
+  }
+
+  var dvTable = document.getElementById("dvTable");
+  dvTable.innerHTML = "";
+  dvTable.appendChild(forecast_card);
 }
