@@ -3,6 +3,14 @@ const config = functions.config();
 const axios = require("axios");
 const e = require("express");
 
+const cors = require("cors");
+app.use(cors());
+
+const cors = require('cors');
+
+// Automatically allow cross-origin requests
+app.use(cors({ origin: true }));
+
 /*
  *  Cloud Function that is called by the script.js file
  *  - Takes in the address passed in to the function and uses it to
@@ -20,6 +28,19 @@ exports.getCoords = functions.https.onCall(async (dataObj, context) => {
   const geocode = data.results[0].locations[0].displayLatLng;
   let lat = geocode.lat;
   let lng = geocode.lng;
+  //Create object to store OpenWeather and AirVisual API call data
+  let obj = {};
+  obj.weather = await getWeather(lat, lng);
+  obj.aq = await getAQ(lat, lng);
+
+  return obj;
+});
+
+exports.getCurrent = functions.https.onCall(async (dataObj, context) => {
+  //Query MapQuest API to get a JSON object in order to get
+  //the geocode for the location entered.  
+  let lat = dataObj.latitude;
+  let lng = dataObj.longitude;
   //Create object to store OpenWeather and AirVisual API call data
   let obj = {};
   obj.weather = await getWeather(lat, lng);

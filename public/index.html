@@ -9,8 +9,9 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
-    />
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnc2sT31OknwQB52bGN8c9g8tINNR5nMk&libraries=places"></script>>
+    />    
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnc2sT31OknwQB52bGN8c9g8tINNR5nMk&libraries=places">
+    </script>>
   </head>
   <body>
     <div class="wrapper">
@@ -42,25 +43,31 @@
           method="post"
         >
           <h1 class="mb-3 text-center">PLACEHOLDER TEXT</h1>
-          <div class="form-inline row justify-content-center">
+          <div class="form-inline justify-content-center form-group">
             <input
               name="location"
               type="location"
               class="form-control ml-3 mr-3 w-75"
               id="address"
-              placeholder="Portland, OR"
+              placeholder="Enter City..."
             />
-            <div class="text-center">
+            <div class="text-center form-group">
               <button
                 type="button"
-                class="btn btn-lrg btn-primary"
+                class="btn btn-lrg btn-primary ml-3 mr-3 w-75"
                 id="get_location"
               >
                 Search
               </button>
             </div>
-          </div>
-        </form>
+            <div class="form-group">
+              <select class="bootstrap-select form-col inherit">
+                <option value="us" selected="selected">˚F</option>
+                <option value="si">˚C</option>
+              </select>
+            </div> 
+          </div>                   
+        </form>             
       </div>
     </div>
 
