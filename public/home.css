@@ -22,6 +22,11 @@ html {
   z-index: 10;
 }
 
+#forecast_card {
+  margin-top: 15px;
+  
+}
+
 /* Visibility Settings */
 .invisible {
   visibility: hidden;

@@ -38,7 +38,9 @@ search.addEventListener("click", () => {
     ? document.getElementById("address").value
     : "Portland, OR";
   const getCoords = firebase.functions().httpsCallable("getCoords");
-  getCoords({ address: addr }).then((result) => showWeather(result.data));
+  getCoords({ address: addr }).then((result) => {     
+    showWeather(result.data);
+  });
 });
 
 function showWeather(data) {
@@ -106,6 +108,19 @@ function currentWeather(current) {
 
   //clear child elements if there is any
   while (cur_body.firstChild) cur_body.firstChild.remove();
+  
+  if (document.contains(document.getElementById("weather_title"))) {
+    document.getElementById("weather_title").remove();
+  }
+  
+    let title = document.createElement("div");
+    title.classList.add("font-weight-bold");
+    title.id = "weather_title";
+    title.classList.add("card-header");
+    title.textContent = `Weather at ${addr}`;
+    cur_card.prepend(title);
+
+  
 
   //Create the Current weather card
   //Weather icon
@@ -252,7 +267,7 @@ function currentAirQuality(data) {
 
   let aqtext = document.createElement("div");
   aqtext.classList.add("font-weight-bold");
-  aqtext.textContent = `Air Qualit level ${data.aqi}`;
+  aqtext.textContent = `Air Index level ${data.aqi}`;
 
   //Clear body's children
   while (body.firstChild) body.firstChild.remove();
@@ -273,17 +288,17 @@ function getForecast(Data) {
   while (forecast_body.firstChild) forecast_body.firstChild.remove();
 
   //Add forecast data
-  forecast_card.classList.add("w-50");
+  forecast_card.classList.add("w-100");
   forecast_card.classList.add("table-bordered");
   forecast_card.classList.add("text-center");
 
-  let forrow1 = forecast_card.insertRow();
+  //let forrow1 = forecast_card.insertRow();
 
-  let forcell1 = forrow1.insertCell();
-  let date = document.createElement("div");
+  //let forcell1 = forrow1.insertCell();
+  //let date = document.createElement("div");
 
   var forecatData = new Array();
-  forecatData.push(["Date", "Icon IMG", "temp", "More Data"]);
+  forecatData.push(["Date", "Weather", "Temperature", "More Data"]);
 
   for (forecast of Data) {
     let forimage = `<img class='img-fluid float-right' src=${forecast.icon} alt="Weather icon"></img>`
@@ -316,7 +331,7 @@ function getForecast(Data) {
     }
   }
 
-  // var dvTable = document.getElementById("forecast_body");
-  // // dvTable.innerHTML = "";
-  // dvTable.appendChild(forecast_card);
+  //var dvTable = document.getElementById("dvTable");
+  //dvTable.innerHTML = "";
+  //dvTable.appendChild(forecast_card);
 }
