@@ -78,18 +78,18 @@ function showWeather(data) {
       clearInterval(id);
       return;
     }
-    if (x >= window.screen.width) {
-      x = 0;
-    } else {
+    if (x >= window.screen.width){
+      x = -400;
+    }else{
       var windspeed = data["weather"][0]["wind"];
       x += windspeed * 0.756; //Meters per second to pixels per frame
       elem.style.left = x + "px";
     }
-    if (y >= window.screen.height) {
-      y = 0;
-    } else {
-      if (data["weather"][0]["condition"].localeCompare("Snow") == 0) {
-        y += 0.378;
+    if (y >= window.screen.height){
+        y = 0;
+    }else{
+      if(data["weather"][0]["condition"].localeCompare("Snow") == 0){
+        y += 0.756;
         elem.style.top = y + "px";
       }
     }
