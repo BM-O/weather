@@ -28,6 +28,21 @@ exports.getCoords = functions.https.onCall(async (dataObj, context) => {
   return obj;
 });
 
+exports.getCurrent = functions.https.onCall(async (dataObj, context) => {
+  //Query MapQuest API to get a JSON object in order to get
+  //Callable function to accept Lat Long from Frontend and getWeather
+  
+  //dataObjt holding the inpute parameters, which will be mapped to Lat Long
+  let lat = dataObj.latitude;
+  let lng = dataObj.longitude;
+  //Create object to store OpenWeather and AirVisual API call data
+  let obj = {};
+  obj.weather = await getWeather(lat, lng);
+  obj.aq = await getAQ(lat, lng);
+
+  return obj;
+});
+
 async function getWeather(lat, lng) {
   //Query OpenWeather API to get a JSON object in order to get the
   //future weather forcasts
