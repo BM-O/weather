@@ -4,9 +4,30 @@ var addr = "Portland, OR"; //Default for animation
 const conditions = ["Clear", "Clouds", "Drizzle", "Rain", "Thunderstorm"];
 let debugging = true;
 
+//function loadDefault() {
+ // const getCoords = firebase.functions().httpsCallable("getCoords");
+  //getCoords({ address: addr }).then((result) => showWeather(result.data));
+//}
+// On load, it will ask for permission to access current location
 function loadDefault() {
-  const getCoords = firebase.functions().httpsCallable("getCoords");
-  getCoords({ address: addr }).then((result) => showWeather(result.data));
+  // It using HTML5 function to get current location LatLong with persmission
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      // Get LatLong from position object
+      let  latitude = position.coords.latitude;
+      let  longitude = position.coords.longitude;      
+      /* Below code will pass LatLong to getCurrent firebase callable function,
+      getCurrent callbale function get weather data from external API,
+      Pass this fetched data to showWeather to render html page
+      */
+      const getCurrent = firebase.functions().httpsCallable("getCurrent");
+      getCurrent({ latitude: latitude, longitude:longitude }).then((result) =>
+        showWeather(result.data));
+    });
+} else {
+  // This code will execute if User doesnt allow permission to access current location or HTML5 not supported.
+    alert("Sorry, your browser does not support HTML5 geolocation. Enter city and search");
+}
 }
 
 search.addEventListener("click", () => {
