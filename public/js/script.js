@@ -316,7 +316,7 @@ function getForecast(Data) {
     }
   }
 
-  var dvTable = document.getElementById("dvTable");
-  dvTable.innerHTML = "";
-  dvTable.appendChild(forecast_card);
+  // var dvTable = document.getElementById("forecast_body");
+  // // dvTable.innerHTML = "";
+  // dvTable.appendChild(forecast_card);
 }

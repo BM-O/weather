@@ -1,11 +1,24 @@
-body {
+body,
+html {
   background-color: #33ccff;
+  height: 100%;
+}
+
+#interface {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 2rem;
+  z-index: 20;
+  text-align: center;
+  /* overflow: scroll; */
 }
 
 .container {
   padding-top: 5%;
   padding-bottom: 15px;
-
   z-index: 10;
 }
 
@@ -22,6 +35,8 @@ body {
   z-index: 100;
   overflow: hidden;
   background-color: #33ccff;
+  position: relative;
+  z-index: 1;
 }
 
 .inner {
@@ -36,26 +51,26 @@ body {
   z-index: -1;
 }
 
-.Clear{
+.Clear {
   display: none;
 }
 
-.Snow{
+.Snow {
   display: none;
 }
 
-.Clouds{
+.Clouds {
   display: none;
 }
 
-.Rain{
+.Rain {
   display: none;
 }
 
-.Drizzle{
+.Drizzle {
   display: none;
 }
 
-.Snow{
+.Snow {
   display: none;
 }
