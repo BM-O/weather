@@ -9,6 +9,25 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "concurrently": "^5.2.0",
+    "express": "^4.17.1",
+    "isomorphic-fetch": "^2.2.1",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.4",
+    "promise": "^8.1.0",
+    "react-router-dom": "^5.2.0",
+    "redux-saga": "^1.1.3"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.6.0",
+    "eslint-config-strongloop": "^2.1.0",
+    "eslint-plugin-react": "^7.20.5",
+    "module-alias": "^2.2.2"
+  },
+  "_moduleAliases": {
+    "root": ".",
+    "routes": "./server/routes",
+    "server": "./server"
   }
 }
