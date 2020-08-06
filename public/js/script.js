@@ -1,7 +1,7 @@
 const weather = document.getElementById("weather_page");
 const search = document.getElementById("get_location");
 var addr = "Portland, OR"; //Default for animation
-const conditions = ["Clear", "Clouds", "Drizzle", "Rain", "Thunderstorm"];
+const conditions = ["Clear", "Clouds", "Drizzle", "Rain", "Thunderstorm", "Snow"];
 let debugging = true;
 
 //function loadDefault() {
@@ -70,21 +70,25 @@ function showWeather(data) {
 
   //animation
   const curAddr = addr;
+  var condition = forecast[0]["condition"];
+  const windspeed = forecast[0]["wind"];
   var elem = document.getElementById("inner");
+
   //Reset previous conditions and display current condition
-  for (condition of conditions) {
+  for (each of conditions) {
     var reset = document.getElementsByClassName("condition");
     for (elements of reset) {
       elements.style.display = "none";
     }
   }
-  var status = document.getElementsByClassName(data["weather"][0]["condition"]);
+  var status = document.getElementsByClassName(condition);
   for (elements of status) {
     elements.style.display = "initial";
   }
 
-  var x = 0;
+  var x = -900;
   var y = 0;
+  var d = 0;
   var id = setInterval((frame) => {
     if (addr !== curAddr) {
       console.log("Address changed from ", curAddr, " to ", addr);
@@ -92,18 +96,27 @@ function showWeather(data) {
       return;
     }
     if (x >= window.screen.width){
-      x = -400;
+      x = -800;
+      //Clouds and swirls wrap back to random height.
+      if(condition.localeCompare("Clear" == 0 || condition.localeCompare("Clouds") == 0)){
+        y = Math.floor(Math.random() * window.screen.height);
+        elem.style.top = y + "px";
+      }
     }else{
-      var windspeed = data["weather"][0]["wind"];
       x += windspeed * 0.756; //Meters per second to pixels per frame
       elem.style.left = x + "px";
     }
     if (y >= window.screen.height){
         y = 0;
     }else{
-      if(data["weather"][0]["condition"].localeCompare("Snow") == 0){
+      //Snow falls and rotates.
+      if(condition.localeCompare("Snow") == 0){
         y += 0.756;
+        d += d < 360 ? 1 : -359;
         elem.style.top = y + "px";
+        for (elements of status) {
+          elements.style.transform = "rotateY(" + d + "deg)";
+        }
       }
     }
   }, 20);

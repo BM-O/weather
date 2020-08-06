@@ -1,7 +1,8 @@
 body,
 html {
   background-color: #33ccff;
-  height: 100%;
+  height: 2000px;
+  overflow: auto;
 }
 
 #interface {
@@ -13,7 +14,6 @@ html {
   top: 2rem;
   z-index: 20;
   text-align: center;
-  /* overflow: scroll; */
 }
 
 .container {
@@ -35,18 +35,15 @@ html {
 }
 
 .wrapper {
-  /* width: 100%; */
-  height: 100%;
+  height:100%;
   z-index: 100;
-  overflow: hidden;
+  overflow-x: hidden;
   background-color: #33ccff;
   position: relative;
   z-index: 1;
 }
 
 .inner {
-  overflow: hidden;
-  /* width: 100%; */
   position: relative;
   z-index: 0;
 }
