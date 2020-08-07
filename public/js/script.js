@@ -4,10 +4,6 @@ var addr = "Portland, OR"; //Default for animation
 const conditions = ["Clear", "Clouds", "Drizzle", "Rain", "Thunderstorm"];
 let debugging = true;
 
-//function loadDefault() {
-// const getCoords = firebase.functions().httpsCallable("getCoords");
-//getCoords({ address: addr }).then((result) => showWeather(result.data));
-//}
 // On load, it will ask for permission to access current location
 function loadDefault() {
   // It using HTML5 function to get current location LatLong with persmission
@@ -33,25 +29,25 @@ function loadDefault() {
   }
 }
 
-function enter (event) {
+function enter(event) {
   if (event.key === "Enter") {
-      event.preventDefault();
-      addr = document.getElementById("address").value;
-      const getCoords = firebase.functions().httpsCallable("getCoords");
-      getCoords({ address: addr }).then((result) => {     
-        showWeather(result.data);
-      });
-      return false;
+    event.preventDefault();
+    addr = document.getElementById("address").value;
+    const getCoords = firebase.functions().httpsCallable("getCoords");
+    getCoords({ address: addr }).then((result) => {
+      showWeather(result.data);
+    });
+    return false;
   }
   return true;
-};
+}
 
 search.addEventListener("click", () => {
   addr = document.getElementById("address").value
     ? document.getElementById("address").value
     : "Portland, OR";
   const getCoords = firebase.functions().httpsCallable("getCoords");
-  getCoords({ address: addr }).then((result) => {     
+  getCoords({ address: addr }).then((result) => {
     showWeather(result.data);
   });
 });
@@ -91,17 +87,17 @@ function showWeather(data) {
       clearInterval(id);
       return;
     }
-    if (x >= window.screen.width){
+    if (x >= window.screen.width) {
       x = -400;
-    }else{
+    } else {
       var windspeed = data["weather"][0]["wind"];
       x += windspeed * 0.756; //Meters per second to pixels per frame
       elem.style.left = x + "px";
     }
-    if (y >= window.screen.height){
-        y = 0;
-    }else{
-      if(data["weather"][0]["condition"].localeCompare("Snow") == 0){
+    if (y >= window.screen.height) {
+      y = 0;
+    } else {
+      if (data["weather"][0]["condition"].localeCompare("Snow") == 0) {
         y += 0.756;
         elem.style.top = y + "px";
       }
@@ -121,19 +117,17 @@ function currentWeather(current) {
 
   //clear child elements if there is any
   while (cur_body.firstChild) cur_body.firstChild.remove();
-  
+
   if (document.contains(document.getElementById("weather_title"))) {
     document.getElementById("weather_title").remove();
   }
-  
-    let title = document.createElement("div");
-    title.classList.add("font-weight-bold");
-    title.id = "weather_title";
-    title.classList.add("card-header");
-    title.textContent = `Weather at ${addr}`;
-    cur_card.prepend(title);
 
-  
+  let title = document.createElement("div");
+  title.classList.add("font-weight-bold");
+  title.id = "weather_title";
+  title.classList.add("card-header");
+  title.textContent = `Weather at ${addr}`;
+  cur_card.prepend(title);
 
   //Create the Current weather card
   //Weather icon
@@ -237,6 +231,30 @@ function currentAirQuality(data) {
   console.log(data.level);
   console.log(data);
 
+  //Air Quality card title
+  if (document.contains(document.getElementById("aq_title"))) {
+    document.getElementById("aq_title").remove();
+  }
+  //Create new air quality title
+  let aq_title = document.createElement("div");
+  aq_title.classList.add("font-weight-bold");
+  aq_title.id = "aq_title";
+  aq_title.classList.add("card-header");
+  aq_title.textContent = `EPA Standard AQI in ${addr}`;
+  aqcard.prepend(aq_title);
+
+  //Advisory Text card Title
+  if (document.contains(document.getElementById("adv_title"))) {
+    document.getElementById("adv_title").remove();
+  }
+  //Create new advisory text title
+  let adv_title = document.createElement("div");
+  adv_title.classList.add("font-weight-bold");
+  adv_title.id = "adv_title";
+  adv_title.classList.add("card-header");
+  adv_title.textContent = `EPA Health Statement for ${addr}`;
+  card.prepend(adv_title);
+
   //Change background color and text color of card
   if (data.level === "Good") {
     card.style.backgroundColor = "#28E439";
@@ -294,8 +312,21 @@ function currentAirQuality(data) {
 
 function getForecast(Data) {
   //Create Forecast
+  const card = document.getElementById("forecast_card");
   const forecast_card = document.getElementById("forecast_table");
   const forecast_body = document.getElementById("forecast_body");
+
+  //Forecast title
+  if (document.contains(document.getElementById("forecast_title"))) {
+    document.getElementById("forecast_title").remove();
+  }
+
+  let title = document.createElement("div");
+  title.classList.add("card-header");
+  title.classList.add("font-weight-bold");
+  title.id = "forecast_title";
+  title.textContent = `7 Day forecast for ${addr}`;
+  card.prepend(title);
 
   //clear current elements to populate new data
   while (forecast_body.firstChild) forecast_body.firstChild.remove();
@@ -314,7 +345,7 @@ function getForecast(Data) {
   forecatData.push(["Date", "Weather", "Temperature", "More Data"]);
 
   for (forecast of Data) {
-    let forimage = `<img class='img-fluid float-right' src=${forecast.icon} alt="Weather icon"></img>`
+    let forimage = `<img class='img-fluid float-right' src=${forecast.icon} alt="Weather icon"></img>`;
 
     forecatData.push([
       forecast.date,
@@ -343,8 +374,4 @@ function getForecast(Data) {
       cell.innerHTML = forecatData[i][j];
     }
   }
-
-  //var dvTable = document.getElementById("dvTable");
-  //dvTable.innerHTML = "";
-  //dvTable.appendChild(forecast_card);
 }
