@@ -373,23 +373,21 @@ function getForecast(Data) {
     row = forecast_card.insertRow(-1);
     for (var j = 0; j < columnCount; j++) {
       if (j === 3) {
+        let maindiv = document.createElement("div");        
+
         let modal = document.createElement("button");
-        modal.classList.add("btn", "btn-info", "btn-sm");
+        modal.classList.add("btn", "btn-dark");
         modal.setAttribute("data-toggle", "modal");
-        modal.setAttribute("data-target", "#exampleModal");
-        modal.setAttribute("type", "button");
-        modal.setAttribute("id","myBtn");
+        modal.setAttribute("data-target", "#sampleModal");       
         modal.innerHTML = "More Data";
         
 
         var div1 = document.createElement("div");
-        div1.id = "myModal";
-        div1.className = "modal fade";
-        div1.setAttribute("role", "dialog");
-        div1.setAttribute("id", "myModal");
+        div1.id = "sampleModal";
+        div1.className = "fade modal";               
 
         var innerDiv1m = document.createElement("div");
-        innerDiv1m.className = "modal-dialog modal-sm";
+        innerDiv1m.className = "modal-dialog";
         div1.appendChild(innerDiv1m);
 
         var innerDiv2m = document.createElement("div");
@@ -402,38 +400,36 @@ function getForecast(Data) {
 
         var buttonM = document.createElement("button");
         buttonM.className = "close";
-        buttonM.setAttribute("data-dismiss", "modal");
-        buttonM.setAttribute("aria-hidden", "true");
-        buttonM.setAttribute("value", "Close");
+        buttonM.setAttribute("data-dismiss", "modal");        
+        //buttonM.setAttribute("value", "Close");
         innerDiv3.appendChild(buttonM);
 
         var headerM = document.createElement("H4");
         headerM.className = "modal-title";
+        headerM.innerHTML = "This is a modal";
         innerDiv3.appendChild(headerM);
 
         var innerDiv31 = document.createElement("div");
         innerDiv31.className = "modal-body";
-        innerDiv2m.appendChild(innerDiv31);
-
-        var para = document.createElement("p");
-        innerDiv31.appendChild(para);
-        para.innerHTML = "paragraph";
+        innerDiv31.innerHTML = "Some Text Here";
+        innerDiv2m.appendChild(innerDiv31);        
 
         var innerDiv32 = document.createElement("div");
         innerDiv32.className = "modal-footer";
         innerDiv2m.appendChild(innerDiv32);
 
-        var closeButton = document.createElement("input");
-        closeButton.className = "btn btn-default";
+        var closeButton = document.createElement("button");
+        closeButton.className = "btn btn-dark";
         closeButton.setAttribute("data-dismiss", "modal");
-        closeButton.setAttribute("type", "button");
-        closeButton.setAttribute("value", "Close");
+        closeButton.innerHTML ="Exit";
         innerDiv32.appendChild(closeButton);
 
         modal.appendChild(div1);
 
+        maindiv.appendChild(modal);
+
         var cell = row.insertCell(-1);
-        cell.appendChild(modal);
+        cell.appendChild(maindiv);
       } else {
         var cell = row.insertCell(-1);
         cell.innerHTML = forecatData[i][j];
