@@ -400,16 +400,16 @@ function getForecast(Data) {
         innerDiv3.className = "modal-header";
         innerDiv2m.appendChild(innerDiv3);
 
-        var buttonM = document.createElement("button");
-        buttonM.className = "close";
-        buttonM.setAttribute("data-dismiss", "modal");
-        //buttonM.setAttribute("value", "Close");
-        innerDiv3.appendChild(buttonM);
-
         var headerM = document.createElement("H4");
         headerM.className = "modal-title";
         headerM.textContent = "This is a modal";
         innerDiv3.appendChild(headerM);
+
+        var buttonM = document.createElement("button");
+        buttonM.className = "close btn";
+        buttonM.setAttribute("data-dismiss", "modal");
+        buttonM.textContent = "X";
+        innerDiv3.appendChild(buttonM);
 
         var innerDiv31 = document.createElement("div");
         innerDiv31.className = "modal-body";
