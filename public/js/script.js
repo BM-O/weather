@@ -345,7 +345,9 @@ function getForecast(Data) {
   forecatData.push(["Date", "Weather", "Temperature", "More Data"]);
 
   for (forecast of Data) {
-    let forimage = `<img class='img-fluid float-right' src=${forecast.icon} alt="Weather icon"></img>`;
+    let forimage = `<figure><img class='img-fluid img-responsive'\
+     src=${forecast.icon} alt="Weather icon"></img><figcaption>${forecast.description}\
+     </figcaption></figure>`
 
     forecatData.push([
       forecast.date,
@@ -370,8 +372,19 @@ function getForecast(Data) {
   for (var i = 2; i < forecatData.length; i++) {
     row = forecast_card.insertRow(-1);
     for (var j = 0; j < columnCount; j++) {
+      if (j === 3){
+        let modal = document.createElement("button");
+        modal.classList.add("btn", "btn-info", "btn-sm");
+        modal.setAttribute("data-toggle","modal");
+        modal.setAttribute("data-target","#exampleModal");
+        modal.innerHTML = "More Data";
+        var cell = row.insertCell(-1);
+        cell.appendChild(modal);
+      }
+      else{
       var cell = row.insertCell(-1);
       cell.innerHTML = forecatData[i][j];
+      }
     }
   }
 }
