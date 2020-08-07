@@ -1,15 +1,6 @@
 const weather = document.getElementById("weather_page");
 const search = document.getElementById("get_location");
 var addr = "Portland, OR"; //Default for animation
-const conditions = [
-  "Clear",
-  "Clouds",
-  "Drizzle",
-  "Rain",
-  "Thunderstorm",
-  "Snow",
-];
-let debugging = true;
 
 // On load, it will ask for permission to access current location
 function loadDefault() {
@@ -36,6 +27,7 @@ function loadDefault() {
   }
 }
 
+//On key press in search bar, check if 'Enter' pressed, to search instead of reloading.
 function enter(event) {
   if (event.key === "Enter") {
     event.preventDefault();
@@ -60,96 +52,22 @@ search.addEventListener("click", () => {
 });
 
 function showWeather(data) {
+  var bg = document.getElementById("page");
+  bg.style.height = "1850px";
   makeVisible(weather);
   console.log(data);
 
   //Data shortcuts
   const aq = data.aq;
   const forecast = data.weather;
+  const condition = forecast[0];
 
-  currentWeather(forecast[0]);
+  currentWeather(condition);
   currentAirQuality(aq);
   getForecast(forecast);
 
-  //animation
-  const curAddr = addr;
-  var condition = forecast[0]["condition"];
-  const windspeed = forecast[0]["wind"];
-  var elem = document.getElementById("inner");
-  var bg = document.getElementById("page");
-  bg.style.height = "1850px";
-
-  if (debugging) {
-    condition = "Rain";
-  }
-
-  //Reset previous conditions and display current condition
-  for (each of conditions) {
-    var reset = document.getElementsByClassName("condition");
-    for (elements of reset) {
-      elements.style.display = "none";
-    }
-  }
-  var status = document.getElementsByClassName(condition);
-  for (elements of status) {
-    elements.style.display = "initial";
-  }
-
-  //TODO: set x to negative of image width, rather than const
-  var x = -900;
-  var y = 0;
-  var d = 0;
-  if (
-    condition.localeCompare("Rain") == 0 ||
-    condition.localeCompare("Drizzle") == 0
-  ) {
-    d = (Math.atan(windspeed / 10) * 180) / Math.PI;
-  }
-
-  var id = setInterval((frame) => {
-    if (addr !== curAddr) {
-      console.log("Address changed from ", curAddr, " to ", addr);
-      clearInterval(id);
-      return;
-    }
-    if (x >= window.screen.width) {
-      x = -800;
-      //Clouds and swirls wrap back to random height.
-      if (
-        condition.localeCompare("Clear") == 0 ||
-        condition.localeCompare("Clouds") == 0
-      ) {
-        y = Math.floor(Math.random() * window.screen.height);
-        elem.style.top = y + "px";
-      }
-    } else {
-      x += windspeed * 0.756; //Meters per second to pixels per frame
-      elem.style.left = x + "px";
-    }
-    //TODO: add rules for rain
-    if (y >= window.screen.height) {
-      y = 0;
-    } else {
-      if (
-        condition.localeCompare("Rain") == 0 ||
-        condition.localeCompare("Drizzle") == 0
-      ) {
-        y += 7.56;
-
-        elem.style.top = y + "px";
-        elem.style.transform = "rotateZ(-" + d + "deg)";
-      }
-      //Snow falls and rotates.
-      if (condition.localeCompare("Snow") == 0) {
-        y += 0.756;
-        d += d < 360 ? 1 : -359;
-        elem.style.top = y + "px";
-        for (elements of status) {
-          elements.style.transform = "rotateY(" + d + "deg)";
-        }
-      }
-    }
-  }, 20);
+  //Animate the current weather condition.
+  animate(condition);
 }
 
 function makeVisible(page) {
