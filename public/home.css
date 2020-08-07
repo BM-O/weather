@@ -27,6 +27,13 @@ html {
   margin-top: 15px;
 }
 
+.modal-backdrop {
+  display: none;
+}
+
+.modal {
+  color: black;
+}
 /* Visibility Settings */
 .invisible {
   visibility: hidden;
