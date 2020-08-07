@@ -1,7 +1,14 @@
 const weather = document.getElementById("weather_page");
 const search = document.getElementById("get_location");
 var addr = "Portland, OR"; //Default for animation
-const conditions = ["Clear", "Clouds", "Drizzle", "Rain", "Thunderstorm"];
+const conditions = [
+  "Clear",
+  "Clouds",
+  "Drizzle",
+  "Rain",
+  "Thunderstorm",
+  "Snow",
+];
 let debugging = true;
 
 // On load, it will ask for permission to access current location
@@ -66,21 +73,32 @@ function showWeather(data) {
 
   //animation
   const curAddr = addr;
+  var condition = forecast[0]["condition"];
+  const windspeed = forecast[0]["wind"];
   var elem = document.getElementById("inner");
+  var bg = document.getElementById("page");
+  bg.style.height = "1850px";
+
+  if (debugging) {
+    condition = "Clouds";
+  }
+
   //Reset previous conditions and display current condition
-  for (condition of conditions) {
+  for (each of conditions) {
     var reset = document.getElementsByClassName("condition");
     for (elements of reset) {
       elements.style.display = "none";
     }
   }
-  var status = document.getElementsByClassName(data["weather"][0]["condition"]);
+  var status = document.getElementsByClassName(condition);
   for (elements of status) {
     elements.style.display = "initial";
   }
 
-  var x = 0;
+  //TODO: set x to negative of image width, rather than const
+  var x = -900;
   var y = 0;
+  var d = 0;
   var id = setInterval((frame) => {
     if (addr !== curAddr) {
       console.log("Address changed from ", curAddr, " to ", addr);
@@ -88,18 +106,32 @@ function showWeather(data) {
       return;
     }
     if (x >= window.screen.width) {
-      x = -400;
+      x = -800;
+      //Clouds and swirls wrap back to random height.
+      if (
+        condition.localeCompare(
+          "Clear" == 0 || condition.localeCompare("Clouds") == 0
+        )
+      ) {
+        y = Math.floor(Math.random() * window.screen.height);
+        elem.style.top = y + "px";
+      }
     } else {
-      var windspeed = data["weather"][0]["wind"];
       x += windspeed * 0.756; //Meters per second to pixels per frame
       elem.style.left = x + "px";
     }
+    //TODO: add rules for rain
     if (y >= window.screen.height) {
       y = 0;
     } else {
-      if (data["weather"][0]["condition"].localeCompare("Snow") == 0) {
+      //Snow falls and rotates.
+      if (condition.localeCompare("Snow") == 0) {
         y += 0.756;
+        d += d < 360 ? 1 : -359;
         elem.style.top = y + "px";
+        for (elements of status) {
+          elements.style.transform = "rotateY(" + d + "deg)";
+        }
       }
     }
   }, 20);
@@ -336,7 +368,7 @@ function getForecast(Data) {
   forecast_card.classList.add("table-bordered");
   forecast_card.classList.add("text-center");
 
-  //let forrow1 = forecast_card.insertRow();
+  //let forrow1 = forecast_table.insertRow();
 
   //let forcell1 = forrow1.insertCell();
   //let date = document.createElement("div");
@@ -347,7 +379,7 @@ function getForecast(Data) {
   for (forecast of Data) {
     let forimage = `<figure><img class='img-fluid img-responsive'\
      src=${forecast.icon} alt="Weather icon"></img><figcaption>${forecast.description}\
-     </figcaption></figure>`
+     </figcaption></figure>`;
 
     forecatData.push([
       forecast.date,
@@ -372,18 +404,17 @@ function getForecast(Data) {
   for (var i = 2; i < forecatData.length; i++) {
     row = forecast_card.insertRow(-1);
     for (var j = 0; j < columnCount; j++) {
-      if (j === 3){
+      if (j === 3) {
         let modal = document.createElement("button");
         modal.classList.add("btn", "btn-info", "btn-sm");
-        modal.setAttribute("data-toggle","modal");
-        modal.setAttribute("data-target","#exampleModal");
+        modal.setAttribute("data-toggle", "modal");
+        modal.setAttribute("data-target", "#exampleModal");
         modal.innerHTML = "More Data";
         var cell = row.insertCell(-1);
         cell.appendChild(modal);
-      }
-      else{
-      var cell = row.insertCell(-1);
-      cell.innerHTML = forecatData[i][j];
+      } else {
+        var cell = row.insertCell(-1);
+        cell.innerHTML = forecatData[i][j];
       }
     }
   }

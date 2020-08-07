@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="page">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Welcome to Firebase Hosting</title>
+    <title>Weather 4Cast</title>
     <link rel="stylesheet" href="home.css" />
     <!-- bootstrap -->
     <link
@@ -18,15 +18,14 @@
   <body onload="loadDefault()">
     <div class="wrapper">
       <div class="inner" id="inner">
-        <img id="flake" class="Snow" src="./resources/snowflake.png" style="width:20px;height:20px;"></img>
+        <img id="flake" class="condition Snow" src="./resources/snowflake.png" style="width:200px;height:200px;"></img>
         <svg height="100" width="100">
-            <circle id="sun" class="Rain Drizzle Thunderstorm" cx="50" cy="50" r="50" style="fill: #dbbb34;" />
+          <circle id="sun" class="condition Rain Drizzle Thunderstorm" cx="50" cy="50" r="50" style="fill: #dbbb34;" />
         </svg>
-        <img id="swirl1" class="Clear" src="./resources/swirl1.png" style="width:100px;height:50px"></img>
-        <img id="cloud1" class="Clouds" src="./resources/cloud1.png" style="width:800px;height:400px;"></img>
+        <img id="swirl1" class="condition Clear" src="./resources/swirl1.png" style="width:800px;height:400px"></img>
+        <img id="cloud1" class="condition Clouds" src="./resources/cloud1.png" style="width:800px;height:400px;"></img>
       </div>
     </div>
-
 
     <div id="interface">
     <!-- HOME PAGE WITH INITAL SEARCH BAR -->
@@ -63,7 +62,7 @@
       <!-- CURRENT WEATHER, AQI, AQ NOTICE -->
       <div class="container">
         <div class="row">
-          <div class="col-md-7">
+          <div class="col-md-7 mb-4">
             <div class="card h-100" id="weather_card">
               <div class="card-body" id="weather_data">
                 <!-- Put Weather data here -->
@@ -91,9 +90,9 @@
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="col mt-4">
           <!-- 7 DAY FORECAST TABLE-->
-          <div class="card p-4 m-4 mx-auto w-100" id="forecast_card">
+          <div class="card m-4 mx-auto w-100" id="forecast_card">
             <table id="forecast_table">
               <tbody id="forecast_body">
                 <!-- CONTENTS CREATED AND APPENDED VIA "script.js" -->
