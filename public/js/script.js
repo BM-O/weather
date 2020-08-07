@@ -1,8 +1,6 @@
 const weather = document.getElementById("weather_page");
 const search = document.getElementById("get_location");
 var addr = "Portland, OR"; //Default for animation
-const conditions = ["Clear", "Clouds", "Drizzle", "Rain", "Thunderstorm"];
-let debugging = true;
 
 // On load, it will ask for permission to access current location
 function loadDefault() {
@@ -29,6 +27,7 @@ function loadDefault() {
   }
 }
 
+//On key press in search bar, check if 'Enter' pressed, to search instead of reloading.
 function enter(event) {
   if (event.key === "Enter") {
     event.preventDefault();
@@ -53,56 +52,27 @@ search.addEventListener("click", () => {
 });
 
 function showWeather(data) {
+  var bg = document.getElementById("page");
+  bg.style.height = "1850px";
   makeVisible(weather);
   console.log(data);
 
   //Data shortcuts
   const aq = data.aq;
   const forecast = data.weather;
+  const condition = forecast[0];
 
-  currentWeather(forecast[0]);
+  currentWeather(condition);
   currentAirQuality(aq);
   getForecast(forecast);
 
-  //animation
-  const curAddr = addr;
-  var elem = document.getElementById("inner");
-  //Reset previous conditions and display current condition
-  for (condition of conditions) {
-    var reset = document.getElementsByClassName("condition");
-    for (elements of reset) {
-      elements.style.display = "none";
-    }
-  }
-  var status = document.getElementsByClassName(data["weather"][0]["condition"]);
-  for (elements of status) {
-    elements.style.display = "initial";
-  }
-
-  var x = 0;
-  var y = 0;
-  var id = setInterval((frame) => {
-    if (addr !== curAddr) {
-      console.log("Address changed from ", curAddr, " to ", addr);
-      clearInterval(id);
-      return;
-    }
-    if (x >= window.screen.width) {
-      x = -400;
-    } else {
-      var windspeed = data["weather"][0]["wind"];
-      x += windspeed * 0.756; //Meters per second to pixels per frame
-      elem.style.left = x + "px";
-    }
-    if (y >= window.screen.height) {
-      y = 0;
-    } else {
-      if (data["weather"][0]["condition"].localeCompare("Snow") == 0) {
-        y += 0.756;
-        elem.style.top = y + "px";
-      }
-    }
-  }, 20);
+  //Animate the current weather condition.
+  //Wait a second to terminate previous animation first.
+  over = true;
+  setTimeout(function () {
+    over = false;
+    animate(condition);
+  }, 1000);
 }
 
 function makeVisible(page) {
@@ -336,7 +306,7 @@ function getForecast(Data) {
   forecast_card.classList.add("table-bordered");
   forecast_card.classList.add("text-center");
 
-  //let forrow1 = forecast_card.insertRow();
+  //let forrow1 = forecast_table.insertRow();
 
   //let forcell1 = forrow1.insertCell();
   //let date = document.createElement("div");
