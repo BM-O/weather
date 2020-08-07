@@ -80,7 +80,7 @@ function showWeather(data) {
   bg.style.height = "1850px";
 
   if (debugging) {
-    condition = "Clouds";
+    condition = "Rain";
   }
 
   //Reset previous conditions and display current condition
@@ -99,6 +99,13 @@ function showWeather(data) {
   var x = -900;
   var y = 0;
   var d = 0;
+  if (
+    condition.localeCompare("Rain") == 0 ||
+    condition.localeCompare("Drizzle") == 0
+  ) {
+    d = (Math.atan(windspeed / 10) * 180) / Math.PI;
+  }
+
   var id = setInterval((frame) => {
     if (addr !== curAddr) {
       console.log("Address changed from ", curAddr, " to ", addr);
@@ -109,9 +116,8 @@ function showWeather(data) {
       x = -800;
       //Clouds and swirls wrap back to random height.
       if (
-        condition.localeCompare(
-          "Clear" == 0 || condition.localeCompare("Clouds") == 0
-        )
+        condition.localeCompare("Clear") == 0 ||
+        condition.localeCompare("Clouds") == 0
       ) {
         y = Math.floor(Math.random() * window.screen.height);
         elem.style.top = y + "px";
@@ -124,6 +130,15 @@ function showWeather(data) {
     if (y >= window.screen.height) {
       y = 0;
     } else {
+      if (
+        condition.localeCompare("Rain") == 0 ||
+        condition.localeCompare("Drizzle") == 0
+      ) {
+        y += 7.56;
+
+        elem.style.top = y + "px";
+        elem.style.transform = "rotateZ(-" + d + "deg)";
+      }
       //Snow falls and rotates.
       if (condition.localeCompare("Snow") == 0) {
         y += 0.756;
