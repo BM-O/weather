@@ -67,7 +67,12 @@ function showWeather(data) {
   getForecast(forecast);
 
   //Animate the current weather condition.
-  animate(condition);
+  //Wait a second to terminate previous animation first.
+  over = true;
+  setTimeout(function () {
+    over = false;
+    animate(condition);
+  }, 1000);
 }
 
 function makeVisible(page) {

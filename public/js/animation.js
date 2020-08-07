@@ -1,3 +1,6 @@
+let update = document.getElementById("location_input");
+var animationid;
+
 //Possible values of weather["condition"] returned by API
 const conditions = [
   "Clear",
@@ -31,7 +34,13 @@ const looks_good_factor = 1 / 100;
 const delta = ppmpspf * looks_good_factor;
 
 //Use to test specific conditions
-let debugging = false;
+let debugging = true;
+
+//Listen for location update to end animation.
+var over = false;
+update.addEventListener("submit", (event) => {
+  over = true;
+});
 
 //Function to animate the weather!
 function animate(weather) {
@@ -40,10 +49,28 @@ function animate(weather) {
   var condition = weather["condition"];
   const windspeed = weather["wind"];
   var elem = document.getElementById("inner");
+  var containers = [elem];
 
   //Override condition for testing
   if (debugging) {
     condition = "Rain";
+  }
+
+  //Set item width and height based on image values for condition.
+  var itemWidth = 0;
+  var itemHeight = 0;
+  if (
+    condition.localeCompare("Clear") == 0 ||
+    condition.localeCompare("Clouds") == 0
+  ) {
+    itemWidth = 800;
+    itemHeight = 400;
+  } else if (condition.localeCompare("Snow") == 0) {
+    itemWidth = 200;
+    itemHeight = 200;
+  } else {
+    itemHeight = 100;
+    itemWidth = 100;
   }
 
   //Reset and hide all conditions
@@ -59,11 +86,32 @@ function animate(weather) {
     elements.style.display = "initial";
   }
 
-  //TODO: set x to negative of image width, currently set to large negative value to prevent pop-in
-  //Initial positioning variable values
-  var x = -900;
+  //If weather condition should have multiple copies, generate clones.
+  if (
+    condition.localeCompare("Clouds") != 0 &&
+    condition.localeCompare("Clear") != 0
+  ) {
+    var inner = document.querySelector("#inner");
+    var clone1 = inner.cloneNode(true);
+    clone1.id = "inner1";
+    elem.after(clone1);
+    containers.push(clone1);
+  }
+
+  //Initial positioning variable values. Initially moved offscreen to prevent pop-in
+  //Randomly pick a unique offset to prevent overlap
   var y = 0;
   var d = 0;
+  var pickX = [0, 1, 2, 3];
+  var pickY = [0, 1, 2, 3];
+  const choicesX = pickX.length;
+  const choicesY = pickY.length;
+  for (all of containers) {
+    const choiceX = pickX.splice(Math.floor(Math.random() * pickX.length), 1);
+    const choiceY = pickY.splice(Math.floor(Math.random() * pickY.length), 1);
+    all.style.left = -(window.screen.width / choicesX) * choiceX + "px";
+    all.style.top = (window.screen.height / choicesY) * choiceY + "px";
+  }
 
   //Rain should appear slanted by wind, equal to direction of travel.
   if (
@@ -76,53 +124,65 @@ function animate(weather) {
   }
 
   //Animate one frame, using set interval.
-  var id = setInterval((frame) => {
-    //Each frame, check if address has changed. If so, clear the interval and end this iteration of the function.
-    if (addr !== curAddr) {
+  animationid = setInterval((frame) => {
+    //Each frame, check if time to terminate. If so, clear the interval and end this iteration of the function.
+    if (over) {
       console.log("Address changed from ", curAddr, " to ", addr);
-      clearInterval(id);
+      var dead_clone1 = document.getElementById("inner1");
+      dead_clone1.parentNode.removeChild(dead_clone1);
+      clearInterval(animationid);
+      over = false;
       return;
     }
 
     //Calculate horizontal position.
-    if (x >= window.screen.width) {
-      x = -800;
-      //Clouds and swirls wrap back to random height.
-      if (
-        condition.localeCompare("Clear") == 0 ||
-        condition.localeCompare("Clouds") == 0
-      ) {
-        y = Math.floor(Math.random() * window.screen.height);
-        elem.style.top = y + "px";
-      }
-      //All weather elements move horizontally based on windspeed.
-    } else {
-      x += windspeed * delta; //Meters per second to pixels per frame
-      elem.style.left = x + "px";
-    }
-
-    //TODO: add rules for rain
-    //Calculate vertical position.
-    if (y >= window.screen.height) {
-      y = 0;
-    } else {
-      //All types of rain should fall at terminal velocity and appear rotated in the direction of movement.
-      if (
-        condition.localeCompare("Rain") == 0 ||
-        condition.localeCompare("Drizzle") == 0
-      ) {
-        y += rainTV * delta;
-        elem.style.top = y + "px";
-        elem.style.transform = "rotateZ(-" + d + "deg)";
+    for (all of containers) {
+      if (all.getBoundingClientRect().left >= window.screen.width) {
+        all.style.left =
+          all.getBoundingClientRect().left -
+          (window.screen.width + itemWidth + 50) +
+          "px";
+        //Clouds and swirls wrap back to random height.
+        if (
+          condition.localeCompare("Clear") == 0 ||
+          condition.localeCompare("Clouds") == 0
+        ) {
+          y = Math.floor(Math.random() * window.screen.height);
+          all.style.top = y + "px";
+        }
+        //All weather elements move horizontally based on windspeed.
+      } else {
+        all.style.left =
+          all.getBoundingClientRect().left + windspeed * delta + "px";
       }
 
-      //Snow falls at terminal velocity and rotates about y axis.
-      if (condition.localeCompare("Snow") == 0) {
-        y += snowTV * delta;
-        d += d < 360 ? 1 : -360;
-        elem.style.top = y + "px";
-        for (elements of status) {
-          elements.style.transform = "rotateY(" + d + "deg)";
+      //TODO: add rules for rain
+      //Calculate vertical position.
+      if (y >= window.screen.height) {
+        //Reset height to just above screen when item falls below screen height.
+        y -= window.screen.height + itemHeight + 50;
+        //Place the item randomly along the top of the screen.
+        all.style.left =
+          Math.floor(Math.random() * window.screen.width) + "px;";
+      } else {
+        //All types of rain should fall at terminal velocity and appear rotated in the direction of movement.
+        if (
+          condition.localeCompare("Rain") == 0 ||
+          condition.localeCompare("Drizzle") == 0
+        ) {
+          y += rainTV * delta;
+          all.style.top = y + "px";
+          all.style.transform = "rotateZ(-" + d + "deg)";
+        }
+
+        //Snow falls at terminal velocity and rotates about y axis.
+        if (condition.localeCompare("Snow") == 0) {
+          y += snowTV * delta;
+          d += d < 360 ? 1 : -360;
+          all.style.top = y + "px";
+          for (elements of status) {
+            elements.style.transform = "rotateY(" + d + "deg)";
+          }
         }
       }
     }
