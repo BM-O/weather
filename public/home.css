@@ -1,8 +1,9 @@
 body,
 html {
   background-color: #33ccff;
-  height: 2000px;
-  overflow: auto;
+  /* height: 2000px; */
+  height: 100%;
+  overflow: visible;
 }
 
 #interface {
@@ -24,7 +25,6 @@ html {
 
 #forecast_card {
   margin-top: 15px;
-  
 }
 
 /* Visibility Settings */

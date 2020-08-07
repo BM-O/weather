@@ -73,6 +73,12 @@ function showWeather(data) {
   var condition = forecast[0]["condition"];
   const windspeed = forecast[0]["wind"];
   var elem = document.getElementById("inner");
+  var bg = document.getElementById("page");
+  bg.style.height = "1850px";
+
+  if (debugging){
+    condition = "Clouds"; 
+  }
 
   //Reset previous conditions and display current condition
   for (each of conditions) {
@@ -86,6 +92,7 @@ function showWeather(data) {
     elements.style.display = "initial";
   }
 
+  //TODO: set x to negative of image width, rather than const
   var x = -900;
   var y = 0;
   var d = 0;
@@ -106,6 +113,7 @@ function showWeather(data) {
       x += windspeed * 0.756; //Meters per second to pixels per frame
       elem.style.left = x + "px";
     }
+    //TODO: add rules for rain
     if (y >= window.screen.height){
         y = 0;
     }else{
@@ -307,18 +315,18 @@ function currentAirQuality(data) {
 
 function getForecast(Data) {
   //Create Forecast
-  const forecast_card = document.getElementById("forecast_table");
+  const forecast_table = document.getElementById("forecast_table");
   const forecast_body = document.getElementById("forecast_body");
 
   //clear current elements to populate new data
   while (forecast_body.firstChild) forecast_body.firstChild.remove();
 
   //Add forecast data
-  forecast_card.classList.add("w-100");
-  forecast_card.classList.add("table-bordered");
-  forecast_card.classList.add("text-center");
+  forecast_table.classList.add("w-100");
+  forecast_table.classList.add("table-bordered");
+  forecast_table.classList.add("text-center");
 
-  //let forrow1 = forecast_card.insertRow();
+  //let forrow1 = forecast_table.insertRow();
 
   //let forcell1 = forrow1.insertCell();
   //let date = document.createElement("div");
@@ -341,7 +349,7 @@ function getForecast(Data) {
   var columnCount = forecatData[0].length;
 
   //Add the header row.
-  var row = forecast_card.insertRow(-1);
+  var row = forecast_table.insertRow(-1);
   for (var i = 0; i < columnCount; i++) {
     var headerCell = document.createElement("TH");
     headerCell.innerHTML = forecatData[0][i];
@@ -350,7 +358,7 @@ function getForecast(Data) {
 
   //Add the data rows.
   for (var i = 2; i < forecatData.length; i++) {
-    row = forecast_card.insertRow(-1);
+    row = forecast_table.insertRow(-1);
     for (var j = 0; j < columnCount; j++) {
       var cell = row.insertCell(-1);
       cell.innerHTML = forecatData[i][j];

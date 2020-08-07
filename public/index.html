@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="page">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Welcome to Firebase Hosting</title>
+    <title>Weather 4Cast</title>
     <link rel="stylesheet" href="home.css" />
     <!-- bootstrap -->
     <link
@@ -26,7 +26,6 @@
         <img id="cloud1" class="condition Clouds" src="./resources/cloud1.png" style="width:800px;height:400px;"></img>
       </div>
     </div>
-
 
     <div id="interface">
     <!-- HOME PAGE WITH INITAL SEARCH BAR -->
@@ -82,7 +81,7 @@
             </div>
             <div class="row">
               <div class="col">
-                <div class="card h-100" id="advisory_card">
+                <div class="card h-100 mt-4" id="advisory_card">
                   <!-- Add bg-[color] and text-[color] class to advisory_card based on level from results -->
                   <div class="card-body" id="advisory_text">
                     <!-- Advisory text from results here -->
@@ -91,14 +90,16 @@
               </div>
             </div>
           </div>
-          <!-- 7 DAY FORECAST TABLE-->
-          <div class="card p-4 m-4 mx-auto w-100" id="forecast_card">
-            <table id="forecast_table">
-              <tbody id="forecast_body">
-                <!-- CONTENTS CREATED AND APPENDED VIA "script.js" -->
-              </tbody>
-            </table>
-          </div>          
+            <div class="col-md-12">
+              <!-- 7 DAY FORECAST TABLE-->
+              <div class="card m-4 mx-auto w-100" id="forecast_card">
+                <table id="forecast_table" class="card-body p-4">
+                  <tbody id="forecast_body">
+                    <!-- CONTENTS CREATED AND APPENDED VIA "script.js" -->
+                  </tbody>
+                </table>
+              </div>          
+          </div>
         </div>
       </div>
     </div>
