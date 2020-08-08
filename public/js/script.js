@@ -112,8 +112,13 @@ function currentWeather(current) {
   temp.textContent = `${current.tempFar}°`;
   let des = document.createElement("h3");
   des.textContent = `${current.description}`;
+  let br = document.createElement("br");
+  let feel = document.createElement("h5");
+  feel.textContent = `Feels Like ${current.tempfeelF} °`;
   cur_body.appendChild(temp);
   cur_body.appendChild(des);
+  cur_body.appendChild(br);
+  cur_body.appendChild(feel);
   //Create a table to store the rest of the data
   let cur_table = document.createElement("table");
   cur_table.classList.add("w-100");
@@ -197,6 +202,29 @@ function currentWeather(current) {
   cur_table.appendChild(row1_head);
   cur_table.appendChild(row2_head);
   cur_table.appendChild(row3_head);
+
+  //Create row 4
+  let row4 = cur_table.insertRow();
+  //Row 4 - Sunrise/sunset
+  let cell7 = row4.insertCell();
+  let sun_label = document.createElement("div");
+  sun_label.classList.add("table-label");
+  sun_label.classList.add("font-weight-bold");
+  sun_label.textContent = "Sunrise | Sunset";
+  cell7.appendChild(sun_label);
+  let sun = document.createElement("div");
+  sun.textContent = `${current.sunrisetime} | ${current.sunsettime}`;
+  cell7.appendChild(sun);
+  //Row 3 - UV Index
+  let cell8 = row4.insertCell();
+  let rain_label = document.createElement("div");
+  rain_label.classList.add("table-label");
+  rain_label.classList.add("font-weight-bold");
+  rain_label.textContent = "Rain | Chance of Rain";
+  cell8.appendChild(rain_label);
+  let rain = document.createElement("div");
+  rain.textContent = `${current.rain} | ${current.pop}`;
+  cell8.appendChild(rain);
 
   //Append the table to the bottom of the card
   cur_body.append(cur_table);
@@ -351,7 +379,7 @@ function getForecast(Data) {
   for (var i = 2; i < forecatData.length; i++) {
     row = forecast_card.insertRow(-1);
 
-    for (var j = 0; j < columnCount; j++) {
+    for (var j = 0; j < columnCount; j++) {      
       if (j === 3) {
         var cell = row.insertCell(-1);
         if (i === 2) {
