@@ -295,7 +295,7 @@ function getForecast(Data) {
   title.classList.add("card-header");
   title.classList.add("font-weight-bold");
   title.id = "forecast_title";
-  title.textContent = `7 Day forecast for ${addr}`;
+  title.textContent = `7 Days forecast for ${addr}`;
   card.prepend(title);
 
   //clear current elements to populate new data
