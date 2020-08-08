@@ -192,39 +192,41 @@ function currentWeather(current) {
   uv.textContent = `${current.uvi} of 10`;
   row3.appendChild(uv);
 
+  //Create row 4
+  let row4_head = document.createElement("thead");
+  row4_head.classList.add("thead-dark");
+  let row4_header = document.createElement("tr");
+  let row4 = document.createElement("tr");
+  //Row 4 - Sunrise/sunset
+  let sun_label = document.createElement("th");
+  sun_label.classList.add("font-weight-bold");
+  sun_label.textContent = "Sunrise | Sunset";
+  row4_header.appendChild(sun_label);
+  let sun = document.createElement("td");
+  sun.textContent = `${current.sunrisetime} | ${current.sunsettime}`;
+  row4.appendChild(sun);
+  //Row 4 - Rain
+  let rain_label = document.createElement("th");
+  rain_label.classList.add("font-weight-bold");
+  rain_label.textContent = "Rain | Chance of Rain";
+  row4_header.appendChild(rain_label);
+  let rain = document.createElement("td");
+  rain.textContent = `${current.rain} | ${current.pop}%`;
+  row4.appendChild(rain);
+
   //Append rows to table
   row1_head.appendChild(row1_header);
   row2_head.appendChild(row2_header);
   row3_head.appendChild(row3_header);
+  row4_head.appendChild(row4_header);
   row1_head.appendChild(row1);
   row2_head.appendChild(row2);
   row3_head.appendChild(row3);
+  row4_head.appendChild(row4);
   cur_table.appendChild(row1_head);
   cur_table.appendChild(row2_head);
   cur_table.appendChild(row3_head);
-
-  //Create row 4
-  let row4 = cur_table.insertRow();
-  //Row 4 - Sunrise/sunset
-  let cell7 = row4.insertCell();
-  let sun_label = document.createElement("div");
-  sun_label.classList.add("table-label");
-  sun_label.classList.add("font-weight-bold");
-  sun_label.textContent = "Sunrise | Sunset";
-  cell7.appendChild(sun_label);
-  let sun = document.createElement("div");
-  sun.textContent = `${current.sunrisetime} | ${current.sunsettime}`;
-  cell7.appendChild(sun);
-  //Row 3 - UV Index
-  let cell8 = row4.insertCell();
-  let rain_label = document.createElement("div");
-  rain_label.classList.add("table-label");
-  rain_label.classList.add("font-weight-bold");
-  rain_label.textContent = "Rain | Chance of Rain";
-  cell8.appendChild(rain_label);
-  let rain = document.createElement("div");
-  rain.textContent = `${current.rain} | ${current.pop}`;
-  cell8.appendChild(rain);
+  cur_table.appendChild(row4_head);
 
   //Append the table to the bottom of the card
   cur_body.append(cur_table);
@@ -379,7 +381,7 @@ function getForecast(Data) {
   for (var i = 2; i < forecatData.length; i++) {
     row = forecast_card.insertRow(-1);
 
-    for (var j = 0; j < columnCount; j++) {      
+    for (var j = 0; j < columnCount; j++) {
       if (j === 3) {
         var cell = row.insertCell(-1);
         if (i === 2) {
