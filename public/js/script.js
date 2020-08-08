@@ -341,7 +341,7 @@ function getForecast(Data) {
   //Add the data rows.
   for (var i = 2; i < forecatData.length; i++) {
     row = forecast_card.insertRow(-1);
-    
+
     for (var j = 0; j < columnCount; j++) {
       if (j === 3) {
         let maindiv = document.createElement("div");
@@ -373,7 +373,7 @@ function getForecast(Data) {
 
         var headerM = document.createElement("H4");
         headerM.className = "modal-title";
-        headerM.textContent = `Weather on ${Data[i-1].date}`;
+        headerM.textContent = `Weather on ${Data[i - 1].date}`;
         innerDiv3.appendChild(headerM);
 
         var buttonM = document.createElement("button");
@@ -383,36 +383,34 @@ function getForecast(Data) {
         innerDiv3.appendChild(buttonM);
 
         var innerDiv31 = document.createElement("div");
-        innerDiv31.className = "modal-body";        
+        innerDiv31.className = "modal-body";
         innerDiv2m.appendChild(innerDiv31);
 
         //var innerDiv32 = document.createElement("div");
         //innerDiv32.className = "modal-footer";
         //innerDiv2m.appendChild(innerDiv32);
-        
 
         //clear child elements if there is any
         let modalh2 = document.createElement("H2");
-        modalh2.textContent = `${Data[i-1].tempFar}°`;
+        modalh2.textContent = `${Data[i - 1].tempFar}°`;
         innerDiv31.appendChild(modalh2);
-        
+
         let modalh3 = document.createElement("H3");
-        modalh3.textContent = `${Data[i-1].description}`;
+        modalh3.textContent = `${Data[i - 1].description}`;
         innerDiv31.appendChild(modalh3);
 
         let forimg = document.createElement("img");
         forimg.classList.add("img-fluid");
-        //forimg.classList.add("");        
-        forimg.src = `${Data[i-1].icon}`;
+        //forimg.classList.add("");
+        forimg.src = `${Data[i - 1].icon}`;
         forimg.alt = "Weather Icon";
         innerDiv31.appendChild(forimg);
-        
+
         let innerTab41 = document.createElement("table");
         innerTab41.className = "table";
         let tab41Thead = document.createElement("THead");
         tab41Thead.className = "thead-dark";
-        innerTab41.appendChild(tab41Thead);  
-
+        innerTab41.appendChild(tab41Thead);
 
         let tab51row = document.createElement("tr");
 
@@ -423,20 +421,20 @@ function getForecast(Data) {
         tab51row.appendChild(tab51th);
         tab51row.appendChild(tab52th);
         tab41Thead.append(tab51row);
-        
+
         let tab52row = document.createElement("tr");
 
         let tab51d = document.createElement("td");
-        tab51d.textContent = `${Data[i-1].tempHi}° | ${Data[i-1].tempLo}°`;
+        tab51d.textContent = `${Data[i - 1].tempHi}° | ${Data[i - 1].tempLo}°`;
         let tab52d = document.createElement("td");
-        tab52d.textContent = `${Data[i-1].wind} mph`;
+        tab52d.textContent = `${Data[i - 1].wind} mph`;
         tab52row.appendChild(tab51d);
         tab52row.appendChild(tab52d);
         tab41Thead.appendChild(tab52row);
 
         let tab51Thead = document.createElement("THead");
         tab51Thead.className = "thead-dark";
-        innerTab41.appendChild(tab51Thead);        
+        innerTab41.appendChild(tab51Thead);
 
         let tab61row = document.createElement("tr");
 
@@ -451,9 +449,9 @@ function getForecast(Data) {
         let tab62row = document.createElement("tr");
 
         let tab61d = document.createElement("td");
-        tab61d.textContent = `${Data[i-1].humidity}%`;
+        tab61d.textContent = `${Data[i - 1].humidity}%`;
         let tab62d = document.createElement("td");
-        tab62d.textContent = `${Data[i-1].dew_point} °`;
+        tab62d.textContent = `${Data[i - 1].dew_point} °`;
         tab62row.appendChild(tab61d);
         tab62row.appendChild(tab62d);
         tab51Thead.appendChild(tab62row);
@@ -478,9 +476,9 @@ function getForecast(Data) {
         let tab72row = document.createElement("tr");
 
         let tab71d = document.createElement("td");
-        tab71d.textContent = `${Data[i-1].pressure} in`;
+        tab71d.textContent = `${Data[i - 1].pressure} in`;
         let tab72d = document.createElement("td");
-        tab72d.textContent = `${Data[i-1].uvi} of 10`;
+        tab72d.textContent = `${Data[i - 1].uvi} of 10`;
         tab72row.appendChild(tab71d);
         tab72row.appendChild(tab72d);
         tab61Thead.appendChild(tab72row);
