@@ -86,8 +86,10 @@ function animate(weather) {
     itemHeight = 200;
   } else {
     itemHeight = 100;
-    itemWidth = 100;
+    itemWidth = 10;
   }
+  elem.style.width = itemWidth + "px";
+  elem.style.height = itemHeight + "px";
 
   //If weather condition should have multiple copies, generate clones.
   //Drizzle, rain thunderstorm and snow each get a second copy.
@@ -169,8 +171,7 @@ function animate(weather) {
   ) {
     //Set degree of slant by the arctangent of the windspeed over terminal velocity of rain (both in meters per second)
     //and convert from radians to degrees.
-    d =
-      (Math.atan((anti_imperial * windspeed * delta) / rainTV) * 180) / Math.PI;
+    d = (Math.atan((windspeed * delta) / rainTV) * 180) / Math.PI;
   }
 
   //Animate one frame, using set interval.
@@ -208,7 +209,7 @@ function animate(weather) {
       if (all.getBoundingClientRect().left >= window.screen.width) {
         all.style.left =
           all.getBoundingClientRect().left -
-          (window.screen.width + itemWidth * 2) +
+          (window.screen.width + itemWidth + 100) +
           "px";
         //Clouds and swirls wrap back to random height.
         if (
@@ -225,9 +226,11 @@ function animate(weather) {
       }
 
       //Calculate vertical position.
-      if (y >= window.screen.height) {
+
+      if (parseInt(all.style.top.slice(0, -2)) >= window.screen.height) {
         //Reset height to just above screen when item falls below screen height.
-        y -= window.screen.height + itemHeight * 2;
+        all.style.top = 0 - itemHeight * 2 + "px";
+
         //Place the item randomly along the top of the screen.
         all.style.left =
           Math.floor(Math.random() * window.screen.width) + "px;";
@@ -238,8 +241,8 @@ function animate(weather) {
           condition.localeCompare("Drizzle") == 0 ||
           condition.localeCompare("Thunderstorm") == 0
         ) {
-          y += rainTV * delta;
-          all.style.top = y + "px";
+          y = rainTV * delta;
+          all.style.top = parseInt(all.style.top.slice(0, -2)) + y + "px";
           all.style.transform = "rotateZ(-" + d + "deg)";
         }
 
