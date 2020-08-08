@@ -2,6 +2,8 @@ const functions = require("firebase-functions");
 const config = functions.config();
 const axios = require("axios");
 const e = require("express");
+const momenttz = require('moment-timezone');
+const moment = require('moment');
 
 /*
  *  Cloud Function that is called by the script.js file
@@ -91,33 +93,40 @@ function timeConverter(UNIX_timestamp) {
   var hour = a.getHours();
   var min = a.getMinutes();
   var sec = a.getSeconds();
-  var datetime =
-    date + " " + month + " " + year + " " + hour + ":" + min + ":" + sec;
-  return datetime;
+  var am = true ;
+
+  if (hour > 12) {
+    am = false;
+    hour -= 12;
+  } else if (hour === 12) {
+    am = false;
+  } else if (hour === 0) {
+    hour = 12;
+  }  
+
+  var time = hour + ":" + min + ":" + (am ? "a.m." : "p.m.");
+  return time;
 }
 
 function partOfDay() {
-	/* given a 24-hour time HH, HHMM or HH:MM, 
+  /* given a 24-hour time HH, HHMM or HH:MM, 
 		return the part of day (morning, afternoon, evening, night)	   
 	*/
-	
-	var myDate = new Date();
+
+  var myDate = new Date();
   var hours = myDate.getHours();
 
-	var partOfDay = '';
-	
-	if (hours < 12) {
-		partOfDay = 'morn';
-	}
-	else if (hours < 17) {
-		partOfDay = 'day';
-	}
-	else if (hours < 21) {
-		partOfDay = 'eve';
-	}
-	else {
-		partOfDay = 'night';
-	}	
+  var partOfDay = "";
+
+  if (hours < 12) {
+    partOfDay = "morn";
+  } else if (hours < 17) {
+    partOfDay = "day";
+  } else if (hours < 21) {
+    partOfDay = "eve";
+  } else {
+    partOfDay = "night";
+  }
   return partOfDay;
 }
 //OpenWeather helper function
@@ -125,6 +134,7 @@ function getWeatherContents(response) {
   //create object that will be returned
   let array = [];
   const weatherData = response.daily;
+  const timezone = response["timezone"];
   const currpart = partOfDay();
   //Parse JSON for necessary data to display
   for (let i = 0; i < weatherData.length; ++i) {
@@ -140,9 +150,11 @@ function getWeatherContents(response) {
     let pressureValue = x["pressure"]; //in hPa
     let dewpointValue = x["dew_point"]; //in Kelvins
     let uvindexValue = x["uvi"]; //out of 10
-    let sunrise = x["sunrise"];
-    let sunset = x["sunset"];
+    let sunrise = moment.unix(x["sunrise"]).tz(timezone).format('hh:mm A');
+    let sunset = moment.unix(x["sunset"]).tz(timezone).format('hh:mm A');
     let feelslike = x["feels_like"][`${currpart}`];
+    let pop = x["pop"];
+    let rain = x["rain"] ? x["rain"] : "No Rain";
 
     //Convert to Month/Day from Unix format
     let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -151,8 +163,8 @@ function getWeatherContents(response) {
     let day = d.getDate();
     let date = `${weekDay} ${day}`;
 
-    let sunrisedt = timeConverter(sunrise);
-    let sunsetdt = timeConverter(sunset);    
+    let sunrisetime = timeConverter(sunrise);
+    let sunsettime = timeConverter(sunset);
 
     //Capitalize the first letters of the strings
     conditionValue =
@@ -198,10 +210,12 @@ function getWeatherContents(response) {
       icon: iconLink,
       tempHi: tempHi,
       tempLo: tempLo,
-      sunrisedt: sunrisedt,
-      sunsetdt: sunsetdt,
+      sunrisetime: sunrise,
+      sunsettime: sunset,
       tempfeelF: tempfeelF,
-      tempfeelC: tempfeelF
+      tempfeelC: tempfeelF,
+      pop: pop,
+      rain: rain,
     };
     array.push(obj); //Add object to array
   }
