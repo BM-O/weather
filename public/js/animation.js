@@ -37,7 +37,7 @@ const looks_good_factor = 1 / 100;
 const delta = ppmpspf * looks_good_factor;
 
 //Use to test specific conditions
-let debugging = true;
+let debugging = false;
 
 //Listen for location update to end animation.
 var over = false;
