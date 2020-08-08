@@ -37,12 +37,13 @@
     ></script>
   </head>
   <body onload="loadDefault()">
-    <div class="wrapper">
+    <div class="wrapper" aria-label="background-animation">
       <div class="inner" id="inner">
         <img
           id="flake"
           class="condition Snow"
           src="./resources/snowflake.png"
+          alt="Single snowflake"
           style="width: 200px; height: 200px;"
         />
         <!-- <svg height="100" width="100">
@@ -61,12 +62,14 @@
           id="swirl1"
           class="condition Clear"
           src="./resources/swirl1.png"
+          alt="Wind swirl"
           style="width: 800px; height: 400px;"
         />
         <img
           id="cloud1"
           class="condition Clouds"
           src="./resources/cloud1.png"
+          alt="Fluffy cloud"
           style="width: 800px; height: 400px;"
         />
       </div>
@@ -75,7 +78,7 @@
 
     <div id="interface">
     <!-- HOME PAGE WITH INITAL SEARCH BAR -->
-    <div class="home_page visible">
+    <div class="home_page visible" aria-label="main-search-bar">
       <div class="container" id="home_search_bar">
         <form id="location_input" >
           <div class="form-inline row justify-content-center">
@@ -95,7 +98,7 @@
             <div class="text-center">
               <button
                 type="button"
-                class="btn btn-lrg btn-primary"
+                class="btn btn-lrg btn-dark"
                 id="get_location"
               >
                 Search
@@ -107,7 +110,7 @@
 
     <!-- WEATHER PAGE -->
     <!-- For this "page", give ids to the elements and put the class names in the js file -->
-    <div class="invisible" id="weather_page">
+    <div class="invisible" id="weather_page" aria-label="main-weather-page">
       <!-- CURRENT WEATHER, AQI, AQ NOTICE -->
       <div class="container">
         <div class="row">
