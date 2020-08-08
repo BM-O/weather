@@ -31,7 +31,7 @@ exports.getCoords = functions.https.onCall(async (dataObj, context) => {
 exports.getCurrent = functions.https.onCall(async (dataObj, context) => {
   //Query MapQuest API to get a JSON object in order to get
   //Callable function to accept Lat Long from Frontend and getWeather
-  
+
   //dataObjt holding the inpute parameters, which will be mapped to Lat Long
   let lat = dataObj.latitude;
   let lng = dataObj.longitude;
@@ -69,11 +69,63 @@ async function getAQ(lat, lng) {
   return getAirQualityContents(data);
 }
 
+function timeConverter(UNIX_timestamp) {
+  var a = new Date(UNIX_timestamp * 1000);
+  var months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var datetime =
+    date + " " + month + " " + year + " " + hour + ":" + min + ":" + sec;
+  return datetime;
+}
+
+function partOfDay() {
+	/* given a 24-hour time HH, HHMM or HH:MM, 
+		return the part of day (morning, afternoon, evening, night)	   
+	*/
+	
+	var myDate = new Date();
+  var hours = myDate.getHours();
+
+	var partOfDay = '';
+	
+	if (hours < 12) {
+		partOfDay = 'morn';
+	}
+	else if (hours < 17) {
+		partOfDay = 'day';
+	}
+	else if (hours < 21) {
+		partOfDay = 'eve';
+	}
+	else {
+		partOfDay = 'night';
+	}	
+  return partOfDay;
+}
 //OpenWeather helper function
 function getWeatherContents(response) {
   //create object that will be returned
   let array = [];
   const weatherData = response.daily;
+  const currpart = partOfDay();
   //Parse JSON for necessary data to display
   for (let i = 0; i < weatherData.length; ++i) {
     let x = weatherData[i];
@@ -88,6 +140,9 @@ function getWeatherContents(response) {
     let pressureValue = x["pressure"]; //in hPa
     let dewpointValue = x["dew_point"]; //in Kelvins
     let uvindexValue = x["uvi"]; //out of 10
+    let sunrise = x["sunrise"];
+    let sunset = x["sunset"];
+    let feelslike = x["feels_like"][`${currpart}`];
 
     //Convert to Month/Day from Unix format
     let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -95,6 +150,9 @@ function getWeatherContents(response) {
     let weekDay = days[d.getDay()];
     let day = d.getDate();
     let date = `${weekDay} ${day}`;
+
+    let sunrisedt = timeConverter(sunrise);
+    let sunsetdt = timeConverter(sunset);    
 
     //Capitalize the first letters of the strings
     conditionValue =
@@ -106,6 +164,8 @@ function getWeatherContents(response) {
     let tempValue = (tempLo + tempHi) / 2; //average temp in Kelvins
     let tempF = Math.round(((tempValue - 273.15) * (9 / 5) + 32) * 10) / 10;
     let tempC = Math.round((tempValue - 273.15) * 10) / 10;
+    let tempfeelF = Math.round(((feelslike - 273.15) * (9 / 5) + 32) * 10) / 10;
+    let tempfeelC = Math.round((feelslike - 273.15) * 10) / 10;
     tempHi = Math.round(((tempHi - 273.15) * (9 / 5) + 32) * 10) / 10;
     tempLo = Math.round(((tempLo - 273.15) * (9 / 5) + 32) * 10) / 10;
     let dewpointF =
@@ -138,6 +198,10 @@ function getWeatherContents(response) {
       icon: iconLink,
       tempHi: tempHi,
       tempLo: tempLo,
+      sunrisedt: sunrisedt,
+      sunsetdt: sunsetdt,
+      tempfeelF: tempfeelF,
+      tempfeelC: tempfeelF
     };
     array.push(obj); //Add object to array
   }
