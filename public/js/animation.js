@@ -137,8 +137,9 @@ function animate(weather) {
       }
       if (d !== 0) {
         for (all of containers) {
-          all.style.transform = "rotateZ(" + d + "deg)";
+          all.style.transform = "none";
         }
+        d = 0;
       }
       clearInterval(animationid);
       over = false;
