@@ -89,19 +89,6 @@ function animate(weather) {
     itemWidth = 100;
   }
 
-  //Reset and hide all conditions
-  for (each of conditions) {
-    var reset = document.getElementsByClassName("condition");
-    for (elements of reset) {
-      elements.style.display = "none";
-    }
-  }
-  //Find the current condition and display it
-  var status = document.getElementsByClassName(condition);
-  for (elements of status) {
-    elements.style.display = "initial";
-  }
-
   //If weather condition should have multiple copies, generate clones.
   //Drizzle, rain thunderstorm and snow each get a second copy.
   if (
@@ -135,8 +122,21 @@ function animate(weather) {
     }
   }
 
+  //Reset and hide all conditions
+  for (each of conditions) {
+    var reset = document.getElementsByClassName("condition");
+    for (elements of reset) {
+      elements.style.display = "none";
+    }
+  }
+  //Find the current condition and display it
+  var status = document.getElementsByClassName(condition);
+  for (elements of status) {
+    elements.style.display = "initial";
+  }
+
   //Initial positioning variable values. Initially moved offscreen to prevent pop-in
-  //Randomly pick a unique offset to prevent overlap
+  //Randomly pick a unique offset to prevent overlap, equidistent from others.
   var y = 0;
   var d = 0;
   var pickX = [0, 1, 2, 3];
@@ -148,6 +148,17 @@ function animate(weather) {
     const choiceY = pickY.splice(Math.floor(Math.random() * pickY.length), 1);
     all.style.left = -(window.screen.width / choicesX) * choiceX + "px";
     all.style.top = (window.screen.height / choicesY) * choiceY + "px";
+  }
+
+  //Give snow random intitial rotation equidistent from others.
+  if (condition.localeCompare("Snow") == 0) {
+    var pickZ = [0, 1, 2];
+    const choicesZ = pickZ.length;
+    for (snowflakes of status) {
+      const choiceZ = pickZ.splice(Math.floor(Math.random() * pickZ.length), 1);
+      snowflakes.style.transform =
+        "rotateY(" + choiceZ * (360 / choicesZ) + "deg)";
+    }
   }
 
   //Rain should appear slanted by wind, equal to direction of travel.
@@ -197,7 +208,7 @@ function animate(weather) {
       if (all.getBoundingClientRect().left >= window.screen.width) {
         all.style.left =
           all.getBoundingClientRect().left -
-          (window.screen.width + itemWidth + 50) +
+          (window.screen.width + itemWidth * 2) +
           "px";
         //Clouds and swirls wrap back to random height.
         if (
@@ -213,11 +224,10 @@ function animate(weather) {
           parseInt(all.style.left.slice(0, -2)) + windspeed * delta + "px";
       }
 
-      //TODO: add rules for rain
       //Calculate vertical position.
       if (y >= window.screen.height) {
         //Reset height to just above screen when item falls below screen height.
-        y -= window.screen.height + itemHeight + 50;
+        y -= window.screen.height + itemHeight * 2;
         //Place the item randomly along the top of the screen.
         all.style.left =
           Math.floor(Math.random() * window.screen.width) + "px;";
@@ -233,15 +243,23 @@ function animate(weather) {
           all.style.transform = "rotateZ(-" + d + "deg)";
         }
 
-        //Snow falls at terminal velocity and rotates about y axis.
+        //Snow falls at a different speed
         if (condition.localeCompare("Snow") == 0) {
           y += snowTV * delta;
-          d += d < 360 ? 1 : -360;
           all.style.top = y + "px";
-          for (elements of status) {
-            elements.style.transform = "rotateY(" + d + "deg)";
-          }
         }
+      }
+    }
+    //Calculate snow rotation.
+    if (condition.localeCompare("Snow" == 0)) {
+      for (elements of status) {
+        elements.style.transform =
+          "rotateY(" +
+          (parseInt(elements.style.transform.slice(8, -4)) +
+            (parseInt(elements.style.transform.slice(8, -4)) < 360
+              ? 1
+              : -360)) +
+          "deg)";
       }
     }
   }, interval);
