@@ -27,6 +27,9 @@ const ppm = ppi * ipm;
 //Pixels per meter per second per frame.
 const ppmpspf = ppm / fps;
 
+//Miles per hour to meters per second.
+const anti_imperial = 0.44704;
+
 //Delta used for movement calculations.
 //It may seem strange to do all this calculation just to throw an arbitrary factor on it,
 //but everything using the same factor keeps relative differences comparable to real life.
@@ -120,7 +123,7 @@ function animate(weather) {
   ) {
     //Set degree of slant by the arctangent of the windspeed over terminal velocity of rain (both in meters per second)
     //and convert from radians to degrees.
-    d = (Math.atan(windspeed / rainTV) * 180) / Math.PI;
+    d = (Math.atan((anti_imperial * windspeed) / rainTV) * 180) / Math.PI;
   }
 
   //Animate one frame, using set interval.
@@ -129,7 +132,14 @@ function animate(weather) {
     if (over) {
       console.log("Address changed from ", curAddr, " to ", addr);
       var dead_clone1 = document.getElementById("inner1");
-      dead_clone1.parentNode.removeChild(dead_clone1);
+      if (dead_clone1) {
+        dead_clone1.parentNode.removeChild(dead_clone1);
+      }
+      if (d !== 0) {
+        for (all of containers) {
+          all.style.transform = "rotateZ(" + d + "deg)";
+        }
+      }
       clearInterval(animationid);
       over = false;
       return;
@@ -152,8 +162,9 @@ function animate(weather) {
         }
         //All weather elements move horizontally based on windspeed.
       } else {
+        // console.log(all.style.left);
         all.style.left =
-          all.getBoundingClientRect().left + windspeed * delta + "px";
+          parseInt(all.style.left.slice(0, -2)) + windspeed * delta + "px";
       }
 
       //TODO: add rules for rain
