@@ -1,5 +1,8 @@
 const weather = document.getElementById("weather_page");
+const homepage = document.getElementById("home_page");
+const aboutus = document.getElementById("About_page");
 const search = document.getElementById("get_location");
+const aboutbtn = document.getElementById("btn_about");
 var addr = "Portland, OR"; //Default for animation
 
 // On load, it will ask for permission to access current location
@@ -50,6 +53,11 @@ search.addEventListener("click", () => {
     showWeather(result.data);
   });
 });
+
+aboutbtn.addEventListener("click", () =>{
+  aboutusvs(weather, homepage, aboutus);
+}
+)
 
 function showWeather(data) {
   var bg = document.getElementById("page");

@@ -37,29 +37,79 @@
     ></script>
   </head>
   <body onload="loadDefault()">
+    <div>
+      <nav
+        class="navbar navbar-default"
+        role="navigation"
+        style="color: white;"
+      >
+        <div 
+          class="navbar-header">
+          <a class="navbar-brand" href="#">
+            Home
+          </a>
+        </div>
+        <div>
+          <button 
+            type="button" 
+            class="btn btn-default navbar-btn">
+            Contact Us
+          </button>
+        </div>
+        <div>
+          <button 
+            type="button" 
+            id = "btn_about";
+            class="btn btn-default navbar-btn">
+            About Us
+          </button>
+        </div>
+      </nav>
+    </div>
     <div class="wrapper">
       <div class="inner" id="inner">
-        <img id="flake" class="condition Snow" src="./resources/snowflake.png" style="width:200px;height:200px;"></img>
+        <img
+          id="flake"
+          class="condition Snow"
+          src="./resources/snowflake.png"
+          style="width: 200px; height: 200px;"
+        />
         <!-- <svg height="100" width="100">
+          
           <circle id="sun" class="condition Rain Drizzle Thunderstorm" cx="50" cy="50" r="50" style="fill: #dbbb34;" />
         </svg> -->
         <svg height="100" width="10">
-          <rect id="drop" height="100" width="10" class="condition Rain Drizzle Thunderstorm" style="fill:white;"/>
+          <rect
+            id="drop"
+            height="100"
+            width="10"
+            class="condition Rain Drizzle Thunderstorm"
+            style="fill: white;"
+          />
         </svg>
-        <img id="swirl1" class="condition Clear" src="./resources/swirl1.png" style="width:800px;height:400px"></img>
-        <img id="cloud1" class="condition Clouds" src="./resources/cloud1.png" style="width:800px;height:400px;"></img>
+        <img
+          id="swirl1"
+          class="condition Clear"
+          src="./resources/swirl1.png"
+          style="width: 800px; height: 400px;"
+        />
+        <img
+          id="cloud1"
+          class="condition Clouds"
+          src="./resources/cloud1.png"
+          style="width: 800px; height: 400px;"
+        />
       </div>
     </div>
 
-    <div id="interface">
+  <div id="interface">      
     <!-- HOME PAGE WITH INITAL SEARCH BAR -->
     <div class="home_page visible">
       <div class="container" id="home_search_bar">
-        <form id="location_input" >
+        <form id="location_input">
           <div class="form-inline row justify-content-center">
             <label for="address" class="search-label" hidden
-              >Enter a zip code or address</label
-            >
+              >Enter a zip code or address</label>
             <input
               name="location_input"
               class="form-control ml-3 mr-3 w-75"
@@ -75,10 +125,10 @@
               >
                 Search
             </button>
-            </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
+    </div>
 
     <!-- WEATHER PAGE -->
     <!-- For this "page", give ids to the elements and put the class names in the js file -->
@@ -126,8 +176,9 @@
           </div>         
         </div>
       </div>
-    </div>
-</div>
+    </div>    
+  </div>
+
     <script src="./js/animation.js"></script>
     <script src="./js/script.js" type=></script>
     <!-- update the version number as needed -->
@@ -154,5 +205,16 @@
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
       crossorigin="anonymous">
     </script>
+    <span>
+      <footer>
+        <nav class= "footer">
+          <ul class = "GoSocial">
+            <li><a href="https://www.linkedin.com/in/kaushik" target="_blank">LinkedIn</a></li>
+            <li><a href="https://github.com/BM-O/weather" target="_blank">GitHub</a></li>
+          </ul>
+        </nav>
+      </footer>
+  </span>
+  
   </body>
 </html>
