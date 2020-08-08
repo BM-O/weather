@@ -113,7 +113,7 @@ function currentWeather(current) {
   let des = document.createElement("h3");
   des.textContent = `${current.description}`;
   let br = document.createElement("br");
-  let feel = document.createElement("h5");
+  let feel = document.createElement("h4");
   feel.textContent = `Feels Like ${current.tempfeelF} °`;
   cur_body.appendChild(temp);
   cur_body.appendChild(des);
