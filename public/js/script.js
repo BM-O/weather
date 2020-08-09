@@ -54,8 +54,7 @@ search.addEventListener("click", () => {
 function showWeather(data) {
   var bg = document.getElementById("page");
   bg.style.height = "1850px";
-  makeVisible(weather);
-  console.log(data);
+  makeVisible(weather);  
 
   //Data shortcuts
   const aq = data.aq;
@@ -211,8 +210,7 @@ function currentWeather(current) {
   rain_label.textContent = "Rain | Chance of Rain";
   row4_header.appendChild(rain_label);
   let rain = document.createElement("td");
-  rain.textContent = `${current.rain} | ${current.pop}%`;
-  console.log(current.pop);
+  rain.textContent = `${current.rain} | ${current.pop}%`;  
   row4.appendChild(rain);
 
   //Append rows to table
@@ -237,9 +235,7 @@ function currentAirQuality(data) {
   const card = document.getElementById("advisory_card");
   const body = document.getElementById("advisory_text");
   const aqcard = document.getElementById("aq_card");
-  const aqbody = document.getElementById("aq_text");
-  console.log(data.level);
-  console.log(data);
+  const aqbody = document.getElementById("aq_text"); 
 
   //Air Quality card title
   if (document.contains(document.getElementById("aq_title"))) {
