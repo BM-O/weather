@@ -154,7 +154,7 @@ function getWeatherContents(response) {
     let sunset = moment.unix(x["sunset"]).tz(timezone).format('hh:mm A');
     let feelslike = x["feels_like"][`${currpart}`];
     let pop = x["pop"];
-    let rain = x["rain"] ? x["rain"] : "No Rain";
+    let rain = x["rain"] ? `${x["rain"]} mm`: "No Rain";
 
     //Convert to Month/Day from Unix format
     let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];

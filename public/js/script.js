@@ -211,7 +211,7 @@ function currentWeather(current) {
   rain_label.textContent = "Rain | Chance of Rain";
   row4_header.appendChild(rain_label);
   let rain = document.createElement("td");
-  rain.textContent = `${current.rain} | ${current.pop}%`;
+  rain.textContent = `${current.rain} | ${current.pop * 100}%`;
   row4.appendChild(rain);
 
   //Append rows to table
@@ -524,8 +524,7 @@ function createmodal1(foredata, num) {
 
   let tab61Thead = document.createElement("THead");
   tab61Thead.className = "thead-dark";
-  innerTab41.appendChild(tab61Thead);
-  innerDiv31.appendChild(innerTab41);
+  innerTab41.appendChild(tab61Thead);  
 
   let tab71row = document.createElement("tr");
 
@@ -546,6 +545,34 @@ function createmodal1(foredata, num) {
   tab72row.appendChild(tab71d);
   tab72row.appendChild(tab72d);
   tab61Thead.appendChild(tab72row);
+
+  //
+  let tab71Thead = document.createElement("THead");
+  tab71Thead.className = "thead-dark";
+  innerTab41.appendChild(tab71Thead);
+  innerDiv31.appendChild(innerTab41);
+
+  let tab81row = document.createElement("tr");
+
+  let tab81th = document.createElement("th");
+  tab81th.textContent = "Sunrise | Sunrise";
+  let tab82th = document.createElement("th");
+  tab82th.textContent = "Chance of Rain";
+  tab81row.appendChild(tab81th);
+  tab81row.appendChild(tab82th);
+  tab71Thead.append(tab81row);
+
+  let tab82row = document.createElement("tr");
+
+  let tab81d = document.createElement("td");
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  let tab82d = document.createElement("td");
+  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82row.appendChild(tab81d);
+  tab82row.appendChild(tab82d);
+  tab71Thead.appendChild(tab82row);
+
+  //
 
   let innerDiv32 = document.createElement("div");
   innerDiv32.className = "modal-footer";
@@ -675,8 +702,7 @@ function createmodal2(foredata, num) {
 
   let tab61Thead = document.createElement("THead");
   tab61Thead.className = "thead-dark";
-  innerTab41.appendChild(tab61Thead);
-  innerDiv31.appendChild(innerTab41);
+  innerTab41.appendChild(tab61Thead);  
 
   let tab71row = document.createElement("tr");
 
@@ -697,6 +723,34 @@ function createmodal2(foredata, num) {
   tab72row.appendChild(tab71d);
   tab72row.appendChild(tab72d);
   tab61Thead.appendChild(tab72row);
+
+  //
+  let tab71Thead = document.createElement("THead");
+  tab71Thead.className = "thead-dark";
+  innerTab41.appendChild(tab71Thead);
+  innerDiv31.appendChild(innerTab41);
+
+  let tab81row = document.createElement("tr");
+
+  let tab81th = document.createElement("th");
+  tab81th.textContent = "Sunrise | Sunrise";
+  let tab82th = document.createElement("th");
+  tab82th.textContent = "Chance of Rain";
+  tab81row.appendChild(tab81th);
+  tab81row.appendChild(tab82th);
+  tab71Thead.append(tab81row);
+
+  let tab82row = document.createElement("tr");
+
+  let tab81d = document.createElement("td");
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  let tab82d = document.createElement("td");
+  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82row.appendChild(tab81d);
+  tab82row.appendChild(tab82d);
+  tab71Thead.appendChild(tab82row);
+
+  //
 
   let innerDiv32 = document.createElement("div");
   innerDiv32.className = "modal-footer";
@@ -826,8 +880,7 @@ function createmodal3(foredata, num) {
 
   let tab61Thead = document.createElement("THead");
   tab61Thead.className = "thead-dark";
-  innerTab41.appendChild(tab61Thead);
-  innerDiv31.appendChild(innerTab41);
+  innerTab41.appendChild(tab61Thead);  
 
   let tab71row = document.createElement("tr");
 
@@ -848,6 +901,34 @@ function createmodal3(foredata, num) {
   tab72row.appendChild(tab71d);
   tab72row.appendChild(tab72d);
   tab61Thead.appendChild(tab72row);
+
+  //
+  let tab71Thead = document.createElement("THead");
+  tab71Thead.className = "thead-dark";
+  innerTab41.appendChild(tab71Thead);
+  innerDiv31.appendChild(innerTab41);
+
+  let tab81row = document.createElement("tr");
+
+  let tab81th = document.createElement("th");
+  tab81th.textContent = "Sunrise | Sunrise";
+  let tab82th = document.createElement("th");
+  tab82th.textContent = "Chance of Rain";
+  tab81row.appendChild(tab81th);
+  tab81row.appendChild(tab82th);
+  tab71Thead.append(tab81row);
+
+  let tab82row = document.createElement("tr");
+
+  let tab81d = document.createElement("td");
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  let tab82d = document.createElement("td");
+  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82row.appendChild(tab81d);
+  tab82row.appendChild(tab82d);
+  tab71Thead.appendChild(tab82row);
+
+  //
 
   let innerDiv32 = document.createElement("div");
   innerDiv32.className = "modal-footer";
@@ -978,7 +1059,6 @@ function createmodal4(foredata, num) {
   let tab61Thead = document.createElement("THead");
   tab61Thead.className = "thead-dark";
   innerTab41.appendChild(tab61Thead);
-  innerDiv31.appendChild(innerTab41);
 
   let tab71row = document.createElement("tr");
 
@@ -999,6 +1079,34 @@ function createmodal4(foredata, num) {
   tab72row.appendChild(tab71d);
   tab72row.appendChild(tab72d);
   tab61Thead.appendChild(tab72row);
+
+  //
+  let tab71Thead = document.createElement("THead");
+  tab71Thead.className = "thead-dark";
+  innerTab41.appendChild(tab71Thead);
+  innerDiv31.appendChild(innerTab41);
+
+  let tab81row = document.createElement("tr");
+
+  let tab81th = document.createElement("th");
+  tab81th.textContent = "Sunrise | Sunrise";
+  let tab82th = document.createElement("th");
+  tab82th.textContent = "Chance of Rain";
+  tab81row.appendChild(tab81th);
+  tab81row.appendChild(tab82th);
+  tab71Thead.append(tab81row);
+
+  let tab82row = document.createElement("tr");
+
+  let tab81d = document.createElement("td");
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  let tab82d = document.createElement("td");
+  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82row.appendChild(tab81d);
+  tab82row.appendChild(tab82d);
+  tab71Thead.appendChild(tab82row);
+
+  //
 
   let innerDiv32 = document.createElement("div");
   innerDiv32.className = "modal-footer";
@@ -1129,7 +1237,6 @@ function createmodal5(foredata, num) {
   let tab61Thead = document.createElement("THead");
   tab61Thead.className = "thead-dark";
   innerTab41.appendChild(tab61Thead);
-  innerDiv31.appendChild(innerTab41);
 
   let tab71row = document.createElement("tr");
 
@@ -1150,6 +1257,34 @@ function createmodal5(foredata, num) {
   tab72row.appendChild(tab71d);
   tab72row.appendChild(tab72d);
   tab61Thead.appendChild(tab72row);
+
+  //
+  let tab71Thead = document.createElement("THead");
+  tab71Thead.className = "thead-dark";
+  innerTab41.appendChild(tab71Thead);
+  innerDiv31.appendChild(innerTab41);
+
+  let tab81row = document.createElement("tr");
+
+  let tab81th = document.createElement("th");
+  tab81th.textContent = "Sunrise | Sunrise";
+  let tab82th = document.createElement("th");
+  tab82th.textContent = "Chance of Rain";
+  tab81row.appendChild(tab81th);
+  tab81row.appendChild(tab82th);
+  tab71Thead.append(tab81row);
+
+  let tab82row = document.createElement("tr");
+
+  let tab81d = document.createElement("td");
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  let tab82d = document.createElement("td");
+  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82row.appendChild(tab81d);
+  tab82row.appendChild(tab82d);
+  tab71Thead.appendChild(tab82row);
+
+  //
 
   let innerDiv32 = document.createElement("div");
   innerDiv32.className = "modal-footer";
@@ -1280,7 +1415,6 @@ function createmodal6(foredata, num) {
   let tab61Thead = document.createElement("THead");
   tab61Thead.className = "thead-dark";
   innerTab41.appendChild(tab61Thead);
-  innerDiv31.appendChild(innerTab41);
 
   let tab71row = document.createElement("tr");
 
@@ -1301,6 +1435,34 @@ function createmodal6(foredata, num) {
   tab72row.appendChild(tab71d);
   tab72row.appendChild(tab72d);
   tab61Thead.appendChild(tab72row);
+
+  //
+  let tab71Thead = document.createElement("THead");
+  tab71Thead.className = "thead-dark";
+  innerTab41.appendChild(tab71Thead);
+  innerDiv31.appendChild(innerTab41);
+
+  let tab81row = document.createElement("tr");
+
+  let tab81th = document.createElement("th");
+  tab81th.textContent = "Sunrise | Sunrise";
+  let tab82th = document.createElement("th");
+  tab82th.textContent = "Chance of Rain";
+  tab81row.appendChild(tab81th);
+  tab81row.appendChild(tab82th);
+  tab71Thead.append(tab81row);
+
+  let tab82row = document.createElement("tr");
+
+  let tab81d = document.createElement("td");
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  let tab82d = document.createElement("td");
+  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82row.appendChild(tab81d);
+  tab82row.appendChild(tab82d);
+  tab71Thead.appendChild(tab82row);
+
+  //
 
   let innerDiv32 = document.createElement("div");
   innerDiv32.className = "modal-footer";
@@ -1431,7 +1593,6 @@ function createmodal7(foredata, num) {
   let tab61Thead = document.createElement("THead");
   tab61Thead.className = "thead-dark";
   innerTab41.appendChild(tab61Thead);
-  innerDiv31.appendChild(innerTab41);
 
   let tab71row = document.createElement("tr");
 
@@ -1452,6 +1613,34 @@ function createmodal7(foredata, num) {
   tab72row.appendChild(tab71d);
   tab72row.appendChild(tab72d);
   tab61Thead.appendChild(tab72row);
+
+  //
+  let tab71Thead = document.createElement("THead");
+  tab71Thead.className = "thead-dark";
+  innerTab41.appendChild(tab71Thead);
+  innerDiv31.appendChild(innerTab41);
+
+  let tab81row = document.createElement("tr");
+
+  let tab81th = document.createElement("th");
+  tab81th.textContent = "Sunrise | Sunrise";
+  let tab82th = document.createElement("th");
+  tab82th.textContent = "Chance of Rain";
+  tab81row.appendChild(tab81th);
+  tab81row.appendChild(tab82th);
+  tab71Thead.append(tab81row);
+
+  let tab82row = document.createElement("tr");
+
+  let tab81d = document.createElement("td");
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  let tab82d = document.createElement("td");
+  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82row.appendChild(tab81d);
+  tab82row.appendChild(tab82d);
+  tab71Thead.appendChild(tab82row);
+
+  //
 
   let innerDiv32 = document.createElement("div");
   innerDiv32.className = "modal-footer";
