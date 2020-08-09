@@ -1,4 +1,4 @@
-const functions = require("firebase-functions");
+  const functions = require("firebase-functions");
 const config = functions.config();
 const axios = require("axios");
 const e = require("express");
@@ -162,6 +162,7 @@ function getWeatherContents(response) {
     let weekDay = days[d.getDay()];
     let day = d.getDate();
     let date = `${weekDay} ${day}`;
+    pop = Math.round(pop*100);
 
     let sunrisetime = timeConverter(sunrise);
     let sunsettime = timeConverter(sunset);

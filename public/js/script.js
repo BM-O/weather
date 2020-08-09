@@ -211,7 +211,8 @@ function currentWeather(current) {
   rain_label.textContent = "Rain | Chance of Rain";
   row4_header.appendChild(rain_label);
   let rain = document.createElement("td");
-  rain.textContent = `${current.rain} | ${current.pop * 100}%`;
+  rain.textContent = `${current.rain} | ${current.pop}%`;
+  console.log(current.pop);
   row4.appendChild(rain);
 
   //Append rows to table
@@ -569,7 +570,7 @@ function createmodal1(foredata, num) {
     foredata[num - 1].sunsettime
   }`;
   let tab82d = document.createElement("td");
-  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82d.textContent = `${foredata[num - 1].pop}%`;
   tab82row.appendChild(tab81d);
   tab82row.appendChild(tab82d);
   tab71Thead.appendChild(tab82row);
@@ -749,7 +750,7 @@ function createmodal2(foredata, num) {
     foredata[num - 1].sunsettime
   }`;
   let tab82d = document.createElement("td");
-  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82d.textContent = `${foredata[num - 1].pop}%`;
   tab82row.appendChild(tab81d);
   tab82row.appendChild(tab82d);
   tab71Thead.appendChild(tab82row);
@@ -929,7 +930,7 @@ function createmodal3(foredata, num) {
     foredata[num - 1].sunsettime
   }`;
   let tab82d = document.createElement("td");
-  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82d.textContent = `${foredata[num - 1].pop}%`;
   tab82row.appendChild(tab81d);
   tab82row.appendChild(tab82d);
   tab71Thead.appendChild(tab82row);
@@ -1109,7 +1110,7 @@ function createmodal4(foredata, num) {
     foredata[num - 1].sunsettime
   }`;
   let tab82d = document.createElement("td");
-  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82d.textContent = `${foredata[num - 1].pop}%`;
   tab82row.appendChild(tab81d);
   tab82row.appendChild(tab82d);
   tab71Thead.appendChild(tab82row);
@@ -1289,7 +1290,7 @@ function createmodal5(foredata, num) {
     foredata[num - 1].sunsettime
   }`;
   let tab82d = document.createElement("td");
-  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82d.textContent = `${foredata[num - 1].pop}%`;
   tab82row.appendChild(tab81d);
   tab82row.appendChild(tab82d);
   tab71Thead.appendChild(tab82row);
@@ -1469,7 +1470,7 @@ function createmodal6(foredata, num) {
     foredata[num - 1].sunsettime
   }`;
   let tab82d = document.createElement("td");
-  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82d.textContent = `${foredata[num - 1].pop}%`;
   tab82row.appendChild(tab81d);
   tab82row.appendChild(tab82d);
   tab71Thead.appendChild(tab82row);
@@ -1649,7 +1650,7 @@ function createmodal7(foredata, num) {
     foredata[num - 1].sunsettime
   }`;
   let tab82d = document.createElement("td");
-  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
+  tab82d.textContent = `${foredata[num - 1].pop}%`;
   tab82row.appendChild(tab81d);
   tab82row.appendChild(tab82d);
   tab71Thead.appendChild(tab82row);
