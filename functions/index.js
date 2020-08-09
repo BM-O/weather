@@ -135,7 +135,7 @@ function getWeatherContents(response) {
   let array = [];
   const weatherData = response.daily;
   const timezone = response["timezone"];
-  const currpart = partOfDay();
+  const currpart = partOfDay(moment.unix(weatherData[0]["dt"]).tz(timezone).format('HH:mm'));
   //Parse JSON for necessary data to display
   for (let i = 0; i < weatherData.length; ++i) {
     let x = weatherData[i];
