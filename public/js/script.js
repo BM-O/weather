@@ -105,7 +105,7 @@ function currentWeather(current) {
   img.classList.add("img-fluid");
   img.classList.add("float-right");
   img.src = `${current.icon}`;
-  img.alt = "Weather icon";
+  img.alt = `${current.description} icon`;
   cur_body.appendChild(img);
   //Temperature and description
   let temp = document.createElement("h2");
@@ -113,7 +113,7 @@ function currentWeather(current) {
   let des = document.createElement("h3");
   des.textContent = `${current.description}`;
   let br = document.createElement("br");
-  let feel = document.createElement("h5");
+  let feel = document.createElement("h4");
   feel.textContent = `Feels Like ${current.tempfeelF} °`;
   cur_body.appendChild(temp);
   cur_body.appendChild(des);
@@ -122,100 +122,111 @@ function currentWeather(current) {
   //Create a table to store the rest of the data
   let cur_table = document.createElement("table");
   cur_table.classList.add("w-100");
+  cur_table.classList.add("table");
   cur_table.classList.add("table-bordered");
   cur_table.classList.add("text-center");
 
   //Create row 1
-  let row1 = cur_table.insertRow();
+  let row1_head = document.createElement("thead");
+  row1_head.classList.add("thead-dark");
+  let row1_header = document.createElement("tr");
+  let row1 = document.createElement("tr");
   //Row 1 - High/Low
-  let cell1 = row1.insertCell();
-  let HiLo_label = document.createElement("div");
-  HiLo_label.classList.add("table-label");
-  HiLo_label.classList.add("font-weight-bold");
+  let HiLo_label = document.createElement("th");
+  //HiLo_label.classList.add("font-weight-bold");
   HiLo_label.textContent = "High/Low";
-  cell1.appendChild(HiLo_label);
-  let HiLo = document.createElement("div");
+  row1_header.appendChild(HiLo_label);
+  let HiLo = document.createElement("td");
   HiLo.textContent = `${current.tempHi}° | ${current.tempLo}°`;
-  cell1.appendChild(HiLo);
+  row1.appendChild(HiLo);
   //Row 1 - Wind
-  let cell2 = row1.insertCell();
-  let wind_label = document.createElement("div");
-  wind_label.classList.add("table-label");
-  wind_label.classList.add("font-weight-bold");
+  let wind_label = document.createElement("th");
+  //wind_label.classList.add("font-weight-bold");
   wind_label.textContent = "Wind";
-  cell2.appendChild(wind_label);
-  let wind = document.createElement("div");
+  row1_header.appendChild(wind_label);
+  let wind = document.createElement("td");
   wind.textContent = `${current.wind} mph`;
-  cell2.appendChild(wind);
+  row1.appendChild(wind);
 
   //Create row 2
-  let row2 = cur_table.insertRow();
+  let row2_head = document.createElement("thead");
+  row2_head.classList.add("thead-dark");
+  let row2_header = document.createElement("tr");
+  let row2 = document.createElement("tr");
   //Row 2 - Humidity
-  let cell3 = row2.insertCell();
-  let hum_label = document.createElement("div");
-  hum_label.classList.add("table-label");
+  let hum_label = document.createElement("th");
   hum_label.classList.add("font-weight-bold");
   hum_label.textContent = "Humidity";
-  cell3.appendChild(hum_label);
-  let hum = document.createElement("div");
+  row2_header.appendChild(hum_label);
+  let hum = document.createElement("td");
   hum.textContent = `${current.humidity}%`;
-  cell3.appendChild(hum);
+  row2.appendChild(hum);
   //Row 2 - Dew Point
-  let cell4 = row2.insertCell();
-  let dew_label = document.createElement("div");
-  dew_label.classList.add("table-label");
+  let dew_label = document.createElement("th");
   dew_label.classList.add("font-weight-bold");
   dew_label.textContent = "Dew Point";
-  cell4.appendChild(dew_label);
-  let dew = document.createElement("div");
+  row2_header.appendChild(dew_label);
+  let dew = document.createElement("td");
   dew.textContent = `${current.dew_point}°`;
-  cell4.appendChild(dew);
+  row2.appendChild(dew);
 
   //Create row 3
-  let row3 = cur_table.insertRow();
+  let row3_head = document.createElement("thead");
+  row3_head.classList.add("thead-dark");
+  let row3_header = document.createElement("tr");
+  let row3 = document.createElement("tr");
   //Row 3 - Pressure
-  let cell5 = row3.insertCell();
-  let press_label = document.createElement("div");
-  press_label.classList.add("table-label");
+  let press_label = document.createElement("th");
   press_label.classList.add("font-weight-bold");
   press_label.textContent = "Pressure";
-  cell5.appendChild(press_label);
-  let press = document.createElement("div");
+  row3_header.appendChild(press_label);
+  let press = document.createElement("td");
   press.textContent = `${current.pressure} in`;
-  cell5.appendChild(press);
+  row3.appendChild(press);
   //Row 3 - UV Index
-  let cell6 = row3.insertCell();
-  let uv_label = document.createElement("div");
-  uv_label.classList.add("table-label");
+  let uv_label = document.createElement("th");
   uv_label.classList.add("font-weight-bold");
   uv_label.textContent = "UV Index";
-  cell6.appendChild(uv_label);
-  let uv = document.createElement("div");
+  row3_header.appendChild(uv_label);
+  let uv = document.createElement("td");
   uv.textContent = `${current.uvi} of 10`;
-  cell6.appendChild(uv);
+  row3.appendChild(uv);
 
   //Create row 4
-  let row4 = cur_table.insertRow();
+  let row4_head = document.createElement("thead");
+  row4_head.classList.add("thead-dark");
+  let row4_header = document.createElement("tr");
+  let row4 = document.createElement("tr");
   //Row 4 - Sunrise/sunset
-  let cell7 = row4.insertCell();
-  let sun_label = document.createElement("div");
-  sun_label.classList.add("table-label");
+  let sun_label = document.createElement("th");
   sun_label.classList.add("font-weight-bold");
   sun_label.textContent = "Sunrise | Sunset";
-  cell7.appendChild(sun_label);
-  let sun = document.createElement("div");
+  row4_header.appendChild(sun_label);
+  let sun = document.createElement("td");
   sun.textContent = `${current.sunrisetime} | ${current.sunsettime}`;
-  cell7.appendChild(sun);
-  //Row 3 - UV Index
-  let cell8 = row4.insertCell();
-  let rain_label = document.createElement("div");
-  rain_label.classList.add("table-label");
+  row4.appendChild(sun);
+  //Row 4 - Rain
+  let rain_label = document.createElement("th");
   rain_label.classList.add("font-weight-bold");
   rain_label.textContent = "Rain | Chance of Rain";
-  cell8.appendChild(rain_label);
-  let rain = document.createElement("div");
-  rain.textContent = `${current.rain} | ${current.pop}`;
-  cell8.appendChild(rain);
+  row4_header.appendChild(rain_label);
+  let rain = document.createElement("td");
+  rain.textContent = `${current.rain} | ${current.pop}%`;
+  row4.appendChild(rain);
+
+  //Append rows to table
+  row1_head.appendChild(row1_header);
+  row2_head.appendChild(row2_header);
+  row3_head.appendChild(row3_header);
+  row4_head.appendChild(row4_header);
+  row1_head.appendChild(row1);
+  row2_head.appendChild(row2);
+  row3_head.appendChild(row3);
+  row4_head.appendChild(row4);
+  cur_table.appendChild(row1_head);
+  cur_table.appendChild(row2_head);
+  cur_table.appendChild(row3_head);
+  cur_table.appendChild(row4_head);
 
   //Append the table to the bottom of the card
   cur_body.append(cur_table);
@@ -344,7 +355,7 @@ function getForecast(Data) {
 
   for (forecast of Data) {
     let forimage = `<figure><img class='img-fluid img-responsive'\
-     src=${forecast.icon} alt="Weather icon"></img><figcaption>${forecast.description}\
+     src=${forecast.icon} alt="${forecast.description} icon"></img><figcaption>${forecast.description}\
      </figcaption></figure>`;
 
     forecatData.push([
@@ -370,7 +381,7 @@ function getForecast(Data) {
   for (var i = 2; i < forecatData.length; i++) {
     row = forecast_card.insertRow(-1);
 
-    for (var j = 0; j < columnCount; j++) {      
+    for (var j = 0; j < columnCount; j++) {
       if (j === 3) {
         var cell = row.insertCell(-1);
         if (i === 2) {
@@ -456,7 +467,7 @@ function createmodal1(foredata, num) {
   let forimg = document.createElement("img");
   forimg.classList.add("img-fluid");
   forimg.src = `${foredata[num - 1].icon}`;
-  forimg.alt = "Weather Icon";
+  forimg.alt = `${foredata[num - 1].description} icon`;
   innerDiv31.appendChild(forimg);
 
   let innerTab41 = document.createElement("table");
@@ -607,7 +618,7 @@ function createmodal2(foredata, num) {
   let forimg = document.createElement("img");
   forimg.classList.add("img-fluid");
   forimg.src = `${foredata[num - 1].icon}`;
-  forimg.alt = "Weather Icon";
+  forimg.alt = `${foredata[num - 1].description} icon`;
   innerDiv31.appendChild(forimg);
 
   let innerTab41 = document.createElement("table");
@@ -758,7 +769,7 @@ function createmodal3(foredata, num) {
   let forimg = document.createElement("img");
   forimg.classList.add("img-fluid");
   forimg.src = `${foredata[num - 1].icon}`;
-  forimg.alt = "Weather Icon";
+  forimg.alt = `${foredata[num - 1].description} icon`;
   innerDiv31.appendChild(forimg);
 
   let innerTab41 = document.createElement("table");
@@ -909,7 +920,7 @@ function createmodal4(foredata, num) {
   let forimg = document.createElement("img");
   forimg.classList.add("img-fluid");
   forimg.src = `${foredata[num - 1].icon}`;
-  forimg.alt = "Weather Icon";
+  forimg.alt = `${foredata[num - 1].description} icon`;
   innerDiv31.appendChild(forimg);
 
   let innerTab41 = document.createElement("table");
@@ -1060,7 +1071,7 @@ function createmodal5(foredata, num) {
   let forimg = document.createElement("img");
   forimg.classList.add("img-fluid");
   forimg.src = `${foredata[num - 1].icon}`;
-  forimg.alt = "Weather Icon";
+  forimg.alt = `${foredata[num - 1].description} icon`;
   innerDiv31.appendChild(forimg);
 
   let innerTab41 = document.createElement("table");
@@ -1211,7 +1222,7 @@ function createmodal6(foredata, num) {
   let forimg = document.createElement("img");
   forimg.classList.add("img-fluid");
   forimg.src = `${foredata[num - 1].icon}`;
-  forimg.alt = "Weather Icon";
+  forimg.alt = `${foredata[num - 1].description} icon`;
   innerDiv31.appendChild(forimg);
 
   let innerTab41 = document.createElement("table");
@@ -1362,7 +1373,7 @@ function createmodal7(foredata, num) {
   let forimg = document.createElement("img");
   forimg.classList.add("img-fluid");
   forimg.src = `${foredata[num - 1].icon}`;
-  forimg.alt = "Weather Icon";
+  forimg.alt = `${foredata[num - 1].description} icon`;
   innerDiv31.appendChild(forimg);
 
   let innerTab41 = document.createElement("table");
