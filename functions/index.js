@@ -22,7 +22,7 @@ exports.getCoords = functions.https.onCall(async (dataObj, context) => {
   const geocode = data.results[0].locations[0].displayLatLng;
   let lat = geocode.lat;
   let lng = geocode.lng;
-  //Create object to store OpenWeather and AirVisual API call data
+  //Create object to store OpenWeather, AirVisual and Weatherbit Alert API call data
   let obj = {};
   obj.weather = await getWeather(lat, lng);
   obj.aq = await getAQ(lat, lng);
