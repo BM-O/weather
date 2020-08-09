@@ -26,6 +26,7 @@ exports.getCoords = functions.https.onCall(async (dataObj, context) => {
   let obj = {};
   obj.weather = await getWeather(lat, lng);
   obj.aq = await getAQ(lat, lng);
+  obj.alert = await getWeatherAlert(lat, lng);
 
   return obj;
 });
@@ -41,6 +42,7 @@ exports.getCurrent = functions.https.onCall(async (dataObj, context) => {
   let obj = {};
   obj.weather = await getWeather(lat, lng);
   obj.aq = await getAQ(lat, lng);
+  obj.alert = await getWeatherAlert(lat, lng);
 
   return obj;
 });
@@ -69,6 +71,18 @@ async function getAQ(lat, lng) {
   const response = await axios.get(query);
   const data = await response.data;
   return getAirQualityContents(data);
+}
+
+async function getWeatherAlert(lat, lng) {
+  //Query WeatherBit.io API to get a JSON object in order fetch active
+  //Weather alerts around the location specified
+  const url = "https://api.weatherbit.io/v2.0/alerts?";
+  const key = config.service.weatherbit_key;
+  const query = `${url}lat=${lat}&lon=${lng}&key=${key}`;
+
+  const response = await axios.get(query);
+  const data = await response.data;
+  return getWeatherAlertContents(data);
 }
 
 function timeConverter(UNIX_timestamp) {
@@ -260,4 +274,31 @@ function getAirQualityContents(response) {
     caution: cautionStatement,
   };
   return obj;
+}
+
+function getWeatherAlertContents(response){
+  
+  let array = [];
+  const weatherAlerts = response.alerts;
+
+  for (let i = 0; i < weatherAlerts.length; ++i) {
+    let x = weatherAlerts[i];
+    let issued = x["effective_local"];
+    let expire = x["expires_local"];
+    let url = x["uri"];
+    let severity = x["severity"];
+    let title = x["title"];
+    let description = x["description"];      
+
+    let obj = {
+      issued: issued,
+      expire: expire,
+      url: url,
+      severity: severity,
+      title: title,
+      description: description
+    };
+    array.push(obj); //Add object to array
+  }
+  return array;
 }
