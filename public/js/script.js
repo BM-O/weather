@@ -524,7 +524,7 @@ function createmodal1(foredata, num) {
 
   let tab61Thead = document.createElement("THead");
   tab61Thead.className = "thead-dark";
-  innerTab41.appendChild(tab61Thead);  
+  innerTab41.appendChild(tab61Thead);
 
   let tab71row = document.createElement("tr");
 
@@ -565,7 +565,9 @@ function createmodal1(foredata, num) {
   let tab82row = document.createElement("tr");
 
   let tab81d = document.createElement("td");
-  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${
+    foredata[num - 1].sunsettime
+  }`;
   let tab82d = document.createElement("td");
   tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
   tab82row.appendChild(tab81d);
@@ -702,7 +704,7 @@ function createmodal2(foredata, num) {
 
   let tab61Thead = document.createElement("THead");
   tab61Thead.className = "thead-dark";
-  innerTab41.appendChild(tab61Thead);  
+  innerTab41.appendChild(tab61Thead);
 
   let tab71row = document.createElement("tr");
 
@@ -743,7 +745,9 @@ function createmodal2(foredata, num) {
   let tab82row = document.createElement("tr");
 
   let tab81d = document.createElement("td");
-  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${
+    foredata[num - 1].sunsettime
+  }`;
   let tab82d = document.createElement("td");
   tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
   tab82row.appendChild(tab81d);
@@ -880,7 +884,7 @@ function createmodal3(foredata, num) {
 
   let tab61Thead = document.createElement("THead");
   tab61Thead.className = "thead-dark";
-  innerTab41.appendChild(tab61Thead);  
+  innerTab41.appendChild(tab61Thead);
 
   let tab71row = document.createElement("tr");
 
@@ -921,7 +925,9 @@ function createmodal3(foredata, num) {
   let tab82row = document.createElement("tr");
 
   let tab81d = document.createElement("td");
-  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${
+    foredata[num - 1].sunsettime
+  }`;
   let tab82d = document.createElement("td");
   tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
   tab82row.appendChild(tab81d);
@@ -1099,7 +1105,9 @@ function createmodal4(foredata, num) {
   let tab82row = document.createElement("tr");
 
   let tab81d = document.createElement("td");
-  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${
+    foredata[num - 1].sunsettime
+  }`;
   let tab82d = document.createElement("td");
   tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
   tab82row.appendChild(tab81d);
@@ -1277,7 +1285,9 @@ function createmodal5(foredata, num) {
   let tab82row = document.createElement("tr");
 
   let tab81d = document.createElement("td");
-  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${
+    foredata[num - 1].sunsettime
+  }`;
   let tab82d = document.createElement("td");
   tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
   tab82row.appendChild(tab81d);
@@ -1455,7 +1465,9 @@ function createmodal6(foredata, num) {
   let tab82row = document.createElement("tr");
 
   let tab81d = document.createElement("td");
-  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${
+    foredata[num - 1].sunsettime
+  }`;
   let tab82d = document.createElement("td");
   tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
   tab82row.appendChild(tab81d);
@@ -1633,7 +1645,9 @@ function createmodal7(foredata, num) {
   let tab82row = document.createElement("tr");
 
   let tab81d = document.createElement("td");
-  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${foredata[num - 1].sunsettime}`;
+  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${
+    foredata[num - 1].sunsettime
+  }`;
   let tab82d = document.createElement("td");
   tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
   tab82row.appendChild(tab81d);
