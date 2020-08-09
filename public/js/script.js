@@ -1,5 +1,6 @@
 const weather = document.getElementById("weather_page");
 const search = document.getElementById("get_location");
+const pgalert = document.getElementById("alert_sec");
 var addr = "Portland, OR"; //Default for animation
 
 // On load, it will ask for permission to access current location
@@ -61,10 +62,17 @@ function showWeather(data) {
   const aq = data.aq;
   const forecast = data.weather;
   const condition = forecast[0];
+  const alert = data.alert[0];
 
   currentWeather(condition);
   currentAirQuality(aq);
   getForecast(forecast);
+  if (alert.length > 0){
+    getAlertData(alert);    
+    pgalert.classList.add("visible");
+    pgalert.classList.remove("invisible");
+  }
+  
 
   //Animate the current weather condition.
   //Wait a second to terminate previous animation first.
@@ -270,36 +278,49 @@ function currentAirQuality(data) {
     card.style.color = "black";
     aqcard.style.backgroundColor = "#28E439";
     aqcard.style.color = "black";
+    altcard.style.backgroundColor = "#28E439";
+    altcard.style.color = "black";
   } else if (data.level === "Moderate") {
     card.style.backgroundColor = "#FEFF48";
     card.style.color = "black";
     aqcard.style.backgroundColor = "#FEFF48";
     aqcard.style.color = "black";
+    altcard.style.backgroundColor = "#FEFF48";
+    altcard.style.color = "black";
   } else if (data.level === "Unhealthy for Sensitive Groups") {
     card.style.backgroundColor = "#FC7F29";
     card.style.color = "white";
     aqcard.style.backgroundColor = "#FC7F29";
     aqcard.style.color = "white";
+    altcard.style.backgroundColor = "#FC7F29";
+    altcard.style.color = "white";
   } else if (data.level === "Unhealthy") {
     card.style.backgroundColor = "#FB061B";
     card.style.color = "white";
     aqcard.style.backgroundColor = "#FB061B";
     aqcard.style.color = "white";
+    altcard.style.backgroundColor = "#FB061B";
+    altcard.style.color = "white";
   } else if (data.level === "Very Unhealthy") {
     card.style.backgroundColor = "#8E3E94";
     card.style.color = "white";
     aqcard.style.backgroundColor = "#8E3E94";
     aqcard.style.color = "white";
+    altcard.style.backgroundColor = "#8E3E94";
+    altcard.style.color = "white";
   } else {
     card.style.backgroundColor = "#7C0124";
     card.style.color = "white";
     aqcard.style.backgroundColor = "#7C0124";
     aqcard.style.color = "white";
+    altcard.style.backgroundColor = "#7C0124";
+    altcard.style.color = "white";
   }
 
   //Add BS4 class to the card body to center text
   body.classList.add("text-center");
   aqbody.classList.add("text-center");
+
   //Create new element to store caution statement
   let text = document.createElement("div");
   text.classList.add("font-weight-bold");
@@ -317,6 +338,54 @@ function currentAirQuality(data) {
   while (aqbody.firstChild) aqbody.firstChild.remove();
   //Append caution statement to the card body
   aqbody.appendChild(aqtext);
+}
+
+function getAlertData(Data) {
+  const altcard = document.getElementById("alert_card");
+  const altbody = document.getElementById("alert_text");
+
+  //Advisory Text card Title
+  if (document.contains(document.getElementById("alt_title"))) {
+    document.getElementById("alt_title").remove();
+  }
+  //Create new alert text title
+  let alt_title = document.createElement("div");
+  alt_title.classList.add("font-weight-bold");
+  alt_title.id = "alt_title";
+  alt_title.classList.add("card-header");
+  alt_title.textContent = `Weather Alert near by ${addr}`;
+  altcard.prepend(alt_title);
+
+  //Change background color and text color of card
+  if (data.level === "Good") {
+    altcard.style.backgroundColor = "#28E439";
+    altcard.style.color = "black";
+  } else if (data.level === "Moderate") {
+    altcard.style.backgroundColor = "#FEFF48";
+    altcard.style.color = "black";
+  } else if (data.level === "Unhealthy for Sensitive Groups") {
+    altcard.style.backgroundColor = "#FC7F29";
+    altcard.style.color = "white";
+  } else if (data.level === "Unhealthy") {
+    altcard.style.backgroundColor = "#FB061B";
+    altcard.style.color = "white";
+  } else if (data.level === "Very Unhealthy") {
+    altcard.style.backgroundColor = "#8E3E94";
+    altcard.style.color = "white";
+  } else {
+    altcard.style.backgroundColor = "#7C0124";
+    altcard.style.color = "white";
+  }
+
+  altbody.classList.add("text-center");
+
+  let alttext = document.createElement("div");
+  alttext.classList.add("font-weight-bold");
+  alttext.textContent = `Air Index level ${data.aqi}`;
+
+  while (altbody.firstChild) altbody.firstChild.remove();
+  //Append caution statement to the card body
+  altbody.appendChild(alttext);
 }
 
 function getForecast(Data) {
@@ -385,25 +454,25 @@ function getForecast(Data) {
       if (j === 3) {
         var cell = row.insertCell(-1);
         if (i === 2) {
-          cell.appendChild(createmodal1(Data, i));
+          cell.appendChild(createmodal(Data, i));
         }
         if (i === 3) {
-          cell.appendChild(createmodal2(Data, i));
+          cell.appendChild(createmodal(Data, i));
         }
         if (i === 4) {
-          cell.appendChild(createmodal3(Data, i));
+          cell.appendChild(createmodal(Data, i));
         }
         if (i === 5) {
-          cell.appendChild(createmodal4(Data, i));
+          cell.appendChild(createmodal(Data, i));
         }
         if (i === 6) {
-          cell.appendChild(createmodal5(Data, i));
+          cell.appendChild(createmodal(Data, i));
         }
         if (i === 7) {
-          cell.appendChild(createmodal6(Data, i));
+          cell.appendChild(createmodal(Data, i));
         }
         if (i === 8) {
-          cell.appendChild(createmodal7(Data, i));
+          cell.appendChild(createmodal(Data, i));
         }
       } else {
         var cell = row.insertCell(-1);
@@ -419,1091 +488,11 @@ function createmodal1(foredata, num) {
   let modal = document.createElement("button");
   modal.classList.add("btn", "btn-dark");
   modal.setAttribute("data-toggle", "modal");
-  modal.setAttribute("data-target", "#sampleModal1");
+  modal.setAttribute("data-target", `#sampleModal${num - 1}`);
   modal.innerHTML = "More Data";
 
   var div1 = document.createElement("div");
-  div1.id = "sampleModal1";
-  div1.className = "fade modal";
-  div1.tabIndex = -1;
-  div1.setAttribute("role", "dialog");
-
-  var innerDiv1m = document.createElement("div");
-  innerDiv1m.className = "modal-dialog";
-  innerDiv1m.setAttribute("role", "document");
-  div1.appendChild(innerDiv1m);
-
-  var innerDiv2m = document.createElement("div");
-  innerDiv2m.className = "modal-content";
-  innerDiv1m.appendChild(innerDiv2m);
-
-  var innerDiv3 = document.createElement("div");
-  innerDiv3.className = "modal-header";
-  innerDiv2m.appendChild(innerDiv3);
-
-  var headerM = document.createElement("H4");
-  headerM.className = "modal-title";
-  headerM.textContent = `Weather on ${foredata[num - 1].date}`;
-  innerDiv3.appendChild(headerM);
-
-  var buttonM = document.createElement("button");
-  buttonM.className = "close btn";
-  buttonM.setAttribute("data-dismiss", "modal");
-  buttonM.textContent = "X";
-  innerDiv3.appendChild(buttonM);
-
-  var innerDiv31 = document.createElement("div");
-  innerDiv31.className = "modal-body";
-  innerDiv2m.appendChild(innerDiv31);
-
-  let modalh2 = document.createElement("H2");
-  modalh2.textContent = `${foredata[num - 1].tempFar}°`;
-  innerDiv31.appendChild(modalh2);
-
-  let modalh3 = document.createElement("H3");
-  modalh3.textContent = `${foredata[num - 1].description}`;
-  innerDiv31.appendChild(modalh3);
-
-  let forimg = document.createElement("img");
-  forimg.classList.add("img-fluid");
-  forimg.src = `${foredata[num - 1].icon}`;
-  forimg.alt = `${foredata[num - 1].description} icon`;
-  innerDiv31.appendChild(forimg);
-
-  let innerTab41 = document.createElement("table");
-  innerTab41.className = "table";
-  let tab41Thead = document.createElement("THead");
-  tab41Thead.className = "thead-dark";
-  innerTab41.appendChild(tab41Thead);
-
-  let tab51row = document.createElement("tr");
-
-  let tab51th = document.createElement("th");
-  tab51th.textContent = "Hi | Lo";
-  let tab52th = document.createElement("th");
-  tab52th.textContent = "Wind";
-  tab51row.appendChild(tab51th);
-  tab51row.appendChild(tab52th);
-  tab41Thead.append(tab51row);
-
-  let tab52row = document.createElement("tr");
-
-  let tab51d = document.createElement("td");
-  tab51d.textContent = `${foredata[num - 1].tempHi}° | ${
-    foredata[num - 1].tempLo
-  }°`;
-  let tab52d = document.createElement("td");
-  tab52d.textContent = `${foredata[num - 1].wind} mph`;
-  tab52row.appendChild(tab51d);
-  tab52row.appendChild(tab52d);
-  tab41Thead.appendChild(tab52row);
-
-  let tab51Thead = document.createElement("THead");
-  tab51Thead.className = "thead-dark";
-  innerTab41.appendChild(tab51Thead);
-
-  let tab61row = document.createElement("tr");
-
-  let tab61th = document.createElement("th");
-  tab61th.textContent = "Humidity";
-  let tab62th = document.createElement("th");
-  tab62th.textContent = "Dew Point";
-  tab61row.appendChild(tab61th);
-  tab61row.appendChild(tab62th);
-  tab51Thead.append(tab61row);
-
-  let tab62row = document.createElement("tr");
-
-  let tab61d = document.createElement("td");
-  tab61d.textContent = `${foredata[num - 1].humidity}%`;
-  let tab62d = document.createElement("td");
-  tab62d.textContent = `${foredata[num - 1].dew_point} °`;
-  tab62row.appendChild(tab61d);
-  tab62row.appendChild(tab62d);
-  tab51Thead.appendChild(tab62row);
-
-  let tab61Thead = document.createElement("THead");
-  tab61Thead.className = "thead-dark";
-  innerTab41.appendChild(tab61Thead);
-
-  let tab71row = document.createElement("tr");
-
-  let tab71th = document.createElement("th");
-  tab71th.textContent = "Pressure";
-  let tab72th = document.createElement("th");
-  tab72th.textContent = "UV Index";
-  tab71row.appendChild(tab71th);
-  tab71row.appendChild(tab72th);
-  tab61Thead.append(tab71row);
-
-  let tab72row = document.createElement("tr");
-
-  let tab71d = document.createElement("td");
-  tab71d.textContent = `${foredata[num - 1].pressure} in`;
-  let tab72d = document.createElement("td");
-  tab72d.textContent = `${foredata[num - 1].uvi} of 10`;
-  tab72row.appendChild(tab71d);
-  tab72row.appendChild(tab72d);
-  tab61Thead.appendChild(tab72row);
-
-  //
-  let tab71Thead = document.createElement("THead");
-  tab71Thead.className = "thead-dark";
-  innerTab41.appendChild(tab71Thead);
-  innerDiv31.appendChild(innerTab41);
-
-  let tab81row = document.createElement("tr");
-
-  let tab81th = document.createElement("th");
-  tab81th.textContent = "Sunrise | Sunrise";
-  let tab82th = document.createElement("th");
-  tab82th.textContent = "Chance of Rain";
-  tab81row.appendChild(tab81th);
-  tab81row.appendChild(tab82th);
-  tab71Thead.append(tab81row);
-
-  let tab82row = document.createElement("tr");
-
-  let tab81d = document.createElement("td");
-  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${
-    foredata[num - 1].sunsettime
-  }`;
-  let tab82d = document.createElement("td");
-  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
-  tab82row.appendChild(tab81d);
-  tab82row.appendChild(tab82d);
-  tab71Thead.appendChild(tab82row);
-
-  //
-
-  let innerDiv32 = document.createElement("div");
-  innerDiv32.className = "modal-footer";
-  innerDiv2m.appendChild(innerDiv32);
-
-  var closeButton = document.createElement("button");
-  closeButton.className = "btn btn-dark";
-  closeButton.setAttribute("data-dismiss", "modal");
-  closeButton.innerHTML = "Exit";
-  innerDiv32.appendChild(closeButton);
-
-  modal.appendChild(div1);
-
-  maindiv.appendChild(modal);
-
-  return maindiv;
-}
-
-function createmodal2(foredata, num) {
-  let maindiv = document.createElement("div");
-
-  let modal = document.createElement("button");
-  modal.classList.add("btn", "btn-dark");
-  modal.setAttribute("data-toggle", "modal");
-  modal.setAttribute("data-target", "#sampleModal2");
-  modal.innerHTML = "More Data";
-
-  var div1 = document.createElement("div");
-  div1.id = "sampleModal2";
-  div1.className = "fade modal";
-  div1.tabIndex = -1;
-  div1.setAttribute("role", "dialog");
-
-  var innerDiv1m = document.createElement("div");
-  innerDiv1m.className = "modal-dialog";
-  innerDiv1m.setAttribute("role", "document");
-  div1.appendChild(innerDiv1m);
-
-  var innerDiv2m = document.createElement("div");
-  innerDiv2m.className = "modal-content";
-  innerDiv1m.appendChild(innerDiv2m);
-
-  var innerDiv3 = document.createElement("div");
-  innerDiv3.className = "modal-header";
-  innerDiv2m.appendChild(innerDiv3);
-
-  var headerM = document.createElement("H4");
-  headerM.className = "modal-title";
-  headerM.textContent = `Weather on ${foredata[num - 1].date}`;
-  innerDiv3.appendChild(headerM);
-
-  var buttonM = document.createElement("button");
-  buttonM.className = "close btn";
-  buttonM.setAttribute("data-dismiss", "modal");
-  buttonM.textContent = "X";
-  innerDiv3.appendChild(buttonM);
-
-  var innerDiv31 = document.createElement("div");
-  innerDiv31.className = "modal-body";
-  innerDiv2m.appendChild(innerDiv31);
-
-  let modalh2 = document.createElement("H2");
-  modalh2.textContent = `${foredata[num - 1].tempFar}°`;
-  innerDiv31.appendChild(modalh2);
-
-  let modalh3 = document.createElement("H3");
-  modalh3.textContent = `${foredata[num - 1].description}`;
-  innerDiv31.appendChild(modalh3);
-
-  let forimg = document.createElement("img");
-  forimg.classList.add("img-fluid");
-  forimg.src = `${foredata[num - 1].icon}`;
-  forimg.alt = `${foredata[num - 1].description} icon`;
-  innerDiv31.appendChild(forimg);
-
-  let innerTab41 = document.createElement("table");
-  innerTab41.className = "table";
-  let tab41Thead = document.createElement("THead");
-  tab41Thead.className = "thead-dark";
-  innerTab41.appendChild(tab41Thead);
-
-  let tab51row = document.createElement("tr");
-
-  let tab51th = document.createElement("th");
-  tab51th.textContent = "Hi | Lo";
-  let tab52th = document.createElement("th");
-  tab52th.textContent = "Wind";
-  tab51row.appendChild(tab51th);
-  tab51row.appendChild(tab52th);
-  tab41Thead.append(tab51row);
-
-  let tab52row = document.createElement("tr");
-
-  let tab51d = document.createElement("td");
-  tab51d.textContent = `${foredata[num - 1].tempHi}° | ${
-    foredata[num - 1].tempLo
-  }°`;
-  let tab52d = document.createElement("td");
-  tab52d.textContent = `${foredata[num - 1].wind} mph`;
-  tab52row.appendChild(tab51d);
-  tab52row.appendChild(tab52d);
-  tab41Thead.appendChild(tab52row);
-
-  let tab51Thead = document.createElement("THead");
-  tab51Thead.className = "thead-dark";
-  innerTab41.appendChild(tab51Thead);
-
-  let tab61row = document.createElement("tr");
-
-  let tab61th = document.createElement("th");
-  tab61th.textContent = "Humidity";
-  let tab62th = document.createElement("th");
-  tab62th.textContent = "Dew Point";
-  tab61row.appendChild(tab61th);
-  tab61row.appendChild(tab62th);
-  tab51Thead.append(tab61row);
-
-  let tab62row = document.createElement("tr");
-
-  let tab61d = document.createElement("td");
-  tab61d.textContent = `${foredata[num - 1].humidity}%`;
-  let tab62d = document.createElement("td");
-  tab62d.textContent = `${foredata[num - 1].dew_point} °`;
-  tab62row.appendChild(tab61d);
-  tab62row.appendChild(tab62d);
-  tab51Thead.appendChild(tab62row);
-
-  let tab61Thead = document.createElement("THead");
-  tab61Thead.className = "thead-dark";
-  innerTab41.appendChild(tab61Thead);
-
-  let tab71row = document.createElement("tr");
-
-  let tab71th = document.createElement("th");
-  tab71th.textContent = "Pressure";
-  let tab72th = document.createElement("th");
-  tab72th.textContent = "UV Index";
-  tab71row.appendChild(tab71th);
-  tab71row.appendChild(tab72th);
-  tab61Thead.append(tab71row);
-
-  let tab72row = document.createElement("tr");
-
-  let tab71d = document.createElement("td");
-  tab71d.textContent = `${foredata[num - 1].pressure} in`;
-  let tab72d = document.createElement("td");
-  tab72d.textContent = `${foredata[num - 1].uvi} of 10`;
-  tab72row.appendChild(tab71d);
-  tab72row.appendChild(tab72d);
-  tab61Thead.appendChild(tab72row);
-
-  //
-  let tab71Thead = document.createElement("THead");
-  tab71Thead.className = "thead-dark";
-  innerTab41.appendChild(tab71Thead);
-  innerDiv31.appendChild(innerTab41);
-
-  let tab81row = document.createElement("tr");
-
-  let tab81th = document.createElement("th");
-  tab81th.textContent = "Sunrise | Sunrise";
-  let tab82th = document.createElement("th");
-  tab82th.textContent = "Chance of Rain";
-  tab81row.appendChild(tab81th);
-  tab81row.appendChild(tab82th);
-  tab71Thead.append(tab81row);
-
-  let tab82row = document.createElement("tr");
-
-  let tab81d = document.createElement("td");
-  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${
-    foredata[num - 1].sunsettime
-  }`;
-  let tab82d = document.createElement("td");
-  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
-  tab82row.appendChild(tab81d);
-  tab82row.appendChild(tab82d);
-  tab71Thead.appendChild(tab82row);
-
-  //
-
-  let innerDiv32 = document.createElement("div");
-  innerDiv32.className = "modal-footer";
-  innerDiv2m.appendChild(innerDiv32);
-
-  var closeButton = document.createElement("button");
-  closeButton.className = "btn btn-dark";
-  closeButton.setAttribute("data-dismiss", "modal");
-  closeButton.innerHTML = "Exit";
-  innerDiv32.appendChild(closeButton);
-
-  modal.appendChild(div1);
-
-  maindiv.appendChild(modal);
-
-  return maindiv;
-}
-
-function createmodal3(foredata, num) {
-  let maindiv = document.createElement("div");
-
-  let modal = document.createElement("button");
-  modal.classList.add("btn", "btn-dark");
-  modal.setAttribute("data-toggle", "modal");
-  modal.setAttribute("data-target", "#sampleModal3");
-  modal.innerHTML = "More Data";
-
-  var div1 = document.createElement("div");
-  div1.id = "sampleModal3";
-  div1.className = "fade modal";
-  div1.tabIndex = -1;
-  div1.setAttribute("role", "dialog");
-
-  var innerDiv1m = document.createElement("div");
-  innerDiv1m.className = "modal-dialog";
-  innerDiv1m.setAttribute("role", "document");
-  div1.appendChild(innerDiv1m);
-
-  var innerDiv2m = document.createElement("div");
-  innerDiv2m.className = "modal-content";
-  innerDiv1m.appendChild(innerDiv2m);
-
-  var innerDiv3 = document.createElement("div");
-  innerDiv3.className = "modal-header";
-  innerDiv2m.appendChild(innerDiv3);
-
-  var headerM = document.createElement("H4");
-  headerM.className = "modal-title";
-  headerM.textContent = `Weather on ${foredata[num - 1].date}`;
-  innerDiv3.appendChild(headerM);
-
-  var buttonM = document.createElement("button");
-  buttonM.className = "close btn";
-  buttonM.setAttribute("data-dismiss", "modal");
-  buttonM.textContent = "X";
-  innerDiv3.appendChild(buttonM);
-
-  var innerDiv31 = document.createElement("div");
-  innerDiv31.className = "modal-body";
-  innerDiv2m.appendChild(innerDiv31);
-
-  let modalh2 = document.createElement("H2");
-  modalh2.textContent = `${foredata[num - 1].tempFar}°`;
-  innerDiv31.appendChild(modalh2);
-
-  let modalh3 = document.createElement("H3");
-  modalh3.textContent = `${foredata[num - 1].description}`;
-  innerDiv31.appendChild(modalh3);
-
-  let forimg = document.createElement("img");
-  forimg.classList.add("img-fluid");
-  forimg.src = `${foredata[num - 1].icon}`;
-  forimg.alt = `${foredata[num - 1].description} icon`;
-  innerDiv31.appendChild(forimg);
-
-  let innerTab41 = document.createElement("table");
-  innerTab41.className = "table";
-  let tab41Thead = document.createElement("THead");
-  tab41Thead.className = "thead-dark";
-  innerTab41.appendChild(tab41Thead);
-
-  let tab51row = document.createElement("tr");
-
-  let tab51th = document.createElement("th");
-  tab51th.textContent = "Hi | Lo";
-  let tab52th = document.createElement("th");
-  tab52th.textContent = "Wind";
-  tab51row.appendChild(tab51th);
-  tab51row.appendChild(tab52th);
-  tab41Thead.append(tab51row);
-
-  let tab52row = document.createElement("tr");
-
-  let tab51d = document.createElement("td");
-  tab51d.textContent = `${foredata[num - 1].tempHi}° | ${
-    foredata[num - 1].tempLo
-  }°`;
-  let tab52d = document.createElement("td");
-  tab52d.textContent = `${foredata[num - 1].wind} mph`;
-  tab52row.appendChild(tab51d);
-  tab52row.appendChild(tab52d);
-  tab41Thead.appendChild(tab52row);
-
-  let tab51Thead = document.createElement("THead");
-  tab51Thead.className = "thead-dark";
-  innerTab41.appendChild(tab51Thead);
-
-  let tab61row = document.createElement("tr");
-
-  let tab61th = document.createElement("th");
-  tab61th.textContent = "Humidity";
-  let tab62th = document.createElement("th");
-  tab62th.textContent = "Dew Point";
-  tab61row.appendChild(tab61th);
-  tab61row.appendChild(tab62th);
-  tab51Thead.append(tab61row);
-
-  let tab62row = document.createElement("tr");
-
-  let tab61d = document.createElement("td");
-  tab61d.textContent = `${foredata[num - 1].humidity}%`;
-  let tab62d = document.createElement("td");
-  tab62d.textContent = `${foredata[num - 1].dew_point} °`;
-  tab62row.appendChild(tab61d);
-  tab62row.appendChild(tab62d);
-  tab51Thead.appendChild(tab62row);
-
-  let tab61Thead = document.createElement("THead");
-  tab61Thead.className = "thead-dark";
-  innerTab41.appendChild(tab61Thead);
-
-  let tab71row = document.createElement("tr");
-
-  let tab71th = document.createElement("th");
-  tab71th.textContent = "Pressure";
-  let tab72th = document.createElement("th");
-  tab72th.textContent = "UV Index";
-  tab71row.appendChild(tab71th);
-  tab71row.appendChild(tab72th);
-  tab61Thead.append(tab71row);
-
-  let tab72row = document.createElement("tr");
-
-  let tab71d = document.createElement("td");
-  tab71d.textContent = `${foredata[num - 1].pressure} in`;
-  let tab72d = document.createElement("td");
-  tab72d.textContent = `${foredata[num - 1].uvi} of 10`;
-  tab72row.appendChild(tab71d);
-  tab72row.appendChild(tab72d);
-  tab61Thead.appendChild(tab72row);
-
-  //
-  let tab71Thead = document.createElement("THead");
-  tab71Thead.className = "thead-dark";
-  innerTab41.appendChild(tab71Thead);
-  innerDiv31.appendChild(innerTab41);
-
-  let tab81row = document.createElement("tr");
-
-  let tab81th = document.createElement("th");
-  tab81th.textContent = "Sunrise | Sunrise";
-  let tab82th = document.createElement("th");
-  tab82th.textContent = "Chance of Rain";
-  tab81row.appendChild(tab81th);
-  tab81row.appendChild(tab82th);
-  tab71Thead.append(tab81row);
-
-  let tab82row = document.createElement("tr");
-
-  let tab81d = document.createElement("td");
-  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${
-    foredata[num - 1].sunsettime
-  }`;
-  let tab82d = document.createElement("td");
-  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
-  tab82row.appendChild(tab81d);
-  tab82row.appendChild(tab82d);
-  tab71Thead.appendChild(tab82row);
-
-  //
-
-  let innerDiv32 = document.createElement("div");
-  innerDiv32.className = "modal-footer";
-  innerDiv2m.appendChild(innerDiv32);
-
-  var closeButton = document.createElement("button");
-  closeButton.className = "btn btn-dark";
-  closeButton.setAttribute("data-dismiss", "modal");
-  closeButton.innerHTML = "Exit";
-  innerDiv32.appendChild(closeButton);
-
-  modal.appendChild(div1);
-
-  maindiv.appendChild(modal);
-
-  return maindiv;
-}
-
-function createmodal4(foredata, num) {
-  let maindiv = document.createElement("div");
-
-  let modal = document.createElement("button");
-  modal.classList.add("btn", "btn-dark");
-  modal.setAttribute("data-toggle", "modal");
-  modal.setAttribute("data-target", "#sampleModal4");
-  modal.innerHTML = "More Data";
-
-  var div1 = document.createElement("div");
-  div1.id = "sampleModal4";
-  div1.className = "fade modal";
-  div1.tabIndex = -1;
-  div1.setAttribute("role", "dialog");
-
-  var innerDiv1m = document.createElement("div");
-  innerDiv1m.className = "modal-dialog";
-  innerDiv1m.setAttribute("role", "document");
-  div1.appendChild(innerDiv1m);
-
-  var innerDiv2m = document.createElement("div");
-  innerDiv2m.className = "modal-content";
-  innerDiv1m.appendChild(innerDiv2m);
-
-  var innerDiv3 = document.createElement("div");
-  innerDiv3.className = "modal-header";
-  innerDiv2m.appendChild(innerDiv3);
-
-  var headerM = document.createElement("H4");
-  headerM.className = "modal-title";
-  headerM.textContent = `Weather on ${foredata[num - 1].date}`;
-  innerDiv3.appendChild(headerM);
-
-  var buttonM = document.createElement("button");
-  buttonM.className = "close btn";
-  buttonM.setAttribute("data-dismiss", "modal");
-  buttonM.textContent = "X";
-  innerDiv3.appendChild(buttonM);
-
-  var innerDiv31 = document.createElement("div");
-  innerDiv31.className = "modal-body";
-  innerDiv2m.appendChild(innerDiv31);
-
-  let modalh2 = document.createElement("H2");
-  modalh2.textContent = `${foredata[num - 1].tempFar}°`;
-  innerDiv31.appendChild(modalh2);
-
-  let modalh3 = document.createElement("H3");
-  modalh3.textContent = `${foredata[num - 1].description}`;
-  innerDiv31.appendChild(modalh3);
-
-  let forimg = document.createElement("img");
-  forimg.classList.add("img-fluid");
-  forimg.src = `${foredata[num - 1].icon}`;
-  forimg.alt = `${foredata[num - 1].description} icon`;
-  innerDiv31.appendChild(forimg);
-
-  let innerTab41 = document.createElement("table");
-  innerTab41.className = "table";
-  let tab41Thead = document.createElement("THead");
-  tab41Thead.className = "thead-dark";
-  innerTab41.appendChild(tab41Thead);
-
-  let tab51row = document.createElement("tr");
-
-  let tab51th = document.createElement("th");
-  tab51th.textContent = "Hi | Lo";
-  let tab52th = document.createElement("th");
-  tab52th.textContent = "Wind";
-  tab51row.appendChild(tab51th);
-  tab51row.appendChild(tab52th);
-  tab41Thead.append(tab51row);
-
-  let tab52row = document.createElement("tr");
-
-  let tab51d = document.createElement("td");
-  tab51d.textContent = `${foredata[num - 1].tempHi}° | ${
-    foredata[num - 1].tempLo
-  }°`;
-  let tab52d = document.createElement("td");
-  tab52d.textContent = `${foredata[num - 1].wind} mph`;
-  tab52row.appendChild(tab51d);
-  tab52row.appendChild(tab52d);
-  tab41Thead.appendChild(tab52row);
-
-  let tab51Thead = document.createElement("THead");
-  tab51Thead.className = "thead-dark";
-  innerTab41.appendChild(tab51Thead);
-
-  let tab61row = document.createElement("tr");
-
-  let tab61th = document.createElement("th");
-  tab61th.textContent = "Humidity";
-  let tab62th = document.createElement("th");
-  tab62th.textContent = "Dew Point";
-  tab61row.appendChild(tab61th);
-  tab61row.appendChild(tab62th);
-  tab51Thead.append(tab61row);
-
-  let tab62row = document.createElement("tr");
-
-  let tab61d = document.createElement("td");
-  tab61d.textContent = `${foredata[num - 1].humidity}%`;
-  let tab62d = document.createElement("td");
-  tab62d.textContent = `${foredata[num - 1].dew_point} °`;
-  tab62row.appendChild(tab61d);
-  tab62row.appendChild(tab62d);
-  tab51Thead.appendChild(tab62row);
-
-  let tab61Thead = document.createElement("THead");
-  tab61Thead.className = "thead-dark";
-  innerTab41.appendChild(tab61Thead);
-
-  let tab71row = document.createElement("tr");
-
-  let tab71th = document.createElement("th");
-  tab71th.textContent = "Pressure";
-  let tab72th = document.createElement("th");
-  tab72th.textContent = "UV Index";
-  tab71row.appendChild(tab71th);
-  tab71row.appendChild(tab72th);
-  tab61Thead.append(tab71row);
-
-  let tab72row = document.createElement("tr");
-
-  let tab71d = document.createElement("td");
-  tab71d.textContent = `${foredata[num - 1].pressure} in`;
-  let tab72d = document.createElement("td");
-  tab72d.textContent = `${foredata[num - 1].uvi} of 10`;
-  tab72row.appendChild(tab71d);
-  tab72row.appendChild(tab72d);
-  tab61Thead.appendChild(tab72row);
-
-  //
-  let tab71Thead = document.createElement("THead");
-  tab71Thead.className = "thead-dark";
-  innerTab41.appendChild(tab71Thead);
-  innerDiv31.appendChild(innerTab41);
-
-  let tab81row = document.createElement("tr");
-
-  let tab81th = document.createElement("th");
-  tab81th.textContent = "Sunrise | Sunrise";
-  let tab82th = document.createElement("th");
-  tab82th.textContent = "Chance of Rain";
-  tab81row.appendChild(tab81th);
-  tab81row.appendChild(tab82th);
-  tab71Thead.append(tab81row);
-
-  let tab82row = document.createElement("tr");
-
-  let tab81d = document.createElement("td");
-  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${
-    foredata[num - 1].sunsettime
-  }`;
-  let tab82d = document.createElement("td");
-  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
-  tab82row.appendChild(tab81d);
-  tab82row.appendChild(tab82d);
-  tab71Thead.appendChild(tab82row);
-
-  //
-
-  let innerDiv32 = document.createElement("div");
-  innerDiv32.className = "modal-footer";
-  innerDiv2m.appendChild(innerDiv32);
-
-  var closeButton = document.createElement("button");
-  closeButton.className = "btn btn-dark";
-  closeButton.setAttribute("data-dismiss", "modal");
-  closeButton.innerHTML = "Exit";
-  innerDiv32.appendChild(closeButton);
-
-  modal.appendChild(div1);
-
-  maindiv.appendChild(modal);
-
-  return maindiv;
-}
-
-function createmodal5(foredata, num) {
-  let maindiv = document.createElement("div");
-
-  let modal = document.createElement("button");
-  modal.classList.add("btn", "btn-dark");
-  modal.setAttribute("data-toggle", "modal");
-  modal.setAttribute("data-target", "#sampleModal5");
-  modal.innerHTML = "More Data";
-
-  var div1 = document.createElement("div");
-  div1.id = "sampleModal5";
-  div1.className = "fade modal";
-  div1.tabIndex = -1;
-  div1.setAttribute("role", "dialog");
-
-  var innerDiv1m = document.createElement("div");
-  innerDiv1m.className = "modal-dialog";
-  innerDiv1m.setAttribute("role", "document");
-  div1.appendChild(innerDiv1m);
-
-  var innerDiv2m = document.createElement("div");
-  innerDiv2m.className = "modal-content";
-  innerDiv1m.appendChild(innerDiv2m);
-
-  var innerDiv3 = document.createElement("div");
-  innerDiv3.className = "modal-header";
-  innerDiv2m.appendChild(innerDiv3);
-
-  var headerM = document.createElement("H4");
-  headerM.className = "modal-title";
-  headerM.textContent = `Weather on ${foredata[num - 1].date}`;
-  innerDiv3.appendChild(headerM);
-
-  var buttonM = document.createElement("button");
-  buttonM.className = "close btn";
-  buttonM.setAttribute("data-dismiss", "modal");
-  buttonM.textContent = "X";
-  innerDiv3.appendChild(buttonM);
-
-  var innerDiv31 = document.createElement("div");
-  innerDiv31.className = "modal-body";
-  innerDiv2m.appendChild(innerDiv31);
-
-  let modalh2 = document.createElement("H2");
-  modalh2.textContent = `${foredata[num - 1].tempFar}°`;
-  innerDiv31.appendChild(modalh2);
-
-  let modalh3 = document.createElement("H3");
-  modalh3.textContent = `${foredata[num - 1].description}`;
-  innerDiv31.appendChild(modalh3);
-
-  let forimg = document.createElement("img");
-  forimg.classList.add("img-fluid");
-  forimg.src = `${foredata[num - 1].icon}`;
-  forimg.alt = `${foredata[num - 1].description} icon`;
-  innerDiv31.appendChild(forimg);
-
-  let innerTab41 = document.createElement("table");
-  innerTab41.className = "table";
-  let tab41Thead = document.createElement("THead");
-  tab41Thead.className = "thead-dark";
-  innerTab41.appendChild(tab41Thead);
-
-  let tab51row = document.createElement("tr");
-
-  let tab51th = document.createElement("th");
-  tab51th.textContent = "Hi | Lo";
-  let tab52th = document.createElement("th");
-  tab52th.textContent = "Wind";
-  tab51row.appendChild(tab51th);
-  tab51row.appendChild(tab52th);
-  tab41Thead.append(tab51row);
-
-  let tab52row = document.createElement("tr");
-
-  let tab51d = document.createElement("td");
-  tab51d.textContent = `${foredata[num - 1].tempHi}° | ${
-    foredata[num - 1].tempLo
-  }°`;
-  let tab52d = document.createElement("td");
-  tab52d.textContent = `${foredata[num - 1].wind} mph`;
-  tab52row.appendChild(tab51d);
-  tab52row.appendChild(tab52d);
-  tab41Thead.appendChild(tab52row);
-
-  let tab51Thead = document.createElement("THead");
-  tab51Thead.className = "thead-dark";
-  innerTab41.appendChild(tab51Thead);
-
-  let tab61row = document.createElement("tr");
-
-  let tab61th = document.createElement("th");
-  tab61th.textContent = "Humidity";
-  let tab62th = document.createElement("th");
-  tab62th.textContent = "Dew Point";
-  tab61row.appendChild(tab61th);
-  tab61row.appendChild(tab62th);
-  tab51Thead.append(tab61row);
-
-  let tab62row = document.createElement("tr");
-
-  let tab61d = document.createElement("td");
-  tab61d.textContent = `${foredata[num - 1].humidity}%`;
-  let tab62d = document.createElement("td");
-  tab62d.textContent = `${foredata[num - 1].dew_point} °`;
-  tab62row.appendChild(tab61d);
-  tab62row.appendChild(tab62d);
-  tab51Thead.appendChild(tab62row);
-
-  let tab61Thead = document.createElement("THead");
-  tab61Thead.className = "thead-dark";
-  innerTab41.appendChild(tab61Thead);
-
-  let tab71row = document.createElement("tr");
-
-  let tab71th = document.createElement("th");
-  tab71th.textContent = "Pressure";
-  let tab72th = document.createElement("th");
-  tab72th.textContent = "UV Index";
-  tab71row.appendChild(tab71th);
-  tab71row.appendChild(tab72th);
-  tab61Thead.append(tab71row);
-
-  let tab72row = document.createElement("tr");
-
-  let tab71d = document.createElement("td");
-  tab71d.textContent = `${foredata[num - 1].pressure} in`;
-  let tab72d = document.createElement("td");
-  tab72d.textContent = `${foredata[num - 1].uvi} of 10`;
-  tab72row.appendChild(tab71d);
-  tab72row.appendChild(tab72d);
-  tab61Thead.appendChild(tab72row);
-
-  //
-  let tab71Thead = document.createElement("THead");
-  tab71Thead.className = "thead-dark";
-  innerTab41.appendChild(tab71Thead);
-  innerDiv31.appendChild(innerTab41);
-
-  let tab81row = document.createElement("tr");
-
-  let tab81th = document.createElement("th");
-  tab81th.textContent = "Sunrise | Sunrise";
-  let tab82th = document.createElement("th");
-  tab82th.textContent = "Chance of Rain";
-  tab81row.appendChild(tab81th);
-  tab81row.appendChild(tab82th);
-  tab71Thead.append(tab81row);
-
-  let tab82row = document.createElement("tr");
-
-  let tab81d = document.createElement("td");
-  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${
-    foredata[num - 1].sunsettime
-  }`;
-  let tab82d = document.createElement("td");
-  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
-  tab82row.appendChild(tab81d);
-  tab82row.appendChild(tab82d);
-  tab71Thead.appendChild(tab82row);
-
-  //
-
-  let innerDiv32 = document.createElement("div");
-  innerDiv32.className = "modal-footer";
-  innerDiv2m.appendChild(innerDiv32);
-
-  var closeButton = document.createElement("button");
-  closeButton.className = "btn btn-dark";
-  closeButton.setAttribute("data-dismiss", "modal");
-  closeButton.innerHTML = "Exit";
-  innerDiv32.appendChild(closeButton);
-
-  modal.appendChild(div1);
-
-  maindiv.appendChild(modal);
-
-  return maindiv;
-}
-
-function createmodal6(foredata, num) {
-  let maindiv = document.createElement("div");
-
-  let modal = document.createElement("button");
-  modal.classList.add("btn", "btn-dark");
-  modal.setAttribute("data-toggle", "modal");
-  modal.setAttribute("data-target", "#sampleModal6");
-  modal.innerHTML = "More Data";
-
-  var div1 = document.createElement("div");
-  div1.id = "sampleModal6";
-  div1.className = "fade modal";
-  div1.tabIndex = -1;
-  div1.setAttribute("role", "dialog");
-
-  var innerDiv1m = document.createElement("div");
-  innerDiv1m.className = "modal-dialog";
-  innerDiv1m.setAttribute("role", "document");
-  div1.appendChild(innerDiv1m);
-
-  var innerDiv2m = document.createElement("div");
-  innerDiv2m.className = "modal-content";
-  innerDiv1m.appendChild(innerDiv2m);
-
-  var innerDiv3 = document.createElement("div");
-  innerDiv3.className = "modal-header";
-  innerDiv2m.appendChild(innerDiv3);
-
-  var headerM = document.createElement("H4");
-  headerM.className = "modal-title";
-  headerM.textContent = `Weather on ${foredata[num - 1].date}`;
-  innerDiv3.appendChild(headerM);
-
-  var buttonM = document.createElement("button");
-  buttonM.className = "close btn";
-  buttonM.setAttribute("data-dismiss", "modal");
-  buttonM.textContent = "X";
-  innerDiv3.appendChild(buttonM);
-
-  var innerDiv31 = document.createElement("div");
-  innerDiv31.className = "modal-body";
-  innerDiv2m.appendChild(innerDiv31);
-
-  let modalh2 = document.createElement("H2");
-  modalh2.textContent = `${foredata[num - 1].tempFar}°`;
-  innerDiv31.appendChild(modalh2);
-
-  let modalh3 = document.createElement("H3");
-  modalh3.textContent = `${foredata[num - 1].description}`;
-  innerDiv31.appendChild(modalh3);
-
-  let forimg = document.createElement("img");
-  forimg.classList.add("img-fluid");
-  forimg.src = `${foredata[num - 1].icon}`;
-  forimg.alt = `${foredata[num - 1].description} icon`;
-  innerDiv31.appendChild(forimg);
-
-  let innerTab41 = document.createElement("table");
-  innerTab41.className = "table";
-  let tab41Thead = document.createElement("THead");
-  tab41Thead.className = "thead-dark";
-  innerTab41.appendChild(tab41Thead);
-
-  let tab51row = document.createElement("tr");
-
-  let tab51th = document.createElement("th");
-  tab51th.textContent = "Hi | Lo";
-  let tab52th = document.createElement("th");
-  tab52th.textContent = "Wind";
-  tab51row.appendChild(tab51th);
-  tab51row.appendChild(tab52th);
-  tab41Thead.append(tab51row);
-
-  let tab52row = document.createElement("tr");
-
-  let tab51d = document.createElement("td");
-  tab51d.textContent = `${foredata[num - 1].tempHi}° | ${
-    foredata[num - 1].tempLo
-  }°`;
-  let tab52d = document.createElement("td");
-  tab52d.textContent = `${foredata[num - 1].wind} mph`;
-  tab52row.appendChild(tab51d);
-  tab52row.appendChild(tab52d);
-  tab41Thead.appendChild(tab52row);
-
-  let tab51Thead = document.createElement("THead");
-  tab51Thead.className = "thead-dark";
-  innerTab41.appendChild(tab51Thead);
-
-  let tab61row = document.createElement("tr");
-
-  let tab61th = document.createElement("th");
-  tab61th.textContent = "Humidity";
-  let tab62th = document.createElement("th");
-  tab62th.textContent = "Dew Point";
-  tab61row.appendChild(tab61th);
-  tab61row.appendChild(tab62th);
-  tab51Thead.append(tab61row);
-
-  let tab62row = document.createElement("tr");
-
-  let tab61d = document.createElement("td");
-  tab61d.textContent = `${foredata[num - 1].humidity}%`;
-  let tab62d = document.createElement("td");
-  tab62d.textContent = `${foredata[num - 1].dew_point} °`;
-  tab62row.appendChild(tab61d);
-  tab62row.appendChild(tab62d);
-  tab51Thead.appendChild(tab62row);
-
-  let tab61Thead = document.createElement("THead");
-  tab61Thead.className = "thead-dark";
-  innerTab41.appendChild(tab61Thead);
-
-  let tab71row = document.createElement("tr");
-
-  let tab71th = document.createElement("th");
-  tab71th.textContent = "Pressure";
-  let tab72th = document.createElement("th");
-  tab72th.textContent = "UV Index";
-  tab71row.appendChild(tab71th);
-  tab71row.appendChild(tab72th);
-  tab61Thead.append(tab71row);
-
-  let tab72row = document.createElement("tr");
-
-  let tab71d = document.createElement("td");
-  tab71d.textContent = `${foredata[num - 1].pressure} in`;
-  let tab72d = document.createElement("td");
-  tab72d.textContent = `${foredata[num - 1].uvi} of 10`;
-  tab72row.appendChild(tab71d);
-  tab72row.appendChild(tab72d);
-  tab61Thead.appendChild(tab72row);
-
-  //
-  let tab71Thead = document.createElement("THead");
-  tab71Thead.className = "thead-dark";
-  innerTab41.appendChild(tab71Thead);
-  innerDiv31.appendChild(innerTab41);
-
-  let tab81row = document.createElement("tr");
-
-  let tab81th = document.createElement("th");
-  tab81th.textContent = "Sunrise | Sunrise";
-  let tab82th = document.createElement("th");
-  tab82th.textContent = "Chance of Rain";
-  tab81row.appendChild(tab81th);
-  tab81row.appendChild(tab82th);
-  tab71Thead.append(tab81row);
-
-  let tab82row = document.createElement("tr");
-
-  let tab81d = document.createElement("td");
-  tab81d.textContent = `${foredata[num - 1].sunrisetime} | ${
-    foredata[num - 1].sunsettime
-  }`;
-  let tab82d = document.createElement("td");
-  tab82d.textContent = `${foredata[num - 1].pop * 100}%`;
-  tab82row.appendChild(tab81d);
-  tab82row.appendChild(tab82d);
-  tab71Thead.appendChild(tab82row);
-
-  //
-
-  let innerDiv32 = document.createElement("div");
-  innerDiv32.className = "modal-footer";
-  innerDiv2m.appendChild(innerDiv32);
-
-  var closeButton = document.createElement("button");
-  closeButton.className = "btn btn-dark";
-  closeButton.setAttribute("data-dismiss", "modal");
-  closeButton.innerHTML = "Exit";
-  innerDiv32.appendChild(closeButton);
-
-  modal.appendChild(div1);
-
-  maindiv.appendChild(modal);
-
-  return maindiv;
-}
-
-function createmodal7(foredata, num) {
-  let maindiv = document.createElement("div");
-
-  let modal = document.createElement("button");
-  modal.classList.add("btn", "btn-dark");
-  modal.setAttribute("data-toggle", "modal");
-  modal.setAttribute("data-target", "#sampleModal7");
-  modal.innerHTML = "More Data";
-
-  var div1 = document.createElement("div");
-  div1.id = "sampleModal7";
+  div1.id = `sampleModal${num - 1}`;
   div1.className = "fade modal";
   div1.tabIndex = -1;
   div1.setAttribute("role", "dialog");
