@@ -62,13 +62,14 @@ function showWeather(data) {
   const aq = data.aq;
   const forecast = data.weather;
   const condition = forecast[0];
-  const alert = data.alert[0];
+  const alert = data.alert;
+
 
   currentWeather(condition);
   currentAirQuality(aq);
   getForecast(forecast);
   if (alert.length > 0){
-    getAlertData(alert);    
+    getAlertData(alert[0]);    
     pgalert.classList.add("visible");
     pgalert.classList.remove("invisible");
   }
@@ -277,44 +278,32 @@ function currentAirQuality(data) {
     card.style.backgroundColor = "#28E439";
     card.style.color = "black";
     aqcard.style.backgroundColor = "#28E439";
-    aqcard.style.color = "black";
-    altcard.style.backgroundColor = "#28E439";
-    altcard.style.color = "black";
+    aqcard.style.color = "black";    
   } else if (data.level === "Moderate") {
     card.style.backgroundColor = "#FEFF48";
     card.style.color = "black";
     aqcard.style.backgroundColor = "#FEFF48";
-    aqcard.style.color = "black";
-    altcard.style.backgroundColor = "#FEFF48";
-    altcard.style.color = "black";
+    aqcard.style.color = "black";    
   } else if (data.level === "Unhealthy for Sensitive Groups") {
     card.style.backgroundColor = "#FC7F29";
     card.style.color = "white";
     aqcard.style.backgroundColor = "#FC7F29";
-    aqcard.style.color = "white";
-    altcard.style.backgroundColor = "#FC7F29";
-    altcard.style.color = "white";
+    aqcard.style.color = "white";    
   } else if (data.level === "Unhealthy") {
     card.style.backgroundColor = "#FB061B";
     card.style.color = "white";
     aqcard.style.backgroundColor = "#FB061B";
-    aqcard.style.color = "white";
-    altcard.style.backgroundColor = "#FB061B";
-    altcard.style.color = "white";
+    aqcard.style.color = "white";    
   } else if (data.level === "Very Unhealthy") {
     card.style.backgroundColor = "#8E3E94";
     card.style.color = "white";
     aqcard.style.backgroundColor = "#8E3E94";
-    aqcard.style.color = "white";
-    altcard.style.backgroundColor = "#8E3E94";
-    altcard.style.color = "white";
+    aqcard.style.color = "white";    
   } else {
     card.style.backgroundColor = "#7C0124";
     card.style.color = "white";
     aqcard.style.backgroundColor = "#7C0124";
-    aqcard.style.color = "white";
-    altcard.style.backgroundColor = "#7C0124";
-    altcard.style.color = "white";
+    aqcard.style.color = "white";    
   }
 
   //Add BS4 class to the card body to center text
@@ -340,7 +329,7 @@ function currentAirQuality(data) {
   aqbody.appendChild(aqtext);
 }
 
-function getAlertData(Data) {
+function getAlertData(alertdata) {
   const altcard = document.getElementById("alert_card");
   const altbody = document.getElementById("alert_text");
 
@@ -357,31 +346,28 @@ function getAlertData(Data) {
   altcard.prepend(alt_title);
 
   //Change background color and text color of card
-  if (data.level === "Good") {
-    altcard.style.backgroundColor = "#28E439";
+  if (alertdata.severity === "Advisory") {
+    altcard.style.backgroundColor = "#FF4500";
     altcard.style.color = "black";
-  } else if (data.level === "Moderate") {
-    altcard.style.backgroundColor = "#FEFF48";
+  } else if (alertdata.severity === "Warning") {
+    altcard.style.backgroundColor = "#FFA500";
     altcard.style.color = "black";
-  } else if (data.level === "Unhealthy for Sensitive Groups") {
-    altcard.style.backgroundColor = "#FC7F29";
-    altcard.style.color = "white";
-  } else if (data.level === "Unhealthy") {
-    altcard.style.backgroundColor = "#FB061B";
-    altcard.style.color = "white";
-  } else if (data.level === "Very Unhealthy") {
-    altcard.style.backgroundColor = "#8E3E94";
-    altcard.style.color = "white";
   } else {
-    altcard.style.backgroundColor = "#7C0124";
-    altcard.style.color = "white";
+    altcard.style.backgroundColor = "#DAA520";
+    altcard.style.color = "black";
   }
 
   altbody.classList.add("text-center");
+  let moreinfo = document.createElement("a");
+  moreinfo.href = alertdata.url;
+  moreinfo.target = "_blank";
+  moreinfo.style = "color:black";
+  moreinfo.textContent = "[Moreinfo...]";  
 
   let alttext = document.createElement("div");
   alttext.classList.add("font-weight-bold");
-  alttext.textContent = `Air Index level ${data.aqi}`;
+  alttext.textContent = `${alertdata.description.substring(0, 100)}  `;
+  alttext.appendChild(moreinfo);
 
   while (altbody.firstChild) altbody.firstChild.remove();
   //Append caution statement to the card body
@@ -482,7 +468,7 @@ function getForecast(Data) {
   }
 }
 
-function createmodal1(foredata, num) {
+function createmodal(foredata, num) {
   let maindiv = document.createElement("div");
 
   let modal = document.createElement("button");

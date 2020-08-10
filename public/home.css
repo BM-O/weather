@@ -83,3 +83,7 @@ html {
 .Snow {
   display: none;
 }
+
+[href] {
+  text-decoration: underline;
+}
